@@ -3,7 +3,8 @@
 </p>
 
 # Vexa
-# API for **Real-Time Meeting Transcription** and **Knowledge Extraction**
+
+# API for **Real-Time Meeting Transcription**
 
 Vexa is an API for **real-time meeting transcription** using **meeting bots** and direct **streaming from web/mobile apps**. It extracts knowledge from various platforms including:
 
@@ -14,6 +15,55 @@ Vexa is an API for **real-time meeting transcription** using **meeting bots** an
 Built as a **scalable multiuser service**, Vexa efficiently supports **thousands of simultaneous users** and **concurrent transcription sessions**. It's an **enterprise-grade** alternative to [recall.ai](https://recall.ai) with numerous extra features, designed specifically for **secure corporate environments** where **data security** and **compliance** are non-negotiable.
 
 ## API Capabilities
+
+<div align="left">
+  <a href="https://api.dev.vexa.ai/docs">
+    <img src="https://img.shields.io/badge/API-Documentation-2ea44f?style=for-the-badge" alt="API Documentation">
+  </a>
+</div>
+
+## Simple API Integration
+**Set up and running in under 5 minutes**
+
+### Create a meeting bot
+```bash
+# POST /v1/bots
+curl -X POST https://api.vexa.ai/v1/bots \
+  -d '{
+    "meeting_url": "https://meet.google.com/abc-defg-hij",
+    "platform": "google_meet"
+  }'
+```
+
+### Retrieve meeting transcript
+```bash
+# GET /v1/transcripts/{meeting_id}
+```
+
+```json
+{
+  "data": {
+    "meeting_id": "meet_abc123",
+    "transcripts": [
+      {
+        "time": "00:01:15",
+        "speaker": "John Smith",
+        "text": "Let's discuss the quarterly results."
+      },
+      {
+        "time": "00:01:23",
+        "speaker": "Sarah Johnson",
+        "text": "The Q3 revenue exceeded our projections by 15%."
+      },
+      {
+        "time": "00:01:42",
+        "speaker": "Michael Chen",
+        "text": "Customer acquisition costs decreased by 12% from last quarter."
+      }
+    ]
+  }
+}
+```
 
 ### Inputs:
 - **Meeting Bots**: Automated bots that join your meetings on:
@@ -32,21 +82,6 @@ Built as a **scalable multiuser service**, Vexa efficiently supports **thousands
 - **Real-time translation** between supported languages
 - **Meeting knowledge extraction** with **RAG** (Retrieval Augmented Generation) for finished meetings
 - **MCP server** for Agent access to transcription data
-
-## 📚 API Reference
-
-<div align="center">
-  <a href="https://api.dev.vexa.ai/docs">
-    <img src="https://img.shields.io/badge/API-Documentation-2ea44f?style=for-the-badge" alt="API Documentation">
-  </a>
-</div>
-
-Explore our comprehensive API documentation to quickly integrate Vexa's powerful transcription capabilities into your applications. Our interactive documentation provides:
-
-- **Detailed Endpoints**: Complete reference for all API endpoints
-- **Request Examples**: Code samples in multiple languages  
-- **Response Schemas**: Clear specifications of all data structures
-- **Authentication Guide**: Simple steps to secure your integration
 
 ## Scalability Architecture
 
