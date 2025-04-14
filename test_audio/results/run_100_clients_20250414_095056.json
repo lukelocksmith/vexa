@@ -1,0 +1,1777 @@
+{
+  "test_id": "ec20bc9a-0c2e-4fcd-916f-f5d7f1e8f9f5",
+  "timestamp": "2025-04-14T09:50:56.730531",
+  "test_config": {
+    "num_clients": 100,
+    "server_url": "ws://load-balancer:80",
+    "audio_dir": "/app/test_audio"
+  },
+  "client_results": [
+    {
+      "client_id": 1,
+      "client_uid": "803c8dd9-a0ab-4de2-9c2e-dab34d9cd8c3",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 2,
+      "client_uid": "4a4062e3-93bb-4176-a7ec-cc10e889d9b7",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.14842939376831,
+      "connection_time": 0.16252350807189941,
+      "message_data": [
+        {
+          "timestamp": 1744624256.9888701,
+          "message_num": 1,
+          "transcript_part": "{'uid': '4a4062e3-93bb-4176-a7ec-cc10e889d9b7', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"4a4062e3-93bb-4176-a7ec-cc10e889d9b7\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.07390999794006348
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.07390999794006348,
+        "max": 0.07390999794006348,
+        "mean": 0.07390999794006348,
+        "median": 0.07390999794006348,
+        "p95": 0.07390999794006348
+      },
+      "error": null
+    },
+    {
+      "client_id": 3,
+      "client_uid": "63058d70-69d6-40f3-b740-d5f0fec9d099",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 4,
+      "client_uid": "c3d86523-09ac-4698-a247-4e9f1cf9a73b",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 5,
+      "client_uid": "e1132a4e-96a0-4db9-9a56-d4866b8d1c61",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.145338773727417,
+      "connection_time": 0.16051173210144043,
+      "message_data": [
+        {
+          "timestamp": 1744624257.2732852,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'e1132a4e-96a0-4db9-9a56-d4866b8d1c61', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"e1132a4e-96a0-4db9-9a56-d4866b8d1c61\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.3557279109954834
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.3557279109954834,
+        "max": 0.3557279109954834,
+        "mean": 0.3557279109954834,
+        "median": 0.3557279109954834,
+        "p95": 0.3557279109954834
+      },
+      "error": null
+    },
+    {
+      "client_id": 6,
+      "client_uid": "3e3592e6-b0ac-4e28-95aa-fc864518329c",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 7,
+      "client_uid": "6c9acdfc-0879-4e76-b95e-5cec906d33ef",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 8,
+      "client_uid": "af832b01-707b-44bc-aec8-8a414460732b",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.143861770629883,
+      "connection_time": 0.15833783149719238,
+      "message_data": [
+        {
+          "timestamp": 1744624257.4080665,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'af832b01-707b-44bc-aec8-8a414460732b', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"af832b01-707b-44bc-aec8-8a414460732b\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.4883427619934082
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.4883427619934082,
+        "max": 0.4883427619934082,
+        "mean": 0.4883427619934082,
+        "median": 0.4883427619934082,
+        "p95": 0.4883427619934082
+      },
+      "error": null
+    },
+    {
+      "client_id": 9,
+      "client_uid": "8c390211-597c-43f2-a093-2cbc6f8d4ab7",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 10,
+      "client_uid": "6538d031-9e6b-4d42-a139-079dfa097818",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 11,
+      "client_uid": "3ba6f8cb-cdfb-43d9-8547-1356259c3e26",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 11.658014059066772,
+      "connection_time": 0.15628409385681152,
+      "message_data": [
+        {
+          "timestamp": 1744624257.419413,
+          "message_num": 1,
+          "transcript_part": "{'uid': '3ba6f8cb-cdfb-43d9-8547-1356259c3e26', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"3ba6f8cb-cdfb-43d9-8547-1356259c3e26\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.49753737449645996
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.49753737449645996,
+        "max": 0.49753737449645996,
+        "mean": 0.49753737449645996,
+        "median": 0.49753737449645996,
+        "p95": 0.49753737449645996
+      },
+      "error": null
+    },
+    {
+      "client_id": 12,
+      "client_uid": "e70160d7-95ac-488c-87a6-30d4d715df55",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 13,
+      "client_uid": "0b5670f2-76ee-4e91-a729-4296f1a47e57",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 14,
+      "client_uid": "6d3b766b-11e4-4980-ad9e-acbd0bb4e75c",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.139790534973145,
+      "connection_time": 0.15421271324157715,
+      "message_data": [
+        {
+          "timestamp": 1744624258.199292,
+          "message_num": 1,
+          "transcript_part": "{'uid': '6d3b766b-11e4-4980-ad9e-acbd0bb4e75c', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"6d3b766b-11e4-4980-ad9e-acbd0bb4e75c\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 1.2752742767333984
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 1.2752742767333984,
+        "max": 1.2752742767333984,
+        "mean": 1.2752742767333984,
+        "median": 1.2752742767333984,
+        "p95": 1.2752742767333984
+      },
+      "error": null
+    },
+    {
+      "client_id": 15,
+      "client_uid": "e944658b-46d9-4a37-8a3a-76dd5d341235",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 16,
+      "client_uid": "19a804a9-d5ec-4795-8afc-f43962a3add5",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 17,
+      "client_uid": "a4a473cb-d10b-4a9a-b481-21ccade22753",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.177172422409058,
+      "connection_time": 0.1522228717803955,
+      "message_data": [
+        {
+          "timestamp": 1744624258.530185,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'a4a473cb-d10b-4a9a-b481-21ccade22753', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"a4a473cb-d10b-4a9a-b481-21ccade22753\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 1.6038050651550293
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 1.6038050651550293,
+        "max": 1.6038050651550293,
+        "mean": 1.6038050651550293,
+        "median": 1.6038050651550293,
+        "p95": 1.6038050651550293
+      },
+      "error": null
+    },
+    {
+      "client_id": 18,
+      "client_uid": "b1a00b12-875d-4fa7-8d7e-3f072e798e40",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 19,
+      "client_uid": "eda1f7b4-868d-4f67-86e8-b41ba76524fe",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 20,
+      "client_uid": "d01e8c94-66bb-4866-9b8a-b560755750d0",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 11.651015281677246,
+      "connection_time": 0.1508927345275879,
+      "message_data": [
+        {
+          "timestamp": 1744624258.498304,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'd01e8c94-66bb-4866-9b8a-b560755750d0', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"d01e8c94-66bb-4866-9b8a-b560755750d0\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 1.5697746276855469
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 1.5697746276855469,
+        "max": 1.5697746276855469,
+        "mean": 1.5697746276855469,
+        "median": 1.5697746276855469,
+        "p95": 1.5697746276855469
+      },
+      "error": null
+    },
+    {
+      "client_id": 21,
+      "client_uid": "86f96c6a-c550-4332-bac1-5eb24de60b92",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 22,
+      "client_uid": "c6e2cc38-1887-4fa1-9756-52d9250eb2b0",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 23,
+      "client_uid": "91c29429-92c6-411e-8f38-3364c097df7f",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.428087949752808,
+      "connection_time": 0.14997553825378418,
+      "message_data": [
+        {
+          "timestamp": 1744624259.1472158,
+          "message_num": 1,
+          "transcript_part": "{'uid': '91c29429-92c6-411e-8f38-3364c097df7f', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"91c29429-92c6-411e-8f38-3364c097df7f\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 2.2162187099456787
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 2.2162187099456787,
+        "max": 2.2162187099456787,
+        "mean": 2.2162187099456787,
+        "median": 2.2162187099456787,
+        "p95": 2.2162187099456787
+      },
+      "error": null
+    },
+    {
+      "client_id": 24,
+      "client_uid": "590b40c9-9a1b-4499-afc8-1773aec8d9bd",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 25,
+      "client_uid": "3689ad1e-318b-4dd3-be5c-ae853be60192",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 26,
+      "client_uid": "cd85754c-1616-4ac3-b653-88b0d499b51c",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.431945085525513,
+      "connection_time": 0.15080523490905762,
+      "message_data": [
+        {
+          "timestamp": 1744624259.1961458,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'cd85754c-1616-4ac3-b653-88b0d499b51c', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"cd85754c-1616-4ac3-b653-88b0d499b51c\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 2.2608609199523926
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 2.2608609199523926,
+        "max": 2.2608609199523926,
+        "mean": 2.2608609199523926,
+        "median": 2.2608609199523926,
+        "p95": 2.2608609199523926
+      },
+      "error": null
+    },
+    {
+      "client_id": 27,
+      "client_uid": "1eff779d-0777-435d-91ba-ea9fbab7fe3e",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 28,
+      "client_uid": "6856fe41-d83a-4213-80b7-ec6426fd5f74",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 29,
+      "client_uid": "4932e538-0ac2-4965-b895-097e0f2c2ad7",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.426464319229126,
+      "connection_time": 0.1453394889831543,
+      "message_data": [
+        {
+          "timestamp": 1744624259.1527333,
+          "message_num": 1,
+          "transcript_part": "{'uid': '4932e538-0ac2-4965-b895-097e0f2c2ad7', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"4932e538-0ac2-4965-b895-097e0f2c2ad7\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 2.219569206237793
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 2.219569206237793,
+        "max": 2.219569206237793,
+        "mean": 2.219569206237793,
+        "median": 2.219569206237793,
+        "p95": 2.219569206237793
+      },
+      "error": null
+    },
+    {
+      "client_id": 30,
+      "client_uid": "b4b3dc69-013b-45fa-a9a3-9f081040dbc0",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 31,
+      "client_uid": "9e97d46f-5e6d-408e-82ce-4a79a01ace37",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 32,
+      "client_uid": "b3e65602-b3c3-4bc8-974f-5e857d3dc7c9",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.434386014938354,
+      "connection_time": 0.14882254600524902,
+      "message_data": [
+        {
+          "timestamp": 1744624261.360138,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'b3e65602-b3c3-4bc8-974f-5e857d3dc7c9', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"b3e65602-b3c3-4bc8-974f-5e857d3dc7c9\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 4.420259475708008
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 4.420259475708008,
+        "max": 4.420259475708008,
+        "mean": 4.420259475708008,
+        "median": 4.420259475708008,
+        "p95": 4.420259475708008
+      },
+      "error": null
+    },
+    {
+      "client_id": 33,
+      "client_uid": "d0fc7ee8-6495-43c6-a4c7-78379cdc135b",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 34,
+      "client_uid": "49e03dd4-001e-4bca-a04a-c094e7a05771",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 35,
+      "client_uid": "82a3d87a-827f-4fd7-a602-6695b2b8b3ff",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.4320068359375,
+      "connection_time": 0.14349365234375,
+      "message_data": [
+        {
+          "timestamp": 1744624259.591169,
+          "message_num": 1,
+          "transcript_part": "{'uid': '82a3d87a-827f-4fd7-a602-6695b2b8b3ff', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"82a3d87a-827f-4fd7-a602-6695b2b8b3ff\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 2.6534416675567627
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 2.6534416675567627,
+        "max": 2.6534416675567627,
+        "mean": 2.6534416675567627,
+        "median": 2.6534416675567627,
+        "p95": 2.6534416675567627
+      },
+      "error": null
+    },
+    {
+      "client_id": 36,
+      "client_uid": "4596f061-9982-4bae-a3fd-2c83501c1f59",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 37,
+      "client_uid": "304ad36b-c265-422a-b513-05d0d31222fb",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 38,
+      "client_uid": "e7a0d6b0-3feb-4ec8-9a42-7e55d48c29fb",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.43877625465393,
+      "connection_time": 0.14464473724365234,
+      "message_data": [
+        {
+          "timestamp": 1744624263.035217,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'e7a0d6b0-3feb-4ec8-9a42-7e55d48c29fb', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"e7a0d6b0-3feb-4ec8-9a42-7e55d48c29fb\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 6.093165159225464
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 6.093165159225464,
+        "max": 6.093165159225464,
+        "mean": 6.093165159225464,
+        "median": 6.093165159225464,
+        "p95": 6.093165159225464
+      },
+      "error": null
+    },
+    {
+      "client_id": 39,
+      "client_uid": "91ea6618-f9ea-43b9-ad60-3b7823f3ec03",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 40,
+      "client_uid": "d910676e-7fc3-43da-b654-f09c89d26822",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 41,
+      "client_uid": "be443be9-46d0-406a-a28b-5cdec67d2c46",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.441060543060303,
+      "connection_time": 0.14365434646606445,
+      "message_data": [
+        {
+          "timestamp": 1744624264.4580576,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'be443be9-46d0-406a-a28b-5cdec67d2c46', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"be443be9-46d0-406a-a28b-5cdec67d2c46\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 7.513770341873169
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 7.513770341873169,
+        "max": 7.513770341873169,
+        "mean": 7.513770341873169,
+        "median": 7.513770341873169,
+        "p95": 7.513770341873169
+      },
+      "error": null
+    },
+    {
+      "client_id": 42,
+      "client_uid": "69160caa-d036-4ad0-83c2-7fcedead8830",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 43,
+      "client_uid": "39a7a4b9-0bf8-44fa-ae75-9e8b53ebeb18",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 44,
+      "client_uid": "e67dd4ca-4d01-4e62-a62a-5d728cf4708b",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.445026636123657,
+      "connection_time": 0.14308428764343262,
+      "message_data": [
+        {
+          "timestamp": 1744624268.6699884,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'e67dd4ca-4d01-4e62-a62a-5d728cf4708b', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"e67dd4ca-4d01-4e62-a62a-5d728cf4708b\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 11.723148345947266
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 11.723148345947266,
+        "max": 11.723148345947266,
+        "mean": 11.723148345947266,
+        "median": 11.723148345947266,
+        "p95": 11.723148345947266
+      },
+      "error": null
+    },
+    {
+      "client_id": 45,
+      "client_uid": "ffd4cfc8-078b-4617-b5a4-699e50106aaf",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 46,
+      "client_uid": "a64a351e-1539-458f-a20c-03c58bd5f145",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 47,
+      "client_uid": "e9c25185-743f-4e8d-b3a3-e5847266b556",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.44539523124695,
+      "connection_time": 0.14206480979919434,
+      "message_data": [
+        {
+          "timestamp": 1744624268.9285934,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'e9c25185-743f-4e8d-b3a3-e5847266b556', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"e9c25185-743f-4e8d-b3a3-e5847266b556\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 11.979583501815796
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 11.979583501815796,
+        "max": 11.979583501815796,
+        "mean": 11.979583501815796,
+        "median": 11.979583501815796,
+        "p95": 11.979583501815796
+      },
+      "error": null
+    },
+    {
+      "client_id": 48,
+      "client_uid": "c752365c-05e2-4645-b4c8-2ec237568f84",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 49,
+      "client_uid": "92e6fa05-c54c-4b84-b01b-2f0e7e6aea5a",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 50,
+      "client_uid": "32de05f8-6635-4c62-ab03-1c3bbad54447",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.447784185409546,
+      "connection_time": 0.1409902572631836,
+      "message_data": [
+        {
+          "timestamp": 1744624269.0549548,
+          "message_num": 1,
+          "transcript_part": "{'uid': '32de05f8-6635-4c62-ab03-1c3bbad54447', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"32de05f8-6635-4c62-ab03-1c3bbad54447\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 12.103821039199829
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 12.103821039199829,
+        "max": 12.103821039199829,
+        "mean": 12.103821039199829,
+        "median": 12.103821039199829,
+        "p95": 12.103821039199829
+      },
+      "error": null
+    },
+    {
+      "client_id": 51,
+      "client_uid": "cb143d64-7aec-44de-840c-670d813715aa",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 52,
+      "client_uid": "dd906dea-3323-4c1e-9e6d-4c4b6465b58a",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 53,
+      "client_uid": "bae1d927-c566-4021-95cf-021e4a82cb59",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.45247173309326,
+      "connection_time": 0.1421976089477539,
+      "message_data": [
+        {
+          "timestamp": 1744624272.499035,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'bae1d927-c566-4021-95cf-021e4a82cb59', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"bae1d927-c566-4021-95cf-021e4a82cb59\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 15.543534278869629
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 15.543534278869629,
+        "max": 15.543534278869629,
+        "mean": 15.543534278869629,
+        "median": 15.543534278869629,
+        "p95": 15.543534278869629
+      },
+      "error": null
+    },
+    {
+      "client_id": 54,
+      "client_uid": "1a92d9a5-3faf-4126-9fcc-ad494928b2a3",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 55,
+      "client_uid": "4197c1d3-0b26-49ec-822b-66596b7d6fd7",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 56,
+      "client_uid": "90ca2163-b89b-4fa1-ba63-c0bdba06ee69",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.449145078659058,
+      "connection_time": 0.1366863250732422,
+      "message_data": [
+        {
+          "timestamp": 1744624271.5116405,
+          "message_num": 1,
+          "transcript_part": "{'uid': '90ca2163-b89b-4fa1-ba63-c0bdba06ee69', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"90ca2163-b89b-4fa1-ba63-c0bdba06ee69\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 14.55835509300232
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 14.55835509300232,
+        "max": 14.55835509300232,
+        "mean": 14.55835509300232,
+        "median": 14.55835509300232,
+        "p95": 14.55835509300232
+      },
+      "error": null
+    },
+    {
+      "client_id": 57,
+      "client_uid": "bf45d694-2380-4928-a026-56bf9ecf1936",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 58,
+      "client_uid": "ad7941ed-b230-419d-bbe9-80f647702d01",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 59,
+      "client_uid": "d4f3de12-4e34-41a5-a2d2-442d207302ce",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.457605361938477,
+      "connection_time": 0.14334893226623535,
+      "message_data": [
+        {
+          "timestamp": 1744624271.921768,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'd4f3de12-4e34-41a5-a2d2-442d207302ce', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"d4f3de12-4e34-41a5-a2d2-442d207302ce\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 14.958617925643921
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 14.958617925643921,
+        "max": 14.958617925643921,
+        "mean": 14.958617925643921,
+        "median": 14.958617925643921,
+        "p95": 14.958617925643921
+      },
+      "error": null
+    },
+    {
+      "client_id": 60,
+      "client_uid": "5148cf3d-d5f9-4cb1-8fb0-0e0ff9fa00a9",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 61,
+      "client_uid": "2393b22f-3853-444c-90e9-d77d7502e9f2",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 62,
+      "client_uid": "e762f9d2-9f6b-40cf-86fb-42b5458a6ea2",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.454136610031128,
+      "connection_time": 0.13801026344299316,
+      "message_data": [
+        {
+          "timestamp": 1744624273.3412755,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'e762f9d2-9f6b-40cf-86fb-42b5458a6ea2', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"e762f9d2-9f6b-40cf-86fb-42b5458a6ea2\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 16.380269289016724
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 16.380269289016724,
+        "max": 16.380269289016724,
+        "mean": 16.380269289016724,
+        "median": 16.380269289016724,
+        "p95": 16.380269289016724
+      },
+      "error": null
+    },
+    {
+      "client_id": 63,
+      "client_uid": "c0ca36eb-2f1d-465d-8513-4047f0024813",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 64,
+      "client_uid": "12c2e3e5-18ad-4a4d-b72b-e2cd7f3784a3",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 65,
+      "client_uid": "88cc8271-3d7d-4f84-82b7-18097bf1159d",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.453643321990967,
+      "connection_time": 0.1326754093170166,
+      "message_data": [
+        {
+          "timestamp": 1744624271.8198187,
+          "message_num": 1,
+          "transcript_part": "{'uid': '88cc8271-3d7d-4f84-82b7-18097bf1159d', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"88cc8271-3d7d-4f84-82b7-18097bf1159d\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 14.860975742340088
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 14.860975742340088,
+        "max": 14.860975742340088,
+        "mean": 14.860975742340088,
+        "median": 14.860975742340088,
+        "p95": 14.860975742340088
+      },
+      "error": null
+    },
+    {
+      "client_id": 66,
+      "client_uid": "f61452fd-b947-4c51-b264-9756065958ee",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 67,
+      "client_uid": "26cb7970-486c-4674-9ed3-248d0a156f58",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 68,
+      "client_uid": "6f5ec735-c02f-4b77-929a-a5dbbe60f329",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.458982944488525,
+      "connection_time": 0.1361091136932373,
+      "message_data": [
+        {
+          "timestamp": 1744624273.6492016,
+          "message_num": 1,
+          "transcript_part": "{'uid': '6f5ec735-c02f-4b77-929a-a5dbbe60f329', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"6f5ec735-c02f-4b77-929a-a5dbbe60f329\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 16.683916807174683
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 16.683916807174683,
+        "max": 16.683916807174683,
+        "mean": 16.683916807174683,
+        "median": 16.683916807174683,
+        "p95": 16.683916807174683
+      },
+      "error": null
+    },
+    {
+      "client_id": 69,
+      "client_uid": "0d893e40-fa85-4c6e-a1d8-152274d76e67",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 70,
+      "client_uid": "b7b07ae7-860a-4c08-ae45-0267d61d466b",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 71,
+      "client_uid": "493abb31-17be-4dcf-b29f-6f2e7de3faf5",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.462103605270386,
+      "connection_time": 0.13953399658203125,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": null
+    },
+    {
+      "client_id": 72,
+      "client_uid": "e1d5198a-3585-4452-aa55-ddffdfb19496",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 73,
+      "client_uid": "911158be-fd67-43ea-b6af-931f3aa11b7e",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 74,
+      "client_uid": "05374b2c-3fda-4648-999b-5aa5a0752101",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.460371732711792,
+      "connection_time": 0.13212847709655762,
+      "message_data": [
+        {
+          "timestamp": 1744624273.633858,
+          "message_num": 1,
+          "transcript_part": "{'uid': '05374b2c-3fda-4648-999b-5aa5a0752101', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"05374b2c-3fda-4648-999b-5aa5a0752101\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 16.66645359992981
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 16.66645359992981,
+        "max": 16.66645359992981,
+        "mean": 16.66645359992981,
+        "median": 16.66645359992981,
+        "p95": 16.66645359992981
+      },
+      "error": null
+    },
+    {
+      "client_id": 75,
+      "client_uid": "8176655d-83ec-4b60-8ff6-da3013007a05",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 76,
+      "client_uid": "735bb309-e34b-4548-b661-aa63b1b50561",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 77,
+      "client_uid": "8e9dd3fc-1ae8-49b7-84f8-4e94fc7be846",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.46273636817932,
+      "connection_time": 0.13115286827087402,
+      "message_data": [
+        {
+          "timestamp": 1744624273.774705,
+          "message_num": 1,
+          "transcript_part": "{'uid': '8e9dd3fc-1ae8-49b7-84f8-4e94fc7be846', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"8e9dd3fc-1ae8-49b7-84f8-4e94fc7be846\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 16.80513334274292
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 16.80513334274292,
+        "max": 16.80513334274292,
+        "mean": 16.80513334274292,
+        "median": 16.80513334274292,
+        "p95": 16.80513334274292
+      },
+      "error": null
+    },
+    {
+      "client_id": 78,
+      "client_uid": "5b4cbba7-14ea-4171-85f3-ca297d29edc6",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 79,
+      "client_uid": "ebce2e17-a08c-428a-99c3-0fab36ac6dc7",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 80,
+      "client_uid": "7cbb105b-9adb-4ab2-955a-cc52e20ecd05",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.4624285697937,
+      "connection_time": 0.13126897811889648,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": null
+    },
+    {
+      "client_id": 81,
+      "client_uid": "4df952ff-3888-495d-8ad0-6f71079846a5",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 82,
+      "client_uid": "da764a73-afbd-49cb-bca8-8df2e21ee588",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 83,
+      "client_uid": "e21a7d72-d576-4620-809f-4da90e1cfb66",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.46278715133667,
+      "connection_time": 0.13024377822875977,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": null
+    },
+    {
+      "client_id": 84,
+      "client_uid": "2cbce875-7b14-4a76-9566-47c413834810",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 85,
+      "client_uid": "b8349ed4-a6fc-4283-a56d-9447d14f4450",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 86,
+      "client_uid": "845ec35f-8883-496e-bef2-9a0ca3ce854f",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.462107181549072,
+      "connection_time": 0.12926936149597168,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": null
+    },
+    {
+      "client_id": 87,
+      "client_uid": "ee8c0ec2-40cd-40c7-8984-3bb2781f6501",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 88,
+      "client_uid": "91789508-ee72-4480-8a34-b821aff7e935",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 89,
+      "client_uid": "55038554-cba0-4a11-8fba-41f0c2fd6e98",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.463484287261963,
+      "connection_time": 0.12821173667907715,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": null
+    },
+    {
+      "client_id": 90,
+      "client_uid": "851aca44-5478-4287-a0ca-0927d79ede1d",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 91,
+      "client_uid": "d2d96651-ab5d-42af-b91b-a77daf7b06be",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 92,
+      "client_uid": "f1ae6a1e-5d1f-4ec0-bc19-173661fff38b",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.463777542114258,
+      "connection_time": 0.1272134780883789,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": null
+    },
+    {
+      "client_id": 93,
+      "client_uid": "924b6b9e-9c3a-401c-94c0-f5a9739b09bc",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 94,
+      "client_uid": "851fca72-77d6-4a9a-9525-f0106604d611",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 95,
+      "client_uid": "8330d8b7-99ff-4c9b-9068-f49330cb0b0d",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.464112758636475,
+      "connection_time": 0.12623834609985352,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": null
+    },
+    {
+      "client_id": 96,
+      "client_uid": "1e147ebf-0131-47e8-97cb-16a3e4625acd",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 97,
+      "client_uid": "80ccdc05-dc60-4a6c-8340-cd8ab77fb34c",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 98,
+      "client_uid": "cb37f407-b668-4430-8629-08a56a91ebcf",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 18.46348285675049,
+      "connection_time": 0.1252589225769043,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": null
+    },
+    {
+      "client_id": 99,
+      "client_uid": "78f20fa9-24c9-4456-b813-1a56d3c4d9cd",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    },
+    {
+      "client_id": 100,
+      "client_uid": "10324509-f53d-4a97-8e2c-cccad2c180ae",
+      "audio_file": "LJ001-0001.wav",
+      "success": false,
+      "message_count": 0,
+      "audio_duration": 13.3058125,
+      "processing_time": 0,
+      "connection_time": 0,
+      "message_data": [],
+      "transcript": "",
+      "latency_stats": {},
+      "error": "FAILED with error: timed out during opening handshake"
+    }
+  ],
+  "summary": {
+    "total_duration": 18.719717979431152,
+    "target_clients": 100,
+    "successful_clients": 33,
+    "failed_clients": 67,
+    "total_messages": 25,
+    "avg_audio_duration": 13.3058125,
+    "avg_processing_time": 16.781452496846516,
+    "latency": {
+      "min": 0.07390999794006348,
+      "max": 16.80513334274292,
+      "mean": 7.820218658447265,
+      "median": 6.093165159225464,
+      "p95": 16.768768382072448
+    }
+  }
+}

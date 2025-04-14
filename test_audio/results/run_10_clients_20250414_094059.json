@@ -1,0 +1,803 @@
+{
+  "test_id": "ace2d29a-3bdc-4a6b-9691-107bf405fd8f",
+  "timestamp": "2025-04-14T09:40:59.609185",
+  "test_config": {
+    "num_clients": 10,
+    "server_url": "ws://load-balancer:80",
+    "audio_dir": "/app/test_audio"
+  },
+  "client_results": [
+    {
+      "client_id": 1,
+      "client_uid": "ff54dbfc-fb3c-4f37-a589-13ff59d39e1b",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 7,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.45328402519226,
+      "connection_time": 0.040377140045166016,
+      "message_data": [
+        {
+          "timestamp": 1744623659.6683326,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'ff54dbfc-fb3c-4f37-a589-13ff59d39e1b', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"ff54dbfc-fb3c-4f37-a589-13ff59d39e1b\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.017172813415527344
+        },
+        {
+          "timestamp": 1744623660.2156675,
+          "message_num": 2,
+          "transcript_part": "{'uid': 'ff54dbfc-fb3c-4f37-a589-13ff59d39e1b', 'segments': [{'start': '0.000', 'end': '1.000', 'text': ' Printing?', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"ff54dbfc-fb3c-4f37-a589-13ff59d39e1b\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.000\", \"text\": \" Printing?\", \"completed\": false}]}",
+          "latency": 0.5645077228546143
+        },
+        {
+          "timestamp": 1744623661.0632493,
+          "message_num": 3,
+          "transcript_part": "{'uid': 'ff54dbfc-fb3c-4f37-a589-13ff59d39e1b', 'segments': [{'start': '0.000', 'end': '2.560', 'text': ' Printing in the only sense', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"ff54dbfc-fb3c-4f37-a589-13ff59d39e1b\", \"segments\": [{\"start\": \"0.000\", \"end\": \"2.560\", \"text\": \" Printing in the only sense\", \"completed\": false}]}",
+          "latency": 1.4120895862579346
+        },
+        {
+          "timestamp": 1744623662.1927736,
+          "message_num": 4,
+          "transcript_part": "{'uid': 'ff54dbfc-fb3c-4f37-a589-13ff59d39e1b', 'segments': [{'start': '0.000', 'end': '5.520', 'text': ' Printing in the only sense with which we are at present concerned.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"ff54dbfc-fb3c-4f37-a589-13ff59d39e1b\", \"segments\": [{\"start\": \"0.000\", \"end\": \"5.520\", \"text\": \" Printing in the only sense with which we are at present concerned.\", \"completed\": false}]}",
+          "latency": 2.541613817214966
+        },
+        {
+          "timestamp": 1744623664.0404642,
+          "message_num": 5,
+          "transcript_part": "{'uid': 'ff54dbfc-fb3c-4f37-a589-13ff59d39e1b', 'segments': [{'start': '0.000', 'end': '6.000', 'text': ' Printing, in the only sense with which we are at present concerned,', 'completed': True}, {'start': '6.000', 'end': '10.000', 'text': ' differs from most, if not from all the arts and crafts', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"ff54dbfc-fb3c-4f37-a589-13ff59d39e1b\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.000\", \"text\": \" Printing, in the only sense with which we are at present concerned,\", \"completed\": true}, {\"start\": \"6.000\", \"end\": \"10.000\", \"text\": \" differs from most, if not from all the arts and crafts\", \"completed\": false}]}",
+          "latency": 4.3893043994903564
+        },
+        {
+          "timestamp": 1744623666.5307093,
+          "message_num": 6,
+          "transcript_part": "{'uid': 'ff54dbfc-fb3c-4f37-a589-13ff59d39e1b', 'segments': [{'start': '0.000', 'end': '6.000', 'text': ' Printing, in the only sense with which we are at present concerned,', 'completed': True}, {'start': '6.000', 'end': '13.120', 'text': ' differs from most if not from all the arts and crafts represented in the exhibition', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"ff54dbfc-fb3c-4f37-a589-13ff59d39e1b\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.000\", \"text\": \" Printing, in the only sense with which we are at present concerned,\", \"completed\": true}, {\"start\": \"6.000\", \"end\": \"13.120\", \"text\": \" differs from most if not from all the arts and crafts represented in the exhibition\", \"completed\": false}]}",
+          "latency": 6.879549503326416
+        },
+        {
+          "timestamp": 1744623667.6838877,
+          "message_num": 7,
+          "transcript_part": "{'uid': 'ff54dbfc-fb3c-4f37-a589-13ff59d39e1b', 'segments': [{'start': '0.000', 'end': '6.000', 'text': ' Printing, in the only sense with which we are at present concerned,', 'completed': True}, {'start': '6.000', 'end': '13.120', 'text': ' differs from most if not from all the arts and crafts represented in the exhibition', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"ff54dbfc-fb3c-4f37-a589-13ff59d39e1b\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.000\", \"text\": \" Printing, in the only sense with which we are at present concerned,\", \"completed\": true}, {\"start\": \"6.000\", \"end\": \"13.120\", \"text\": \" differs from most if not from all the arts and crafts represented in the exhibition\", \"completed\": false}]}",
+          "latency": 8.03272795677185
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.017172813415527344,
+        "max": 8.03272795677185,
+        "mean": 3.405280828475952,
+        "median": 2.541613817214966,
+        "p95": 8.03272795677185
+      },
+      "error": null
+    },
+    {
+      "client_id": 2,
+      "client_uid": "9194aecc-df8a-443f-8a88-8c27247ad368",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 9,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.451127767562866,
+      "connection_time": 0.015093326568603516,
+      "message_data": [
+        {
+          "timestamp": 1744623659.673807,
+          "message_num": 1,
+          "transcript_part": "{'uid': '9194aecc-df8a-443f-8a88-8c27247ad368', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"9194aecc-df8a-443f-8a88-8c27247ad368\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.02859187126159668
+        },
+        {
+          "timestamp": 1744623660.0281556,
+          "message_num": 2,
+          "transcript_part": "{'uid': '9194aecc-df8a-443f-8a88-8c27247ad368', 'segments': [{'start': '0.000', 'end': '1.000', 'text': ' Printing?', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"9194aecc-df8a-443f-8a88-8c27247ad368\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.000\", \"text\": \" Printing?\", \"completed\": false}]}",
+          "latency": 0.38294053077697754
+        },
+        {
+          "timestamp": 1744623660.6047094,
+          "message_num": 3,
+          "transcript_part": "{'uid': '9194aecc-df8a-443f-8a88-8c27247ad368', 'segments': [{'start': '0.000', 'end': '1.500', 'text': ' Printing in the', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"9194aecc-df8a-443f-8a88-8c27247ad368\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.500\", \"text\": \" Printing in the\", \"completed\": false}]}",
+          "latency": 0.9594943523406982
+        },
+        {
+          "timestamp": 1744623661.4779727,
+          "message_num": 4,
+          "transcript_part": "{'uid': '9194aecc-df8a-443f-8a88-8c27247ad368', 'segments': [{'start': '0.000', 'end': '4.000', 'text': ' Printing in the only sense with which we are at print.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"9194aecc-df8a-443f-8a88-8c27247ad368\", \"segments\": [{\"start\": \"0.000\", \"end\": \"4.000\", \"text\": \" Printing in the only sense with which we are at print.\", \"completed\": false}]}",
+          "latency": 1.8327577114105225
+        },
+        {
+          "timestamp": 1744623662.5999646,
+          "message_num": 5,
+          "transcript_part": "{'uid': '9194aecc-df8a-443f-8a88-8c27247ad368', 'segments': [{'start': '0.000', 'end': '7.120', 'text': ' Printing, in the only sense with which we are at present concerned, differs from', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"9194aecc-df8a-443f-8a88-8c27247ad368\", \"segments\": [{\"start\": \"0.000\", \"end\": \"7.120\", \"text\": \" Printing, in the only sense with which we are at present concerned, differs from\", \"completed\": false}]}",
+          "latency": 2.954749584197998
+        },
+        {
+          "timestamp": 1744623664.3712015,
+          "message_num": 6,
+          "transcript_part": "{'uid': '9194aecc-df8a-443f-8a88-8c27247ad368', 'segments': [{'start': '0.000', 'end': '3.280', 'text': ' Printing, in the only sense with which', 'completed': True}, {'start': '3.280', 'end': '6.120', 'text': ' we are at present concerned,', 'completed': True}, {'start': '6.120', 'end': '10.760', 'text': ' differs from most, if not from all the arts and crafts', 'completed': True}, {'start': '10.760', 'end': '11.776', 'text': ' represented in this book.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"9194aecc-df8a-443f-8a88-8c27247ad368\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.280\", \"text\": \" Printing, in the only sense with which\", \"completed\": true}, {\"start\": \"3.280\", \"end\": \"6.120\", \"text\": \" we are at present concerned,\", \"completed\": true}, {\"start\": \"6.120\", \"end\": \"10.760\", \"text\": \" differs from most, if not from all the arts and crafts\", \"completed\": true}, {\"start\": \"10.760\", \"end\": \"11.776\", \"text\": \" represented in this book.\", \"completed\": false}]}",
+          "latency": 4.725986480712891
+        },
+        {
+          "timestamp": 1744623665.6334722,
+          "message_num": 7,
+          "transcript_part": "{'uid': '9194aecc-df8a-443f-8a88-8c27247ad368', 'segments': [{'start': '0.000', 'end': '3.280', 'text': ' Printing, in the only sense with which', 'completed': True}, {'start': '3.280', 'end': '6.120', 'text': ' we are at present concerned,', 'completed': True}, {'start': '6.120', 'end': '10.760', 'text': ' differs from most, if not from all the arts and crafts', 'completed': True}, {'start': '10.760', 'end': '13.306', 'text': ' represented in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"9194aecc-df8a-443f-8a88-8c27247ad368\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.280\", \"text\": \" Printing, in the only sense with which\", \"completed\": true}, {\"start\": \"3.280\", \"end\": \"6.120\", \"text\": \" we are at present concerned,\", \"completed\": true}, {\"start\": \"6.120\", \"end\": \"10.760\", \"text\": \" differs from most, if not from all the arts and crafts\", \"completed\": true}, {\"start\": \"10.760\", \"end\": \"13.306\", \"text\": \" represented in the exhibition.\", \"completed\": false}]}",
+          "latency": 5.988257169723511
+        },
+        {
+          "timestamp": 1744623666.49011,
+          "message_num": 8,
+          "transcript_part": "{'uid': '9194aecc-df8a-443f-8a88-8c27247ad368', 'segments': [{'start': '0.000', 'end': '3.280', 'text': ' Printing, in the only sense with which', 'completed': True}, {'start': '3.280', 'end': '6.120', 'text': ' we are at present concerned,', 'completed': True}, {'start': '6.120', 'end': '10.760', 'text': ' differs from most, if not from all the arts and crafts', 'completed': True}, {'start': '10.760', 'end': '13.306', 'text': ' represented in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"9194aecc-df8a-443f-8a88-8c27247ad368\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.280\", \"text\": \" Printing, in the only sense with which\", \"completed\": true}, {\"start\": \"3.280\", \"end\": \"6.120\", \"text\": \" we are at present concerned,\", \"completed\": true}, {\"start\": \"6.120\", \"end\": \"10.760\", \"text\": \" differs from most, if not from all the arts and crafts\", \"completed\": true}, {\"start\": \"10.760\", \"end\": \"13.306\", \"text\": \" represented in the exhibition.\", \"completed\": false}]}",
+          "latency": 6.844894886016846
+        },
+        {
+          "timestamp": 1744623667.2931006,
+          "message_num": 9,
+          "transcript_part": "{'uid': '9194aecc-df8a-443f-8a88-8c27247ad368', 'segments': [{'start': '0.000', 'end': '3.280', 'text': ' Printing, in the only sense with which', 'completed': True}, {'start': '3.280', 'end': '6.120', 'text': ' we are at present concerned,', 'completed': True}, {'start': '6.120', 'end': '10.760', 'text': ' differs from most, if not from all the arts and crafts', 'completed': True}, {'start': '10.760', 'end': '13.306', 'text': ' represented in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"9194aecc-df8a-443f-8a88-8c27247ad368\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.280\", \"text\": \" Printing, in the only sense with which\", \"completed\": true}, {\"start\": \"3.280\", \"end\": \"6.120\", \"text\": \" we are at present concerned,\", \"completed\": true}, {\"start\": \"6.120\", \"end\": \"10.760\", \"text\": \" differs from most, if not from all the arts and crafts\", \"completed\": true}, {\"start\": \"10.760\", \"end\": \"13.306\", \"text\": \" represented in the exhibition.\", \"completed\": false}]}",
+          "latency": 7.64788556098938
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.02859187126159668,
+        "max": 7.64788556098938,
+        "mean": 3.485062016381158,
+        "median": 2.954749584197998,
+        "p95": 7.64788556098938
+      },
+      "error": null
+    },
+    {
+      "client_id": 3,
+      "client_uid": "2457fe0e-5333-445a-a74f-cfdd8a8a5daf",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 9,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.451505184173584,
+      "connection_time": 0.017269372940063477,
+      "message_data": [
+        {
+          "timestamp": 1744623659.6683853,
+          "message_num": 1,
+          "transcript_part": "{'uid': '2457fe0e-5333-445a-a74f-cfdd8a8a5daf', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"2457fe0e-5333-445a-a74f-cfdd8a8a5daf\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.019465923309326172
+        },
+        {
+          "timestamp": 1744623660.022639,
+          "message_num": 2,
+          "transcript_part": "{'uid': '2457fe0e-5333-445a-a74f-cfdd8a8a5daf', 'segments': [{'start': '0.000', 'end': '1.000', 'text': ' Printing?', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2457fe0e-5333-445a-a74f-cfdd8a8a5daf\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.000\", \"text\": \" Printing?\", \"completed\": false}]}",
+          "latency": 0.3737196922302246
+        },
+        {
+          "timestamp": 1744623660.59573,
+          "message_num": 3,
+          "transcript_part": "{'uid': '2457fe0e-5333-445a-a74f-cfdd8a8a5daf', 'segments': [{'start': '0.000', 'end': '1.500', 'text': ' Printing in the', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2457fe0e-5333-445a-a74f-cfdd8a8a5daf\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.500\", \"text\": \" Printing in the\", \"completed\": false}]}",
+          "latency": 0.9468107223510742
+        },
+        {
+          "timestamp": 1744623661.47138,
+          "message_num": 4,
+          "transcript_part": "{'uid': '2457fe0e-5333-445a-a74f-cfdd8a8a5daf', 'segments': [{'start': '0.000', 'end': '4.000', 'text': ' Printing in the only sense with which we are at print.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2457fe0e-5333-445a-a74f-cfdd8a8a5daf\", \"segments\": [{\"start\": \"0.000\", \"end\": \"4.000\", \"text\": \" Printing in the only sense with which we are at print.\", \"completed\": false}]}",
+          "latency": 1.822460651397705
+        },
+        {
+          "timestamp": 1744623662.595733,
+          "message_num": 5,
+          "transcript_part": "{'uid': '2457fe0e-5333-445a-a74f-cfdd8a8a5daf', 'segments': [{'start': '0.000', 'end': '7.120', 'text': ' Printing, in the only sense with which we are at present concerned, differs from', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2457fe0e-5333-445a-a74f-cfdd8a8a5daf\", \"segments\": [{\"start\": \"0.000\", \"end\": \"7.120\", \"text\": \" Printing, in the only sense with which we are at present concerned, differs from\", \"completed\": false}]}",
+          "latency": 2.9468135833740234
+        },
+        {
+          "timestamp": 1744623664.3772867,
+          "message_num": 6,
+          "transcript_part": "{'uid': '2457fe0e-5333-445a-a74f-cfdd8a8a5daf', 'segments': [{'start': '0.000', 'end': '3.280', 'text': ' Printing, in the only sense with which', 'completed': True}, {'start': '3.280', 'end': '6.120', 'text': ' we are at present concerned,', 'completed': True}, {'start': '6.120', 'end': '10.760', 'text': ' differs from most, if not from all the arts and crafts', 'completed': True}, {'start': '10.760', 'end': '11.776', 'text': ' represented in this book.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2457fe0e-5333-445a-a74f-cfdd8a8a5daf\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.280\", \"text\": \" Printing, in the only sense with which\", \"completed\": true}, {\"start\": \"3.280\", \"end\": \"6.120\", \"text\": \" we are at present concerned,\", \"completed\": true}, {\"start\": \"6.120\", \"end\": \"10.760\", \"text\": \" differs from most, if not from all the arts and crafts\", \"completed\": true}, {\"start\": \"10.760\", \"end\": \"11.776\", \"text\": \" represented in this book.\", \"completed\": false}]}",
+          "latency": 4.728367328643799
+        },
+        {
+          "timestamp": 1744623665.645116,
+          "message_num": 7,
+          "transcript_part": "{'uid': '2457fe0e-5333-445a-a74f-cfdd8a8a5daf', 'segments': [{'start': '0.000', 'end': '3.280', 'text': ' Printing, in the only sense with which', 'completed': True}, {'start': '3.280', 'end': '6.120', 'text': ' we are at present concerned,', 'completed': True}, {'start': '6.120', 'end': '10.760', 'text': ' differs from most, if not from all the arts and crafts', 'completed': True}, {'start': '10.760', 'end': '13.306', 'text': ' represented in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2457fe0e-5333-445a-a74f-cfdd8a8a5daf\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.280\", \"text\": \" Printing, in the only sense with which\", \"completed\": true}, {\"start\": \"3.280\", \"end\": \"6.120\", \"text\": \" we are at present concerned,\", \"completed\": true}, {\"start\": \"6.120\", \"end\": \"10.760\", \"text\": \" differs from most, if not from all the arts and crafts\", \"completed\": true}, {\"start\": \"10.760\", \"end\": \"13.306\", \"text\": \" represented in the exhibition.\", \"completed\": false}]}",
+          "latency": 5.996196746826172
+        },
+        {
+          "timestamp": 1744623666.4948838,
+          "message_num": 8,
+          "transcript_part": "{'uid': '2457fe0e-5333-445a-a74f-cfdd8a8a5daf', 'segments': [{'start': '0.000', 'end': '3.280', 'text': ' Printing, in the only sense with which', 'completed': True}, {'start': '3.280', 'end': '6.120', 'text': ' we are at present concerned,', 'completed': True}, {'start': '6.120', 'end': '10.760', 'text': ' differs from most, if not from all the arts and crafts', 'completed': True}, {'start': '10.760', 'end': '13.306', 'text': ' represented in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2457fe0e-5333-445a-a74f-cfdd8a8a5daf\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.280\", \"text\": \" Printing, in the only sense with which\", \"completed\": true}, {\"start\": \"3.280\", \"end\": \"6.120\", \"text\": \" we are at present concerned,\", \"completed\": true}, {\"start\": \"6.120\", \"end\": \"10.760\", \"text\": \" differs from most, if not from all the arts and crafts\", \"completed\": true}, {\"start\": \"10.760\", \"end\": \"13.306\", \"text\": \" represented in the exhibition.\", \"completed\": false}]}",
+          "latency": 6.845964431762695
+        },
+        {
+          "timestamp": 1744623667.2921898,
+          "message_num": 9,
+          "transcript_part": "{'uid': '2457fe0e-5333-445a-a74f-cfdd8a8a5daf', 'segments': [{'start': '0.000', 'end': '3.280', 'text': ' Printing, in the only sense with which', 'completed': True}, {'start': '3.280', 'end': '6.120', 'text': ' we are at present concerned,', 'completed': True}, {'start': '6.120', 'end': '10.760', 'text': ' differs from most, if not from all the arts and crafts', 'completed': True}, {'start': '10.760', 'end': '13.306', 'text': ' represented in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2457fe0e-5333-445a-a74f-cfdd8a8a5daf\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.280\", \"text\": \" Printing, in the only sense with which\", \"completed\": true}, {\"start\": \"3.280\", \"end\": \"6.120\", \"text\": \" we are at present concerned,\", \"completed\": true}, {\"start\": \"6.120\", \"end\": \"10.760\", \"text\": \" differs from most, if not from all the arts and crafts\", \"completed\": true}, {\"start\": \"10.760\", \"end\": \"13.306\", \"text\": \" represented in the exhibition.\", \"completed\": false}]}",
+          "latency": 7.643270492553711
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.019465923309326172,
+        "max": 7.643270492553711,
+        "mean": 3.4803410636054144,
+        "median": 2.9468135833740234,
+        "p95": 7.643270492553711
+      },
+      "error": null
+    },
+    {
+      "client_id": 4,
+      "client_uid": "83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 7,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.467881679534912,
+      "connection_time": 0.03120255470275879,
+      "message_data": [
+        {
+          "timestamp": 1744623659.7513897,
+          "message_num": 1,
+          "transcript_part": "{'uid': '83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.08729195594787598
+        },
+        {
+          "timestamp": 1744623660.3999763,
+          "message_num": 2,
+          "transcript_part": "{'uid': '83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c', 'segments': [{'start': '0.000', 'end': '1.000', 'text': ' Printing?', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.000\", \"text\": \" Printing?\", \"completed\": false}]}",
+          "latency": 0.7358784675598145
+        },
+        {
+          "timestamp": 1744623661.3386092,
+          "message_num": 3,
+          "transcript_part": "{'uid': '83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c', 'segments': [{'start': '0.000', 'end': '3.072', 'text': ' Printing in the only sense with which', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.072\", \"text\": \" Printing in the only sense with which\", \"completed\": false}]}",
+          "latency": 1.674511432647705
+        },
+        {
+          "timestamp": 1744623662.595789,
+          "message_num": 4,
+          "transcript_part": "{'uid': '83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c', 'segments': [{'start': '0.000', 'end': '6.640', 'text': ' Printing, in the only sense with which we are at present concerned, differs', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.640\", \"text\": \" Printing, in the only sense with which we are at present concerned, differs\", \"completed\": false}]}",
+          "latency": 2.9316911697387695
+        },
+        {
+          "timestamp": 1744623664.5927956,
+          "message_num": 5,
+          "transcript_part": "{'uid': '83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '11.264', 'text': ' if not from all, the arts and crafts represent.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"11.264\", \"text\": \" if not from all, the arts and crafts represent.\", \"completed\": false}]}",
+          "latency": 4.928697824478149
+        },
+        {
+          "timestamp": 1744623666.878807,
+          "message_num": 6,
+          "transcript_part": "{'uid': '83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '13.240', 'text': ' if not from all the arts and crafts represented in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"13.240\", \"text\": \" if not from all the arts and crafts represented in the exhibition.\", \"completed\": false}]}",
+          "latency": 7.214709281921387
+        },
+        {
+          "timestamp": 1744623667.9780695,
+          "message_num": 7,
+          "transcript_part": "{'uid': '83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '13.240', 'text': ' if not from all the arts and crafts represented in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"83f7ed2f-cc56-460c-9ffb-0ea3a8f5ce9c\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"13.240\", \"text\": \" if not from all the arts and crafts represented in the exhibition.\", \"completed\": false}]}",
+          "latency": 8.313971757888794
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.08729195594787598,
+        "max": 8.313971757888794,
+        "mean": 3.6981074128832137,
+        "median": 2.9316911697387695,
+        "p95": 8.313971757888794
+      },
+      "error": null
+    },
+    {
+      "client_id": 5,
+      "client_uid": "53b4258c-eca0-4d4d-a22e-1b3242e7f9a5",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 9,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.45598030090332,
+      "connection_time": 0.01923990249633789,
+      "message_data": [
+        {
+          "timestamp": 1744623659.7931755,
+          "message_num": 1,
+          "transcript_part": "{'uid': '53b4258c-eca0-4d4d-a22e-1b3242e7f9a5', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"53b4258c-eca0-4d4d-a22e-1b3242e7f9a5\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.1397838592529297
+        },
+        {
+          "timestamp": 1744623660.4011447,
+          "message_num": 2,
+          "transcript_part": "{'uid': '53b4258c-eca0-4d4d-a22e-1b3242e7f9a5', 'segments': [{'start': '0.000', 'end': '1.000', 'text': ' Printing?', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"53b4258c-eca0-4d4d-a22e-1b3242e7f9a5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.000\", \"text\": \" Printing?\", \"completed\": false}]}",
+          "latency": 0.7477531433105469
+        },
+        {
+          "timestamp": 1744623661.1320977,
+          "message_num": 3,
+          "transcript_part": "{'uid': '53b4258c-eca0-4d4d-a22e-1b3242e7f9a5', 'segments': [{'start': '0.000', 'end': '3.072', 'text': ' Printing in the only sense with which', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"53b4258c-eca0-4d4d-a22e-1b3242e7f9a5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.072\", \"text\": \" Printing in the only sense with which\", \"completed\": false}]}",
+          "latency": 1.4787061214447021
+        },
+        {
+          "timestamp": 1744623662.1884665,
+          "message_num": 4,
+          "transcript_part": "{'uid': '53b4258c-eca0-4d4d-a22e-1b3242e7f9a5', 'segments': [{'start': '0.000', 'end': '5.500', 'text': ' Printing in the only sense with which we are at present concerned.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"53b4258c-eca0-4d4d-a22e-1b3242e7f9a5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"5.500\", \"text\": \" Printing in the only sense with which we are at present concerned.\", \"completed\": false}]}",
+          "latency": 2.5350749492645264
+        },
+        {
+          "timestamp": 1744623663.6316671,
+          "message_num": 5,
+          "transcript_part": "{'uid': '53b4258c-eca0-4d4d-a22e-1b3242e7f9a5', 'segments': [{'start': '0.000', 'end': '6.000', 'text': ' Printing, in the only sense with which we are at present concerned,', 'completed': True}, {'start': '6.000', 'end': '10.000', 'text': ' differs from most, if not from all the arts and crafts', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"53b4258c-eca0-4d4d-a22e-1b3242e7f9a5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.000\", \"text\": \" Printing, in the only sense with which we are at present concerned,\", \"completed\": true}, {\"start\": \"6.000\", \"end\": \"10.000\", \"text\": \" differs from most, if not from all the arts and crafts\", \"completed\": false}]}",
+          "latency": 3.9782755374908447
+        },
+        {
+          "timestamp": 1744623665.4332898,
+          "message_num": 6,
+          "transcript_part": "{'uid': '53b4258c-eca0-4d4d-a22e-1b3242e7f9a5', 'segments': [{'start': '0.000', 'end': '6.000', 'text': ' Printing, in the only sense with which we are at present concerned,', 'completed': True}, {'start': '6.000', 'end': '13.120', 'text': ' differs from most if not from all the arts and crafts represented in the exhibition', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"53b4258c-eca0-4d4d-a22e-1b3242e7f9a5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.000\", \"text\": \" Printing, in the only sense with which we are at present concerned,\", \"completed\": true}, {\"start\": \"6.000\", \"end\": \"13.120\", \"text\": \" differs from most if not from all the arts and crafts represented in the exhibition\", \"completed\": false}]}",
+          "latency": 5.779898166656494
+        },
+        {
+          "timestamp": 1744623666.2868257,
+          "message_num": 7,
+          "transcript_part": "{'uid': '53b4258c-eca0-4d4d-a22e-1b3242e7f9a5', 'segments': [{'start': '0.000', 'end': '6.000', 'text': ' Printing, in the only sense with which we are at present concerned,', 'completed': True}, {'start': '6.000', 'end': '13.120', 'text': ' differs from most if not from all the arts and crafts represented in the exhibition', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"53b4258c-eca0-4d4d-a22e-1b3242e7f9a5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.000\", \"text\": \" Printing, in the only sense with which we are at present concerned,\", \"completed\": true}, {\"start\": \"6.000\", \"end\": \"13.120\", \"text\": \" differs from most if not from all the arts and crafts represented in the exhibition\", \"completed\": false}]}",
+          "latency": 6.633434057235718
+        },
+        {
+          "timestamp": 1744623667.065623,
+          "message_num": 8,
+          "transcript_part": "{'uid': '53b4258c-eca0-4d4d-a22e-1b3242e7f9a5', 'segments': [{'start': '0.000', 'end': '6.000', 'text': ' Printing, in the only sense with which we are at present concerned,', 'completed': True}, {'start': '6.000', 'end': '13.120', 'text': ' differs from most if not from all the arts and crafts represented in the exhibition', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"53b4258c-eca0-4d4d-a22e-1b3242e7f9a5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.000\", \"text\": \" Printing, in the only sense with which we are at present concerned,\", \"completed\": true}, {\"start\": \"6.000\", \"end\": \"13.120\", \"text\": \" differs from most if not from all the arts and crafts represented in the exhibition\", \"completed\": false}]}",
+          "latency": 7.4122314453125
+        },
+        {
+          "timestamp": 1744623667.8995926,
+          "message_num": 9,
+          "transcript_part": "{'uid': '53b4258c-eca0-4d4d-a22e-1b3242e7f9a5', 'segments': [{'start': '0.000', 'end': '6.000', 'text': ' Printing, in the only sense with which we are at present concerned,', 'completed': True}, {'start': '6.000', 'end': '13.120', 'text': ' differs from most if not from all the arts and crafts represented in the exhibition', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"53b4258c-eca0-4d4d-a22e-1b3242e7f9a5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.000\", \"text\": \" Printing, in the only sense with which we are at present concerned,\", \"completed\": true}, {\"start\": \"6.000\", \"end\": \"13.120\", \"text\": \" differs from most if not from all the arts and crafts represented in the exhibition\", \"completed\": false}]}",
+          "latency": 8.246201038360596
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.1397838592529297,
+        "max": 8.246201038360596,
+        "mean": 4.105706479814318,
+        "median": 3.9782755374908447,
+        "p95": 8.246201038360596
+      },
+      "error": null
+    },
+    {
+      "client_id": 6,
+      "client_uid": "2a6a1f91-60e4-4f35-ba03-e01a14f363d3",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 9,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.457739114761353,
+      "connection_time": 0.0201723575592041,
+      "message_data": [
+        {
+          "timestamp": 1744623659.7481487,
+          "message_num": 1,
+          "transcript_part": "{'uid': '2a6a1f91-60e4-4f35-ba03-e01a14f363d3', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"2a6a1f91-60e4-4f35-ba03-e01a14f363d3\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.0926053524017334
+        },
+        {
+          "timestamp": 1744623660.4001105,
+          "message_num": 2,
+          "transcript_part": "{'uid': '2a6a1f91-60e4-4f35-ba03-e01a14f363d3', 'segments': [{'start': '0.000', 'end': '1.000', 'text': ' Printing?', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2a6a1f91-60e4-4f35-ba03-e01a14f363d3\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.000\", \"text\": \" Printing?\", \"completed\": false}]}",
+          "latency": 0.7445671558380127
+        },
+        {
+          "timestamp": 1744623661.1320467,
+          "message_num": 3,
+          "transcript_part": "{'uid': '2a6a1f91-60e4-4f35-ba03-e01a14f363d3', 'segments': [{'start': '0.000', 'end': '3.072', 'text': ' Printing in the only sense with which', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2a6a1f91-60e4-4f35-ba03-e01a14f363d3\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.072\", \"text\": \" Printing in the only sense with which\", \"completed\": false}]}",
+          "latency": 1.4765033721923828
+        },
+        {
+          "timestamp": 1744623662.1928072,
+          "message_num": 4,
+          "transcript_part": "{'uid': '2a6a1f91-60e4-4f35-ba03-e01a14f363d3', 'segments': [{'start': '0.000', 'end': '5.500', 'text': ' Printing in the only sense with which we are at present concerned.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2a6a1f91-60e4-4f35-ba03-e01a14f363d3\", \"segments\": [{\"start\": \"0.000\", \"end\": \"5.500\", \"text\": \" Printing in the only sense with which we are at present concerned.\", \"completed\": false}]}",
+          "latency": 2.537263870239258
+        },
+        {
+          "timestamp": 1744623663.6813307,
+          "message_num": 5,
+          "transcript_part": "{'uid': '2a6a1f91-60e4-4f35-ba03-e01a14f363d3', 'segments': [{'start': '0.000', 'end': '6.000', 'text': ' Printing, in the only sense with which we are at present concerned,', 'completed': True}, {'start': '6.000', 'end': '10.000', 'text': ' differs from most, if not from all the arts and crafts', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2a6a1f91-60e4-4f35-ba03-e01a14f363d3\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.000\", \"text\": \" Printing, in the only sense with which we are at present concerned,\", \"completed\": true}, {\"start\": \"6.000\", \"end\": \"10.000\", \"text\": \" differs from most, if not from all the arts and crafts\", \"completed\": false}]}",
+          "latency": 4.025787353515625
+        },
+        {
+          "timestamp": 1744623665.4464703,
+          "message_num": 6,
+          "transcript_part": "{'uid': '2a6a1f91-60e4-4f35-ba03-e01a14f363d3', 'segments': [{'start': '0.000', 'end': '6.000', 'text': ' Printing, in the only sense with which we are at present concerned,', 'completed': True}, {'start': '6.000', 'end': '13.120', 'text': ' differs from most if not from all the arts and crafts represented in the exhibition', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2a6a1f91-60e4-4f35-ba03-e01a14f363d3\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.000\", \"text\": \" Printing, in the only sense with which we are at present concerned,\", \"completed\": true}, {\"start\": \"6.000\", \"end\": \"13.120\", \"text\": \" differs from most if not from all the arts and crafts represented in the exhibition\", \"completed\": false}]}",
+          "latency": 5.790926933288574
+        },
+        {
+          "timestamp": 1744623666.286163,
+          "message_num": 7,
+          "transcript_part": "{'uid': '2a6a1f91-60e4-4f35-ba03-e01a14f363d3', 'segments': [{'start': '0.000', 'end': '6.000', 'text': ' Printing, in the only sense with which we are at present concerned,', 'completed': True}, {'start': '6.000', 'end': '13.120', 'text': ' differs from most if not from all the arts and crafts represented in the exhibition', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2a6a1f91-60e4-4f35-ba03-e01a14f363d3\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.000\", \"text\": \" Printing, in the only sense with which we are at present concerned,\", \"completed\": true}, {\"start\": \"6.000\", \"end\": \"13.120\", \"text\": \" differs from most if not from all the arts and crafts represented in the exhibition\", \"completed\": false}]}",
+          "latency": 6.630619764328003
+        },
+        {
+          "timestamp": 1744623667.0643845,
+          "message_num": 8,
+          "transcript_part": "{'uid': '2a6a1f91-60e4-4f35-ba03-e01a14f363d3', 'segments': [{'start': '0.000', 'end': '6.000', 'text': ' Printing, in the only sense with which we are at present concerned,', 'completed': True}, {'start': '6.000', 'end': '13.120', 'text': ' differs from most if not from all the arts and crafts represented in the exhibition', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2a6a1f91-60e4-4f35-ba03-e01a14f363d3\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.000\", \"text\": \" Printing, in the only sense with which we are at present concerned,\", \"completed\": true}, {\"start\": \"6.000\", \"end\": \"13.120\", \"text\": \" differs from most if not from all the arts and crafts represented in the exhibition\", \"completed\": false}]}",
+          "latency": 7.408841133117676
+        },
+        {
+          "timestamp": 1744623667.904388,
+          "message_num": 9,
+          "transcript_part": "{'uid': '2a6a1f91-60e4-4f35-ba03-e01a14f363d3', 'segments': [{'start': '0.000', 'end': '6.000', 'text': ' Printing, in the only sense with which we are at present concerned,', 'completed': True}, {'start': '6.000', 'end': '13.120', 'text': ' differs from most if not from all the arts and crafts represented in the exhibition', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"2a6a1f91-60e4-4f35-ba03-e01a14f363d3\", \"segments\": [{\"start\": \"0.000\", \"end\": \"6.000\", \"text\": \" Printing, in the only sense with which we are at present concerned,\", \"completed\": true}, {\"start\": \"6.000\", \"end\": \"13.120\", \"text\": \" differs from most if not from all the arts and crafts represented in the exhibition\", \"completed\": false}]}",
+          "latency": 8.248844623565674
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.0926053524017334,
+        "max": 8.248844623565674,
+        "mean": 4.106217728720771,
+        "median": 4.025787353515625,
+        "p95": 8.248844623565674
+      },
+      "error": null
+    },
+    {
+      "client_id": 7,
+      "client_uid": "953f81b2-7c70-4d5c-98a0-8b127208f7e5",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 7,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.461595296859741,
+      "connection_time": 0.02106332778930664,
+      "message_data": [
+        {
+          "timestamp": 1744623659.8358424,
+          "message_num": 1,
+          "transcript_part": "{'uid': '953f81b2-7c70-4d5c-98a0-8b127208f7e5', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"953f81b2-7c70-4d5c-98a0-8b127208f7e5\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.17818856239318848
+        },
+        {
+          "timestamp": 1744623660.0249667,
+          "message_num": 2,
+          "transcript_part": "{'uid': '953f81b2-7c70-4d5c-98a0-8b127208f7e5', 'segments': [{'start': '0.000', 'end': '1.000', 'text': ' Printing?', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"953f81b2-7c70-4d5c-98a0-8b127208f7e5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.000\", \"text\": \" Printing?\", \"completed\": false}]}",
+          "latency": 0.3673129081726074
+        },
+        {
+          "timestamp": 1744623660.7955556,
+          "message_num": 3,
+          "transcript_part": "{'uid': '953f81b2-7c70-4d5c-98a0-8b127208f7e5', 'segments': [{'start': '0.000', 'end': '1.500', 'text': ' Printing in the', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"953f81b2-7c70-4d5c-98a0-8b127208f7e5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.500\", \"text\": \" Printing in the\", \"completed\": false}]}",
+          "latency": 1.137901782989502
+        },
+        {
+          "timestamp": 1744623661.8454697,
+          "message_num": 4,
+          "transcript_part": "{'uid': '953f81b2-7c70-4d5c-98a0-8b127208f7e5', 'segments': [{'start': '0.000', 'end': '4.500', 'text': ' Printing in the only sense with which we are at present', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"953f81b2-7c70-4d5c-98a0-8b127208f7e5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"4.500\", \"text\": \" Printing in the only sense with which we are at present\", \"completed\": false}]}",
+          "latency": 2.1878159046173096
+        },
+        {
+          "timestamp": 1744623663.4723594,
+          "message_num": 5,
+          "transcript_part": "{'uid': '953f81b2-7c70-4d5c-98a0-8b127208f7e5', 'segments': [{'start': '0.000', 'end': '8.640', 'text': ' Printing, in the only sense with which we are at present concerned, differs from most if not from', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"953f81b2-7c70-4d5c-98a0-8b127208f7e5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"8.640\", \"text\": \" Printing, in the only sense with which we are at present concerned, differs from most if not from\", \"completed\": false}]}",
+          "latency": 3.8147056102752686
+        },
+        {
+          "timestamp": 1744623666.0908234,
+          "message_num": 6,
+          "transcript_part": "{'uid': '953f81b2-7c70-4d5c-98a0-8b127208f7e5', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '11.760', 'text': ' if not from all the arts and crafts represented', 'completed': True}, {'start': '11.760', 'end': '13.306', 'text': ' in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"953f81b2-7c70-4d5c-98a0-8b127208f7e5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"11.760\", \"text\": \" if not from all the arts and crafts represented\", \"completed\": true}, {\"start\": \"11.760\", \"end\": \"13.306\", \"text\": \" in the exhibition.\", \"completed\": false}]}",
+          "latency": 6.433169603347778
+        },
+        {
+          "timestamp": 1744623667.2956457,
+          "message_num": 7,
+          "transcript_part": "{'uid': '953f81b2-7c70-4d5c-98a0-8b127208f7e5', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '11.760', 'text': ' if not from all the arts and crafts represented', 'completed': True}, {'start': '11.760', 'end': '13.306', 'text': ' in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"953f81b2-7c70-4d5c-98a0-8b127208f7e5\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"11.760\", \"text\": \" if not from all the arts and crafts represented\", \"completed\": true}, {\"start\": \"11.760\", \"end\": \"13.306\", \"text\": \" in the exhibition.\", \"completed\": false}]}",
+          "latency": 7.637991905212402
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.17818856239318848,
+        "max": 7.637991905212402,
+        "mean": 3.1081551824297224,
+        "median": 2.1878159046173096,
+        "p95": 7.637991905212402
+      },
+      "error": null
+    },
+    {
+      "client_id": 8,
+      "client_uid": "8f9f2359-ecb0-44fe-8939-4fed6f255b31",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 9,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.465240240097046,
+      "connection_time": 0.02397775650024414,
+      "message_data": [
+        {
+          "timestamp": 1744623659.7614787,
+          "message_num": 1,
+          "transcript_part": "{'uid': '8f9f2359-ecb0-44fe-8939-4fed6f255b31', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"8f9f2359-ecb0-44fe-8939-4fed6f255b31\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.0996086597442627
+        },
+        {
+          "timestamp": 1744623660.2157037,
+          "message_num": 2,
+          "transcript_part": "{'uid': '8f9f2359-ecb0-44fe-8939-4fed6f255b31', 'segments': [{'start': '0.000', 'end': '1.000', 'text': ' Printing?', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"8f9f2359-ecb0-44fe-8939-4fed6f255b31\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.000\", \"text\": \" Printing?\", \"completed\": false}]}",
+          "latency": 0.5538337230682373
+        },
+        {
+          "timestamp": 1744623660.8658192,
+          "message_num": 3,
+          "transcript_part": "{'uid': '8f9f2359-ecb0-44fe-8939-4fed6f255b31', 'segments': [{'start': '0.000', 'end': '2.560', 'text': ' Printing in the only sense', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"8f9f2359-ecb0-44fe-8939-4fed6f255b31\", \"segments\": [{\"start\": \"0.000\", \"end\": \"2.560\", \"text\": \" Printing in the only sense\", \"completed\": false}]}",
+          "latency": 1.203949213027954
+        },
+        {
+          "timestamp": 1744623661.815878,
+          "message_num": 4,
+          "transcript_part": "{'uid': '8f9f2359-ecb0-44fe-8939-4fed6f255b31', 'segments': [{'start': '0.000', 'end': '4.500', 'text': ' Printing in the only sense with which we are at present', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"8f9f2359-ecb0-44fe-8939-4fed6f255b31\", \"segments\": [{\"start\": \"0.000\", \"end\": \"4.500\", \"text\": \" Printing in the only sense with which we are at present\", \"completed\": false}]}",
+          "latency": 2.154007911682129
+        },
+        {
+          "timestamp": 1744623663.054049,
+          "message_num": 5,
+          "transcript_part": "{'uid': '8f9f2359-ecb0-44fe-8939-4fed6f255b31', 'segments': [{'start': '0.000', 'end': '8.640', 'text': ' Printing, in the only sense with which we are at present concerned, differs from most if not from', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"8f9f2359-ecb0-44fe-8939-4fed6f255b31\", \"segments\": [{\"start\": \"0.000\", \"end\": \"8.640\", \"text\": \" Printing, in the only sense with which we are at present concerned, differs from most if not from\", \"completed\": false}]}",
+          "latency": 3.392179012298584
+        },
+        {
+          "timestamp": 1744623665.070076,
+          "message_num": 6,
+          "transcript_part": "{'uid': '8f9f2359-ecb0-44fe-8939-4fed6f255b31', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '11.760', 'text': ' if not from all the arts and crafts represented', 'completed': True}, {'start': '11.760', 'end': '13.306', 'text': ' in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"8f9f2359-ecb0-44fe-8939-4fed6f255b31\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"11.760\", \"text\": \" if not from all the arts and crafts represented\", \"completed\": true}, {\"start\": \"11.760\", \"end\": \"13.306\", \"text\": \" in the exhibition.\", \"completed\": false}]}",
+          "latency": 5.408205986022949
+        },
+        {
+          "timestamp": 1744623665.900005,
+          "message_num": 7,
+          "transcript_part": "{'uid': '8f9f2359-ecb0-44fe-8939-4fed6f255b31', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '11.760', 'text': ' if not from all the arts and crafts represented', 'completed': True}, {'start': '11.760', 'end': '13.306', 'text': ' in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"8f9f2359-ecb0-44fe-8939-4fed6f255b31\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"11.760\", \"text\": \" if not from all the arts and crafts represented\", \"completed\": true}, {\"start\": \"11.760\", \"end\": \"13.306\", \"text\": \" in the exhibition.\", \"completed\": false}]}",
+          "latency": 6.238135099411011
+        },
+        {
+          "timestamp": 1744623666.656714,
+          "message_num": 8,
+          "transcript_part": "{'uid': '8f9f2359-ecb0-44fe-8939-4fed6f255b31', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '11.760', 'text': ' if not from all the arts and crafts represented', 'completed': True}, {'start': '11.760', 'end': '13.306', 'text': ' in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"8f9f2359-ecb0-44fe-8939-4fed6f255b31\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"11.760\", \"text\": \" if not from all the arts and crafts represented\", \"completed\": true}, {\"start\": \"11.760\", \"end\": \"13.306\", \"text\": \" in the exhibition.\", \"completed\": false}]}",
+          "latency": 6.99484395980835
+        },
+        {
+          "timestamp": 1744623667.4973722,
+          "message_num": 9,
+          "transcript_part": "{'uid': '8f9f2359-ecb0-44fe-8939-4fed6f255b31', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '11.760', 'text': ' if not from all the arts and crafts represented', 'completed': True}, {'start': '11.760', 'end': '13.306', 'text': ' in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"8f9f2359-ecb0-44fe-8939-4fed6f255b31\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"11.760\", \"text\": \" if not from all the arts and crafts represented\", \"completed\": true}, {\"start\": \"11.760\", \"end\": \"13.306\", \"text\": \" in the exhibition.\", \"completed\": false}]}",
+          "latency": 7.8355021476745605
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.0996086597442627,
+        "max": 7.8355021476745605,
+        "mean": 3.764473968082004,
+        "median": 3.392179012298584,
+        "p95": 7.8355021476745605
+      },
+      "error": null
+    },
+    {
+      "client_id": 9,
+      "client_uid": "84dc7dac-94c0-4981-a9cf-8cede62a85ad",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 9,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.463419198989868,
+      "connection_time": 0.020665645599365234,
+      "message_data": [
+        {
+          "timestamp": 1744623659.7327049,
+          "message_num": 1,
+          "transcript_part": "{'uid': '84dc7dac-94c0-4981-a9cf-8cede62a85ad', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"84dc7dac-94c0-4981-a9cf-8cede62a85ad\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.07294631004333496
+        },
+        {
+          "timestamp": 1744623660.2156203,
+          "message_num": 2,
+          "transcript_part": "{'uid': '84dc7dac-94c0-4981-a9cf-8cede62a85ad', 'segments': [{'start': '0.000', 'end': '1.000', 'text': ' Printing?', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"84dc7dac-94c0-4981-a9cf-8cede62a85ad\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.000\", \"text\": \" Printing?\", \"completed\": false}]}",
+          "latency": 0.5558617115020752
+        },
+        {
+          "timestamp": 1744623660.865779,
+          "message_num": 3,
+          "transcript_part": "{'uid': '84dc7dac-94c0-4981-a9cf-8cede62a85ad', 'segments': [{'start': '0.000', 'end': '2.560', 'text': ' Printing in the only sense', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"84dc7dac-94c0-4981-a9cf-8cede62a85ad\", \"segments\": [{\"start\": \"0.000\", \"end\": \"2.560\", \"text\": \" Printing in the only sense\", \"completed\": false}]}",
+          "latency": 1.2060203552246094
+        },
+        {
+          "timestamp": 1744623661.813726,
+          "message_num": 4,
+          "transcript_part": "{'uid': '84dc7dac-94c0-4981-a9cf-8cede62a85ad', 'segments': [{'start': '0.000', 'end': '4.500', 'text': ' Printing in the only sense with which we are at present', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"84dc7dac-94c0-4981-a9cf-8cede62a85ad\", \"segments\": [{\"start\": \"0.000\", \"end\": \"4.500\", \"text\": \" Printing in the only sense with which we are at present\", \"completed\": false}]}",
+          "latency": 2.1539673805236816
+        },
+        {
+          "timestamp": 1744623663.0904748,
+          "message_num": 5,
+          "transcript_part": "{'uid': '84dc7dac-94c0-4981-a9cf-8cede62a85ad', 'segments': [{'start': '0.000', 'end': '8.640', 'text': ' Printing, in the only sense with which we are at present concerned, differs from most if not from', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"84dc7dac-94c0-4981-a9cf-8cede62a85ad\", \"segments\": [{\"start\": \"0.000\", \"end\": \"8.640\", \"text\": \" Printing, in the only sense with which we are at present concerned, differs from most if not from\", \"completed\": false}]}",
+          "latency": 3.4307162761688232
+        },
+        {
+          "timestamp": 1744623665.08903,
+          "message_num": 6,
+          "transcript_part": "{'uid': '84dc7dac-94c0-4981-a9cf-8cede62a85ad', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '11.760', 'text': ' if not from all the arts and crafts represented', 'completed': True}, {'start': '11.760', 'end': '13.306', 'text': ' in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"84dc7dac-94c0-4981-a9cf-8cede62a85ad\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"11.760\", \"text\": \" if not from all the arts and crafts represented\", \"completed\": true}, {\"start\": \"11.760\", \"end\": \"13.306\", \"text\": \" in the exhibition.\", \"completed\": false}]}",
+          "latency": 5.429271459579468
+        },
+        {
+          "timestamp": 1744623665.9152908,
+          "message_num": 7,
+          "transcript_part": "{'uid': '84dc7dac-94c0-4981-a9cf-8cede62a85ad', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '11.760', 'text': ' if not from all the arts and crafts represented', 'completed': True}, {'start': '11.760', 'end': '13.306', 'text': ' in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"84dc7dac-94c0-4981-a9cf-8cede62a85ad\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"11.760\", \"text\": \" if not from all the arts and crafts represented\", \"completed\": true}, {\"start\": \"11.760\", \"end\": \"13.306\", \"text\": \" in the exhibition.\", \"completed\": false}]}",
+          "latency": 6.255532264709473
+        },
+        {
+          "timestamp": 1744623666.656183,
+          "message_num": 8,
+          "transcript_part": "{'uid': '84dc7dac-94c0-4981-a9cf-8cede62a85ad', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '11.760', 'text': ' if not from all the arts and crafts represented', 'completed': True}, {'start': '11.760', 'end': '13.306', 'text': ' in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"84dc7dac-94c0-4981-a9cf-8cede62a85ad\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"11.760\", \"text\": \" if not from all the arts and crafts represented\", \"completed\": true}, {\"start\": \"11.760\", \"end\": \"13.306\", \"text\": \" in the exhibition.\", \"completed\": false}]}",
+          "latency": 6.996424436569214
+        },
+        {
+          "timestamp": 1744623667.497219,
+          "message_num": 9,
+          "transcript_part": "{'uid': '84dc7dac-94c0-4981-a9cf-8cede62a85ad', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '11.760', 'text': ' if not from all the arts and crafts represented', 'completed': True}, {'start': '11.760', 'end': '13.306', 'text': ' in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"84dc7dac-94c0-4981-a9cf-8cede62a85ad\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"11.760\", \"text\": \" if not from all the arts and crafts represented\", \"completed\": true}, {\"start\": \"11.760\", \"end\": \"13.306\", \"text\": \" in the exhibition.\", \"completed\": false}]}",
+          "latency": 7.837460517883301
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.07294631004333496,
+        "max": 7.837460517883301,
+        "mean": 3.7709111902448864,
+        "median": 3.4307162761688232,
+        "p95": 7.837460517883301
+      },
+      "error": null
+    },
+    {
+      "client_id": 10,
+      "client_uid": "11062b17-859e-45dc-9cfa-53beb958132f",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 6,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.47062063217163,
+      "connection_time": 0.02594304084777832,
+      "message_data": [
+        {
+          "timestamp": 1744623659.756619,
+          "message_num": 1,
+          "transcript_part": "{'uid': '11062b17-859e-45dc-9cfa-53beb958132f', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"11062b17-859e-45dc-9cfa-53beb958132f\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.09037613868713379
+        },
+        {
+          "timestamp": 1744623660.5911322,
+          "message_num": 2,
+          "transcript_part": "{'uid': '11062b17-859e-45dc-9cfa-53beb958132f', 'segments': [{'start': '0.000', 'end': '1.000', 'text': ' Printing?', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"11062b17-859e-45dc-9cfa-53beb958132f\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.000\", \"text\": \" Printing?\", \"completed\": false}]}",
+          "latency": 0.924889326095581
+        },
+        {
+          "timestamp": 1744623661.590697,
+          "message_num": 3,
+          "transcript_part": "{'uid': '11062b17-859e-45dc-9cfa-53beb958132f', 'segments': [{'start': '0.000', 'end': '3.584', 'text': ' Printing in the only sense with which we are', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"11062b17-859e-45dc-9cfa-53beb958132f\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.584\", \"text\": \" Printing in the only sense with which we are\", \"completed\": false}]}",
+          "latency": 1.9244542121887207
+        },
+        {
+          "timestamp": 1744623663.0121639,
+          "message_num": 4,
+          "transcript_part": "{'uid': '11062b17-859e-45dc-9cfa-53beb958132f', 'segments': [{'start': '0.000', 'end': '7.680', 'text': ' Printing, in the only sense with which we are at present concerned, differs from most', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"11062b17-859e-45dc-9cfa-53beb958132f\", \"segments\": [{\"start\": \"0.000\", \"end\": \"7.680\", \"text\": \" Printing, in the only sense with which we are at present concerned, differs from most\", \"completed\": false}]}",
+          "latency": 3.345921039581299
+        },
+        {
+          "timestamp": 1744623665.2944489,
+          "message_num": 5,
+          "transcript_part": "{'uid': '11062b17-859e-45dc-9cfa-53beb958132f', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '11.760', 'text': ' if not from all the arts and crafts represented', 'completed': True}, {'start': '11.760', 'end': '13.306', 'text': ' in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"11062b17-859e-45dc-9cfa-53beb958132f\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"11.760\", \"text\": \" if not from all the arts and crafts represented\", \"completed\": true}, {\"start\": \"11.760\", \"end\": \"13.306\", \"text\": \" in the exhibition.\", \"completed\": false}]}",
+          "latency": 5.628206014633179
+        },
+        {
+          "timestamp": 1744623667.1618304,
+          "message_num": 6,
+          "transcript_part": "{'uid': '11062b17-859e-45dc-9cfa-53beb958132f', 'segments': [{'start': '0.000', 'end': '3.800', 'text': ' Printing, in the only sense with which we are', 'completed': True}, {'start': '3.800', 'end': '7.840', 'text': ' at present concerned, differs from most,', 'completed': True}, {'start': '7.840', 'end': '11.760', 'text': ' if not from all the arts and crafts represented', 'completed': True}, {'start': '11.760', 'end': '13.306', 'text': ' in the exhibition.', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"11062b17-859e-45dc-9cfa-53beb958132f\", \"segments\": [{\"start\": \"0.000\", \"end\": \"3.800\", \"text\": \" Printing, in the only sense with which we are\", \"completed\": true}, {\"start\": \"3.800\", \"end\": \"7.840\", \"text\": \" at present concerned, differs from most,\", \"completed\": true}, {\"start\": \"7.840\", \"end\": \"11.760\", \"text\": \" if not from all the arts and crafts represented\", \"completed\": true}, {\"start\": \"11.760\", \"end\": \"13.306\", \"text\": \" in the exhibition.\", \"completed\": false}]}",
+          "latency": 7.495587587356567
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.09037613868713379,
+        "max": 7.495587587356567,
+        "mean": 3.23490571975708,
+        "median": 2.6351876258850098,
+        "p95": 7.495587587356567
+      },
+      "error": null
+    }
+  ],
+  "summary": {
+    "total_duration": 8.527793407440186,
+    "target_clients": 10,
+    "successful_clients": 10,
+    "failed_clients": 0,
+    "total_messages": 81,
+    "avg_audio_duration": 13.305812499999998,
+    "avg_processing_time": 8.459839344024658,
+    "latency": {
+      "min": 3.1081551824297224,
+      "max": 4.106217728720771,
+      "mean": 3.615916159039452,
+      "median": 3.5915847146321855
+    }
+  }
+}

@@ -1,0 +1,1721 @@
+{
+  "test_id": "6843c3c8-ade9-4e72-99ee-248320215945",
+  "timestamp": "2025-04-14T09:50:01.659942",
+  "test_config": {
+    "num_clients": 60,
+    "server_url": "ws://load-balancer:80",
+    "audio_dir": "/app/test_audio"
+  },
+  "client_results": [
+    {
+      "client_id": 1,
+      "client_uid": "bb46f4a8-4167-436d-a8a2-a862a6359084",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 2,
+      "audio_duration": 13.3058125,
+      "processing_time": 11.282422542572021,
+      "connection_time": 0.13062715530395508,
+      "message_data": [
+        {
+          "timestamp": 1744624201.8617537,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'bb46f4a8-4167-436d-a8a2-a862a6359084', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"bb46f4a8-4167-436d-a8a2-a862a6359084\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.06919527053833008
+        },
+        {
+          "timestamp": 1744624207.1757207,
+          "message_num": 2,
+          "transcript_part": "{'uid': 'bb46f4a8-4167-436d-a8a2-a862a6359084', 'segments': [{'start': '0.000', 'end': '1.000', 'text': ' Printing?', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"bb46f4a8-4167-436d-a8a2-a862a6359084\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.000\", \"text\": \" Printing?\", \"completed\": false}]}",
+          "latency": 5.383162260055542
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.06919527053833008,
+        "max": 5.383162260055542,
+        "mean": 2.726178765296936,
+        "median": 2.726178765296936,
+        "p95": 5.383162260055542
+      },
+      "error": null
+    },
+    {
+      "client_id": 2,
+      "client_uid": "5d2a8c0f-f583-492c-ab93-be9b2445f61d",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 2,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.60037350654602,
+      "connection_time": 0.10929679870605469,
+      "message_data": [
+        {
+          "timestamp": 1744624201.919829,
+          "message_num": 1,
+          "transcript_part": "{'uid': '5d2a8c0f-f583-492c-ab93-be9b2445f61d', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"5d2a8c0f-f583-492c-ab93-be9b2445f61d\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.129486083984375
+        },
+        {
+          "timestamp": 1744624208.2933886,
+          "message_num": 2,
+          "transcript_part": "{'uid': '5d2a8c0f-f583-492c-ab93-be9b2445f61d', 'segments': [{'start': '0.000', 'end': '1.000', 'text': ' Printing?', 'completed': False}]}",
+          "raw_message": "{\"uid\": \"5d2a8c0f-f583-492c-ab93-be9b2445f61d\", \"segments\": [{\"start\": \"0.000\", \"end\": \"1.000\", \"text\": \" Printing?\", \"completed\": false}]}",
+          "latency": 6.5030457973480225
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.129486083984375,
+        "max": 6.5030457973480225,
+        "mean": 3.3162659406661987,
+        "median": 3.3162659406661987,
+        "p95": 6.5030457973480225
+      },
+      "error": null
+    },
+    {
+      "client_id": 3,
+      "client_uid": "fa80a26e-d70c-4a08-913f-ef43cb54b04b",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.833280324935913,
+      "connection_time": 0.11201715469360352,
+      "message_data": [
+        {
+          "timestamp": 1744624201.9200058,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'fa80a26e-d70c-4a08-913f-ef43cb54b04b', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"fa80a26e-d70c-4a08-913f-ef43cb54b04b\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.1253044605255127
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.1253044605255127,
+        "max": 0.1253044605255127,
+        "mean": 0.1253044605255127,
+        "median": 0.1253044605255127,
+        "p95": 0.1253044605255127
+      },
+      "error": null
+    },
+    {
+      "client_id": 4,
+      "client_uid": "e06be179-2096-4cf0-b0fd-02bd238f3849",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.33894968032837,
+      "connection_time": 0.12051868438720703,
+      "message_data": [
+        {
+          "timestamp": 1744624201.8984468,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'e06be179-2096-4cf0-b0fd-02bd238f3849', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"e06be179-2096-4cf0-b0fd-02bd238f3849\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.09384799003601074
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.09384799003601074,
+        "max": 0.09384799003601074,
+        "mean": 0.09384799003601074,
+        "median": 0.09384799003601074,
+        "p95": 0.09384799003601074
+      },
+      "error": null
+    },
+    {
+      "client_id": 5,
+      "client_uid": "bbb91683-30fa-4181-8e42-45ff224b244f",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 9.279378175735474,
+      "connection_time": 0.11147642135620117,
+      "message_data": [
+        {
+          "timestamp": 1744624202.0648463,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'bbb91683-30fa-4181-8e42-45ff224b244f', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"bbb91683-30fa-4181-8e42-45ff224b244f\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.2680039405822754
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.2680039405822754,
+        "max": 0.2680039405822754,
+        "mean": 0.2680039405822754,
+        "median": 0.2680039405822754,
+        "p95": 0.2680039405822754
+      },
+      "error": null
+    },
+    {
+      "client_id": 6,
+      "client_uid": "8662d81c-b5b8-42f1-b039-bb81fc5e50d1",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.967698574066162,
+      "connection_time": 0.11234450340270996,
+      "message_data": [
+        {
+          "timestamp": 1744624202.0238788,
+          "message_num": 1,
+          "transcript_part": "{'uid': '8662d81c-b5b8-42f1-b039-bb81fc5e50d1', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"8662d81c-b5b8-42f1-b039-bb81fc5e50d1\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.22486400604248047
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.22486400604248047,
+        "max": 0.22486400604248047,
+        "mean": 0.22486400604248047,
+        "median": 0.22486400604248047,
+        "p95": 0.22486400604248047
+      },
+      "error": null
+    },
+    {
+      "client_id": 7,
+      "client_uid": "1f56f85d-f55e-4403-919b-b204321a8014",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.262982606887817,
+      "connection_time": 0.11935687065124512,
+      "message_data": [
+        {
+          "timestamp": 1744624202.1326118,
+          "message_num": 1,
+          "transcript_part": "{'uid': '1f56f85d-f55e-4403-919b-b204321a8014', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"1f56f85d-f55e-4403-919b-b204321a8014\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.32528042793273926
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.32528042793273926,
+        "max": 0.32528042793273926,
+        "mean": 0.32528042793273926,
+        "median": 0.32528042793273926,
+        "p95": 0.32528042793273926
+      },
+      "error": null
+    },
+    {
+      "client_id": 8,
+      "client_uid": "c3260955-8b69-4b9f-bc97-f54244d9f8c9",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 9.614638566970825,
+      "connection_time": 0.11209464073181152,
+      "message_data": [
+        {
+          "timestamp": 1744624202.1848795,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'c3260955-8b69-4b9f-bc97-f54244d9f8c9', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"c3260955-8b69-4b9f-bc97-f54244d9f8c9\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.3835599422454834
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.3835599422454834,
+        "max": 0.3835599422454834,
+        "mean": 0.3835599422454834,
+        "median": 0.3835599422454834,
+        "p95": 0.3835599422454834
+      },
+      "error": null
+    },
+    {
+      "client_id": 9,
+      "client_uid": "0cdaabe0-6a70-4bba-8b46-0a19a08f9fbf",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.956481456756592,
+      "connection_time": 0.11905384063720703,
+      "message_data": [
+        {
+          "timestamp": 1744624202.3192732,
+          "message_num": 1,
+          "transcript_part": "{'uid': '0cdaabe0-6a70-4bba-8b46-0a19a08f9fbf', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"0cdaabe0-6a70-4bba-8b46-0a19a08f9fbf\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.5096805095672607
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.5096805095672607,
+        "max": 0.5096805095672607,
+        "mean": 0.5096805095672607,
+        "median": 0.5096805095672607,
+        "p95": 0.5096805095672607
+      },
+      "error": null
+    },
+    {
+      "client_id": 10,
+      "client_uid": "8a796a78-9a54-4817-974b-fe9c01b0a60b",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.25821304321289,
+      "connection_time": 0.11993837356567383,
+      "message_data": [
+        {
+          "timestamp": 1744624202.370378,
+          "message_num": 1,
+          "transcript_part": "{'uid': '8a796a78-9a54-4817-974b-fe9c01b0a60b', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"8a796a78-9a54-4817-974b-fe9c01b0a60b\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.5586018562316895
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.5586018562316895,
+        "max": 0.5586018562316895,
+        "mean": 0.5586018562316895,
+        "median": 0.5586018562316895,
+        "p95": 0.5586018562316895
+      },
+      "error": null
+    },
+    {
+      "client_id": 11,
+      "client_uid": "a2785c62-670e-441d-883f-7766801dbe56",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 9.612499475479126,
+      "connection_time": 0.12085938453674316,
+      "message_data": [
+        {
+          "timestamp": 1744624202.3966873,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'a2785c62-670e-441d-883f-7766801dbe56', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"a2785c62-670e-441d-883f-7766801dbe56\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.5827279090881348
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.5827279090881348,
+        "max": 0.5827279090881348,
+        "mean": 0.5827279090881348,
+        "median": 0.5827279090881348,
+        "p95": 0.5827279090881348
+      },
+      "error": null
+    },
+    {
+      "client_id": 12,
+      "client_uid": "fa0c5c20-90a3-4feb-8c47-89fb93f60ae3",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.922989845275879,
+      "connection_time": 0.12167716026306152,
+      "message_data": [
+        {
+          "timestamp": 1744624202.6544926,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'fa0c5c20-90a3-4feb-8c47-89fb93f60ae3', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"fa0c5c20-90a3-4feb-8c47-89fb93f60ae3\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.8383574485778809
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.8383574485778809,
+        "max": 0.8383574485778809,
+        "mean": 0.8383574485778809,
+        "median": 0.8383574485778809,
+        "p95": 0.8383574485778809
+      },
+      "error": null
+    },
+    {
+      "client_id": 13,
+      "client_uid": "721b02de-45ca-40d5-a207-f6b8f04e7f90",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.275207042694092,
+      "connection_time": 0.12679028511047363,
+      "message_data": [
+        {
+          "timestamp": 1744624202.6262748,
+          "message_num": 1,
+          "transcript_part": "{'uid': '721b02de-45ca-40d5-a207-f6b8f04e7f90', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"721b02de-45ca-40d5-a207-f6b8f04e7f90\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.8037724494934082
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.8037724494934082,
+        "max": 0.8037724494934082,
+        "mean": 0.8037724494934082,
+        "median": 0.8037724494934082,
+        "p95": 0.8037724494934082
+      },
+      "error": null
+    },
+    {
+      "client_id": 14,
+      "client_uid": "3e5eff84-db80-4a41-ac79-e56bb6e236fd",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.566922664642334,
+      "connection_time": 0.12126541137695312,
+      "message_data": [
+        {
+          "timestamp": 1744624202.4012516,
+          "message_num": 1,
+          "transcript_part": "{'uid': '3e5eff84-db80-4a41-ac79-e56bb6e236fd', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"3e5eff84-db80-4a41-ac79-e56bb6e236fd\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.5829775333404541
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.5829775333404541,
+        "max": 0.5829775333404541,
+        "mean": 0.5829775333404541,
+        "median": 0.5829775333404541,
+        "p95": 0.5829775333404541
+      },
+      "error": null
+    },
+    {
+      "client_id": 15,
+      "client_uid": "a8b0e8e7-76ed-429c-ae82-4359e0064563",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.912238359451294,
+      "connection_time": 0.13476109504699707,
+      "message_data": [
+        {
+          "timestamp": 1744624202.7870755,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'a8b0e8e7-76ed-429c-ae82-4359e0064563', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"a8b0e8e7-76ed-429c-ae82-4359e0064563\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.9539783000946045
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.9539783000946045,
+        "max": 0.9539783000946045,
+        "mean": 0.9539783000946045,
+        "median": 0.9539783000946045,
+        "p95": 0.9539783000946045
+      },
+      "error": null
+    },
+    {
+      "client_id": 16,
+      "client_uid": "e28dd645-423f-4d09-b355-d07c19a9e1af",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 12.966495990753174,
+      "connection_time": 0.12930703163146973,
+      "message_data": [
+        {
+          "timestamp": 1744624203.7873912,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'e28dd645-423f-4d09-b355-d07c19a9e1af', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"e28dd645-423f-4d09-b355-d07c19a9e1af\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 1.9585204124450684
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 1.9585204124450684,
+        "max": 1.9585204124450684,
+        "mean": 1.9585204124450684,
+        "median": 1.9585204124450684,
+        "p95": 1.9585204124450684
+      },
+      "error": null
+    },
+    {
+      "client_id": 17,
+      "client_uid": "8e6ee147-cc71-4573-93f9-1f78ca321da0",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.565808773040771,
+      "connection_time": 0.12377667427062988,
+      "message_data": [
+        {
+          "timestamp": 1744624202.7175386,
+          "message_num": 1,
+          "transcript_part": "{'uid': '8e6ee147-cc71-4573-93f9-1f78ca321da0', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"8e6ee147-cc71-4573-93f9-1f78ca321da0\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.8929080963134766
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.8929080963134766,
+        "max": 0.8929080963134766,
+        "mean": 0.8929080963134766,
+        "median": 0.8929080963134766,
+        "p95": 0.8929080963134766
+      },
+      "error": null
+    },
+    {
+      "client_id": 18,
+      "client_uid": "8ae0d7c6-4d48-47bc-bbb5-3dad611611f5",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.927769184112549,
+      "connection_time": 0.13583731651306152,
+      "message_data": [
+        {
+          "timestamp": 1744624202.7803028,
+          "message_num": 1,
+          "transcript_part": "{'uid': '8ae0d7c6-4d48-47bc-bbb5-3dad611611f5', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"8ae0d7c6-4d48-47bc-bbb5-3dad611611f5\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.9423999786376953
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.9423999786376953,
+        "max": 0.9423999786376953,
+        "mean": 0.9423999786376953,
+        "median": 0.9423999786376953,
+        "p95": 0.9423999786376953
+      },
+      "error": null
+    },
+    {
+      "client_id": 19,
+      "client_uid": "a744a310-0945-427a-808c-25820ba8f6b4",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 12.499189853668213,
+      "connection_time": 0.1276874542236328,
+      "message_data": [
+        {
+          "timestamp": 1744624202.728842,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'a744a310-0945-427a-808c-25820ba8f6b4', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"a744a310-0945-427a-808c-25820ba8f6b4\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.897857666015625
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.897857666015625,
+        "max": 0.897857666015625,
+        "mean": 0.897857666015625,
+        "median": 0.897857666015625,
+        "p95": 0.897857666015625
+      },
+      "error": null
+    },
+    {
+      "client_id": 20,
+      "client_uid": "fb5b7b79-26f9-4206-b95a-dd5d44aaf431",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 9.7531156539917,
+      "connection_time": 0.12223267555236816,
+      "message_data": [
+        {
+          "timestamp": 1744624202.6978269,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'fb5b7b79-26f9-4206-b95a-dd5d44aaf431', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"fb5b7b79-26f9-4206-b95a-dd5d44aaf431\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.8710837364196777
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.8710837364196777,
+        "max": 0.8710837364196777,
+        "mean": 0.8710837364196777,
+        "median": 0.8710837364196777,
+        "p95": 0.8710837364196777
+      },
+      "error": null
+    },
+    {
+      "client_id": 21,
+      "client_uid": "f9fb24b8-6a31-46ed-9f33-836823e6b250",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.924025297164917,
+      "connection_time": 0.11483240127563477,
+      "message_data": [
+        {
+          "timestamp": 1744624202.2189736,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'f9fb24b8-6a31-46ed-9f33-836823e6b250', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"f9fb24b8-6a31-46ed-9f33-836823e6b250\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 0.3985888957977295
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 0.3985888957977295,
+        "max": 0.3985888957977295,
+        "mean": 0.3985888957977295,
+        "median": 0.3985888957977295,
+        "p95": 0.3985888957977295
+      },
+      "error": null
+    },
+    {
+      "client_id": 22,
+      "client_uid": "0d53362f-672e-4cd1-a2ac-eb49c5d03ca1",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 12.768879890441895,
+      "connection_time": 0.12916040420532227,
+      "message_data": [
+        {
+          "timestamp": 1744624203.8229637,
+          "message_num": 1,
+          "transcript_part": "{'uid': '0d53362f-672e-4cd1-a2ac-eb49c5d03ca1', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"0d53362f-672e-4cd1-a2ac-eb49c5d03ca1\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 1.9872095584869385
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 1.9872095584869385,
+        "max": 1.9872095584869385,
+        "mean": 1.9872095584869385,
+        "median": 1.9872095584869385,
+        "p95": 1.9872095584869385
+      },
+      "error": null
+    },
+    {
+      "client_id": 23,
+      "client_uid": "f38f510a-f697-4f0f-9749-5eb61e1da195",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 9.638091325759888,
+      "connection_time": 0.13241076469421387,
+      "message_data": [
+        {
+          "timestamp": 1744624204.0785031,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'f38f510a-f697-4f0f-9749-5eb61e1da195', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"f38f510a-f697-4f0f-9749-5eb61e1da195\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 2.238490104675293
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 2.238490104675293,
+        "max": 2.238490104675293,
+        "mean": 2.238490104675293,
+        "median": 2.238490104675293,
+        "p95": 2.238490104675293
+      },
+      "error": null
+    },
+    {
+      "client_id": 24,
+      "client_uid": "b4f650b6-8783-4221-ae7c-ec9e7f7792cc",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.598352432250977,
+      "connection_time": 0.13773608207702637,
+      "message_data": [
+        {
+          "timestamp": 1744624203.0776587,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'b4f650b6-8783-4221-ae7c-ec9e7f7792cc', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"b4f650b6-8783-4221-ae7c-ec9e7f7792cc\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 1.2313055992126465
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 1.2313055992126465,
+        "max": 1.2313055992126465,
+        "mean": 1.2313055992126465,
+        "median": 1.2313055992126465,
+        "p95": 1.2313055992126465
+      },
+      "error": null
+    },
+    {
+      "client_id": 25,
+      "client_uid": "ac05956e-1c28-4002-b45a-54d0d79bdf9b",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.004778146743774,
+      "connection_time": 0.13248991966247559,
+      "message_data": [
+        {
+          "timestamp": 1744624204.3334424,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'ac05956e-1c28-4002-b45a-54d0d79bdf9b', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"ac05956e-1c28-4002-b45a-54d0d79bdf9b\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 2.491316080093384
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 2.491316080093384,
+        "max": 2.491316080093384,
+        "mean": 2.491316080093384,
+        "median": 2.491316080093384,
+        "p95": 2.491316080093384
+      },
+      "error": null
+    },
+    {
+      "client_id": 26,
+      "client_uid": "1994a02c-46b9-4716-abcd-81d79fc44518",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.038508176803589,
+      "connection_time": 0.1427295207977295,
+      "message_data": [
+        {
+          "timestamp": 1744624204.9708583,
+          "message_num": 1,
+          "transcript_part": "{'uid': '1994a02c-46b9-4716-abcd-81d79fc44518', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"1994a02c-46b9-4716-abcd-81d79fc44518\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 3.11745548248291
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 3.11745548248291,
+        "max": 3.11745548248291,
+        "mean": 3.11745548248291,
+        "median": 3.11745548248291,
+        "p95": 3.11745548248291
+      },
+      "error": null
+    },
+    {
+      "client_id": 27,
+      "client_uid": "a92bc334-d7e3-4bc8-ae94-714e3c4edb62",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.889309883117676,
+      "connection_time": 0.14379048347473145,
+      "message_data": [
+        {
+          "timestamp": 1744624203.7545464,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'a92bc334-d7e3-4bc8-ae94-714e3c4edb62', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"a92bc334-d7e3-4bc8-ae94-714e3c4edb62\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 1.8990371227264404
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 1.8990371227264404,
+        "max": 1.8990371227264404,
+        "mean": 1.8990371227264404,
+        "median": 1.8990371227264404,
+        "p95": 1.8990371227264404
+      },
+      "error": null
+    },
+    {
+      "client_id": 28,
+      "client_uid": "5e267bae-3a21-4249-bb4a-8b9b725268d5",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 12.863499402999878,
+      "connection_time": 0.1313939094543457,
+      "message_data": [
+        {
+          "timestamp": 1744624203.8711917,
+          "message_num": 1,
+          "transcript_part": "{'uid': '5e267bae-3a21-4249-bb4a-8b9b725268d5', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"5e267bae-3a21-4249-bb4a-8b9b725268d5\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 2.026960849761963
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 2.026960849761963,
+        "max": 2.026960849761963,
+        "mean": 2.026960849761963,
+        "median": 2.026960849761963,
+        "p95": 2.026960849761963
+      },
+      "error": null
+    },
+    {
+      "client_id": 29,
+      "client_uid": "ba302dd0-842f-42ef-b7d2-55766ee643bb",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 9.835078001022339,
+      "connection_time": 0.1437053680419922,
+      "message_data": [
+        {
+          "timestamp": 1744624205.1725092,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'ba302dd0-842f-42ef-b7d2-55766ee643bb', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"ba302dd0-842f-42ef-b7d2-55766ee643bb\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 3.3148934841156006
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 3.3148934841156006,
+        "max": 3.3148934841156006,
+        "mean": 3.3148934841156006,
+        "median": 3.3148934841156006,
+        "p95": 3.3148934841156006
+      },
+      "error": null
+    },
+    {
+      "client_id": 30,
+      "client_uid": "e0fbea72-40ad-41b8-8611-04a59a3a1279",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.898678302764893,
+      "connection_time": 0.1363058090209961,
+      "message_data": [
+        {
+          "timestamp": 1744624205.3314228,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'e0fbea72-40ad-41b8-8611-04a59a3a1279', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"e0fbea72-40ad-41b8-8611-04a59a3a1279\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 3.4801766872406006
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 3.4801766872406006,
+        "max": 3.4801766872406006,
+        "mean": 3.4801766872406006,
+        "median": 3.4801766872406006,
+        "p95": 3.4801766872406006
+      },
+      "error": null
+    },
+    {
+      "client_id": 31,
+      "client_uid": "c329eb12-43ee-4f17-be71-e90955bc0796",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 12.968947649002075,
+      "connection_time": 0.13247013092041016,
+      "message_data": [
+        {
+          "timestamp": 1744624204.1563501,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'c329eb12-43ee-4f17-be71-e90955bc0796', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"c329eb12-43ee-4f17-be71-e90955bc0796\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 2.3078835010528564
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 2.3078835010528564,
+        "max": 2.3078835010528564,
+        "mean": 2.3078835010528564,
+        "median": 2.3078835010528564,
+        "p95": 2.3078835010528564
+      },
+      "error": null
+    },
+    {
+      "client_id": 32,
+      "client_uid": "30b50281-8cbe-448f-a0e4-abaad4b52d25",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.280264616012573,
+      "connection_time": 0.16164040565490723,
+      "message_data": [
+        {
+          "timestamp": 1744624205.307564,
+          "message_num": 1,
+          "transcript_part": "{'uid': '30b50281-8cbe-448f-a0e4-abaad4b52d25', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"30b50281-8cbe-448f-a0e4-abaad4b52d25\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 3.42854905128479
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 3.42854905128479,
+        "max": 3.42854905128479,
+        "mean": 3.42854905128479,
+        "median": 3.42854905128479,
+        "p95": 3.42854905128479
+      },
+      "error": null
+    },
+    {
+      "client_id": 33,
+      "client_uid": "7251143a-33af-42c3-9dfa-c8c9054d0fc3",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 8.883769273757935,
+      "connection_time": 0.16450095176696777,
+      "message_data": [
+        {
+          "timestamp": 1744624205.8761158,
+          "message_num": 1,
+          "transcript_part": "{'uid': '7251143a-33af-42c3-9dfa-c8c9054d0fc3', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"7251143a-33af-42c3-9dfa-c8c9054d0fc3\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 3.993459463119507
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 3.993459463119507,
+        "max": 3.993459463119507,
+        "mean": 3.993459463119507,
+        "median": 3.993459463119507,
+        "p95": 3.993459463119507
+      },
+      "error": null
+    },
+    {
+      "client_id": 34,
+      "client_uid": "7d4a5f8e-9094-4495-bdb3-cf1ebd1c2858",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 12.958210468292236,
+      "connection_time": 0.14057016372680664,
+      "message_data": [
+        {
+          "timestamp": 1744624204.5522172,
+          "message_num": 1,
+          "transcript_part": "{'uid': '7d4a5f8e-9094-4495-bdb3-cf1ebd1c2858', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"7d4a5f8e-9094-4495-bdb3-cf1ebd1c2858\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 2.692497730255127
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 2.692497730255127,
+        "max": 2.692497730255127,
+        "mean": 2.692497730255127,
+        "median": 2.692497730255127,
+        "p95": 2.692497730255127
+      },
+      "error": null
+    },
+    {
+      "client_id": 35,
+      "client_uid": "6d43f0c5-66a7-4a20-932a-5fa8ea416358",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.355771780014038,
+      "connection_time": 0.1645975112915039,
+      "message_data": [
+        {
+          "timestamp": 1744624208.0065377,
+          "message_num": 1,
+          "transcript_part": "{'uid': '6d43f0c5-66a7-4a20-932a-5fa8ea416358', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"6d43f0c5-66a7-4a20-932a-5fa8ea416358\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 6.121727228164673
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 6.121727228164673,
+        "max": 6.121727228164673,
+        "mean": 6.121727228164673,
+        "median": 6.121727228164673,
+        "p95": 6.121727228164673
+      },
+      "error": null
+    },
+    {
+      "client_id": 36,
+      "client_uid": "fffd9e79-9c1b-4e8d-a895-2fe0bb1d3810",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.859212398529053,
+      "connection_time": 0.1721956729888916,
+      "message_data": [
+        {
+          "timestamp": 1744624206.1823506,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'fffd9e79-9c1b-4e8d-a895-2fe0bb1d3810', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"fffd9e79-9c1b-4e8d-a895-2fe0bb1d3810\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 4.288895845413208
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 4.288895845413208,
+        "max": 4.288895845413208,
+        "mean": 4.288895845413208,
+        "median": 4.288895845413208,
+        "p95": 4.288895845413208
+      },
+      "error": null
+    },
+    {
+      "client_id": 37,
+      "client_uid": "eba32c0c-9b95-48b3-9b08-2abec0d60e02",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 12.991698026657104,
+      "connection_time": 0.13967370986938477,
+      "message_data": [
+        {
+          "timestamp": 1744624204.3112972,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'eba32c0c-9b95-48b3-9b08-2abec0d60e02', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"eba32c0c-9b95-48b3-9b08-2abec0d60e02\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 2.4493308067321777
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 2.4493308067321777,
+        "max": 2.4493308067321777,
+        "mean": 2.4493308067321777,
+        "median": 2.4493308067321777,
+        "p95": 2.4493308067321777
+      },
+      "error": null
+    },
+    {
+      "client_id": 38,
+      "client_uid": "c9df3b3c-4697-40f6-9c0c-3915a28a2841",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.451389074325562,
+      "connection_time": 0.16363048553466797,
+      "message_data": [
+        {
+          "timestamp": 1744624208.3298266,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'c9df3b3c-4697-40f6-9c0c-3915a28a2841', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"c9df3b3c-4697-40f6-9c0c-3915a28a2841\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 6.442886829376221
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 6.442886829376221,
+        "max": 6.442886829376221,
+        "mean": 6.442886829376221,
+        "median": 6.442886829376221,
+        "p95": 6.442886829376221
+      },
+      "error": null
+    },
+    {
+      "client_id": 39,
+      "client_uid": "718e9220-fdf5-41da-9967-8d83a95947f6",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.851948261260986,
+      "connection_time": 0.17864465713500977,
+      "message_data": [
+        {
+          "timestamp": 1744624206.2030756,
+          "message_num": 1,
+          "transcript_part": "{'uid': '718e9220-fdf5-41da-9967-8d83a95947f6', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"718e9220-fdf5-41da-9967-8d83a95947f6\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 4.3001015186309814
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 4.3001015186309814,
+        "max": 4.3001015186309814,
+        "mean": 4.3001015186309814,
+        "median": 4.3001015186309814,
+        "p95": 4.3001015186309814
+      },
+      "error": null
+    },
+    {
+      "client_id": 40,
+      "client_uid": "7c5e80e8-921b-4ba1-b8b5-bf965dc9c976",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.07436752319336,
+      "connection_time": 0.13871359825134277,
+      "message_data": [
+        {
+          "timestamp": 1744624205.4488106,
+          "message_num": 1,
+          "transcript_part": "{'uid': '7c5e80e8-921b-4ba1-b8b5-bf965dc9c976', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"7c5e80e8-921b-4ba1-b8b5-bf965dc9c976\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 3.5847504138946533
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 3.5847504138946533,
+        "max": 3.5847504138946533,
+        "mean": 3.5847504138946533,
+        "median": 3.5847504138946533,
+        "p95": 3.5847504138946533
+      },
+      "error": null
+    },
+    {
+      "client_id": 41,
+      "client_uid": "021384d6-8d31-4051-9ec1-0bc0e09394aa",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.320260763168335,
+      "connection_time": 0.16271495819091797,
+      "message_data": [
+        {
+          "timestamp": 1744624208.2008586,
+          "message_num": 1,
+          "transcript_part": "{'uid': '021384d6-8d31-4051-9ec1-0bc0e09394aa', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"021384d6-8d31-4051-9ec1-0bc0e09394aa\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 6.311764240264893
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 6.311764240264893,
+        "max": 6.311764240264893,
+        "mean": 6.311764240264893,
+        "median": 6.311764240264893,
+        "p95": 6.311764240264893
+      },
+      "error": null
+    },
+    {
+      "client_id": 42,
+      "client_uid": "60a14f5e-1be9-436b-bc6d-479c0c8ce533",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.85628628730774,
+      "connection_time": 0.17981886863708496,
+      "message_data": [
+        {
+          "timestamp": 1744624213.7594528,
+          "message_num": 1,
+          "transcript_part": "{'uid': '60a14f5e-1be9-436b-bc6d-479c0c8ce533', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"60a14f5e-1be9-436b-bc6d-479c0c8ce533\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 11.852236986160278
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 11.852236986160278,
+        "max": 11.852236986160278,
+        "mean": 11.852236986160278,
+        "median": 11.852236986160278,
+        "p95": 11.852236986160278
+      },
+      "error": null
+    },
+    {
+      "client_id": 43,
+      "client_uid": "e043b1d5-2f0e-4e51-be10-b36ac2b3ea54",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.041196346282959,
+      "connection_time": 0.137770414352417,
+      "message_data": [
+        {
+          "timestamp": 1744624205.0760775,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'e043b1d5-2f0e-4e51-be10-b36ac2b3ea54', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"e043b1d5-2f0e-4e51-be10-b36ac2b3ea54\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 3.209900140762329
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 3.209900140762329,
+        "max": 3.209900140762329,
+        "mean": 3.209900140762329,
+        "median": 3.209900140762329,
+        "p95": 3.209900140762329
+      },
+      "error": null
+    },
+    {
+      "client_id": 44,
+      "client_uid": "8fab5e4a-8ceb-49db-ad8e-04a8ef80efc4",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.359402656555176,
+      "connection_time": 0.1616652011871338,
+      "message_data": [
+        {
+          "timestamp": 1744624208.303664,
+          "message_num": 1,
+          "transcript_part": "{'uid': '8fab5e4a-8ceb-49db-ad8e-04a8ef80efc4', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"8fab5e4a-8ceb-49db-ad8e-04a8ef80efc4\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 6.412454843521118
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 6.412454843521118,
+        "max": 6.412454843521118,
+        "mean": 6.412454843521118,
+        "median": 6.412454843521118,
+        "p95": 6.412454843521118
+      },
+      "error": null
+    },
+    {
+      "client_id": 45,
+      "client_uid": "12b93594-9af1-43ce-9b83-059d7c517670",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.850455045700073,
+      "connection_time": 0.17877912521362305,
+      "message_data": [
+        {
+          "timestamp": 1744624206.265263,
+          "message_num": 1,
+          "transcript_part": "{'uid': '12b93594-9af1-43ce-9b83-059d7c517670', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"12b93594-9af1-43ce-9b83-059d7c517670\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 4.35591721534729
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 4.35591721534729,
+        "max": 4.35591721534729,
+        "mean": 4.35591721534729,
+        "median": 4.35591721534729,
+        "p95": 4.35591721534729
+      },
+      "error": null
+    },
+    {
+      "client_id": 46,
+      "client_uid": "bbedd011-f96a-43af-b97e-09cbb7697965",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.07058072090149,
+      "connection_time": 0.13668060302734375,
+      "message_data": [
+        {
+          "timestamp": 1744624205.4799197,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'bbedd011-f96a-43af-b97e-09cbb7697965', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"bbedd011-f96a-43af-b97e-09cbb7697965\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 3.6116368770599365
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 3.6116368770599365,
+        "max": 3.6116368770599365,
+        "mean": 3.6116368770599365,
+        "median": 3.6116368770599365,
+        "p95": 3.6116368770599365
+      },
+      "error": null
+    },
+    {
+      "client_id": 47,
+      "client_uid": "5cb0e103-2caf-4237-99b3-8def1bca352e",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.410046577453613,
+      "connection_time": 0.16292786598205566,
+      "message_data": [
+        {
+          "timestamp": 1744624208.5072908,
+          "message_num": 1,
+          "transcript_part": "{'uid': '5cb0e103-2caf-4237-99b3-8def1bca352e', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"5cb0e103-2caf-4237-99b3-8def1bca352e\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 6.611711263656616
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 6.611711263656616,
+        "max": 6.611711263656616,
+        "mean": 6.611711263656616,
+        "median": 6.611711263656616,
+        "p95": 6.611711263656616
+      },
+      "error": null
+    },
+    {
+      "client_id": 48,
+      "client_uid": "337c4663-c811-4a15-8e16-91b65421f723",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.84664511680603,
+      "connection_time": 0.17778515815734863,
+      "message_data": [
+        {
+          "timestamp": 1744624206.7826767,
+          "message_num": 1,
+          "transcript_part": "{'uid': '337c4663-c811-4a15-8e16-91b65421f723', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"337c4663-c811-4a15-8e16-91b65421f723\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 4.8712193965911865
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 4.8712193965911865,
+        "max": 4.8712193965911865,
+        "mean": 4.8712193965911865,
+        "median": 4.8712193965911865,
+        "p95": 4.8712193965911865
+      },
+      "error": null
+    },
+    {
+      "client_id": 49,
+      "client_uid": "2d8be811-45f8-42f8-80c3-0a25dbffefb9",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.005082845687866,
+      "connection_time": 0.13570451736450195,
+      "message_data": [
+        {
+          "timestamp": 1744624205.2854784,
+          "message_num": 1,
+          "transcript_part": "{'uid': '2d8be811-45f8-42f8-80c3-0a25dbffefb9', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"2d8be811-45f8-42f8-80c3-0a25dbffefb9\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 3.4150872230529785
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 3.4150872230529785,
+        "max": 3.4150872230529785,
+        "mean": 3.4150872230529785,
+        "median": 3.4150872230529785,
+        "p95": 3.4150872230529785
+      },
+      "error": null
+    },
+    {
+      "client_id": 50,
+      "client_uid": "8cf640e9-6605-48b1-9d62-4591540e84ec",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.437962293624878,
+      "connection_time": 0.16514348983764648,
+      "message_data": [
+        {
+          "timestamp": 1744624209.6703014,
+          "message_num": 1,
+          "transcript_part": "{'uid': '8cf640e9-6605-48b1-9d62-4591540e84ec', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"8cf640e9-6605-48b1-9d62-4591540e84ec\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 7.769446134567261
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 7.769446134567261,
+        "max": 7.769446134567261,
+        "mean": 7.769446134567261,
+        "median": 7.769446134567261,
+        "p95": 7.769446134567261
+      },
+      "error": null
+    },
+    {
+      "client_id": 51,
+      "client_uid": "484b4c7e-1ffb-42d1-a582-694484770521",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.851009368896484,
+      "connection_time": 0.17683792114257812,
+      "message_data": [
+        {
+          "timestamp": 1744624212.6278605,
+          "message_num": 1,
+          "transcript_part": "{'uid': '484b4c7e-1ffb-42d1-a582-694484770521', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"484b4c7e-1ffb-42d1-a582-694484770521\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 10.714292526245117
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 10.714292526245117,
+        "max": 10.714292526245117,
+        "mean": 10.714292526245117,
+        "median": 10.714292526245117,
+        "p95": 10.714292526245117
+      },
+      "error": null
+    },
+    {
+      "client_id": 52,
+      "client_uid": "4151d3d5-2e3f-42ab-aaf8-399359b13811",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.062004566192627,
+      "connection_time": 0.13469672203063965,
+      "message_data": [
+        {
+          "timestamp": 1744624206.9380746,
+          "message_num": 1,
+          "transcript_part": "{'uid': '4151d3d5-2e3f-42ab-aaf8-399359b13811', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"4151d3d5-2e3f-42ab-aaf8-399359b13811\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 5.065532684326172
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 5.065532684326172,
+        "max": 5.065532684326172,
+        "mean": 5.065532684326172,
+        "median": 5.065532684326172,
+        "p95": 5.065532684326172
+      },
+      "error": null
+    },
+    {
+      "client_id": 53,
+      "client_uid": "2dba4ff1-4b44-46c5-ab95-e6ef60bce7c9",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.346821784973145,
+      "connection_time": 0.15980935096740723,
+      "message_data": [
+        {
+          "timestamp": 1744624208.4865372,
+          "message_num": 1,
+          "transcript_part": "{'uid': '2dba4ff1-4b44-46c5-ab95-e6ef60bce7c9', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"2dba4ff1-4b44-46c5-ab95-e6ef60bce7c9\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 6.587846755981445
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 6.587846755981445,
+        "max": 6.587846755981445,
+        "mean": 6.587846755981445,
+        "median": 6.587846755981445,
+        "p95": 6.587846755981445
+      },
+      "error": null
+    },
+    {
+      "client_id": 54,
+      "client_uid": "540203ee-7c7d-4f50-a26c-42c478801050",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.847435712814331,
+      "connection_time": 0.1757800579071045,
+      "message_data": [
+        {
+          "timestamp": 1744624210.4439993,
+          "message_num": 1,
+          "transcript_part": "{'uid': '540203ee-7c7d-4f50-a26c-42c478801050', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"540203ee-7c7d-4f50-a26c-42c478801050\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 8.528321266174316
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 8.528321266174316,
+        "max": 8.528321266174316,
+        "mean": 8.528321266174316,
+        "median": 8.528321266174316,
+        "p95": 8.528321266174316
+      },
+      "error": null
+    },
+    {
+      "client_id": 55,
+      "client_uid": "4f4daac1-a382-4940-874e-614112675355",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.066053867340088,
+      "connection_time": 0.13373756408691406,
+      "message_data": [
+        {
+          "timestamp": 1744624207.8796365,
+          "message_num": 1,
+          "transcript_part": "{'uid': '4f4daac1-a382-4940-874e-614112675355', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"4f4daac1-a382-4940-874e-614112675355\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 6.004962682723999
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 6.004962682723999,
+        "max": 6.004962682723999,
+        "mean": 6.004962682723999,
+        "median": 6.004962682723999,
+        "p95": 6.004962682723999
+      },
+      "error": null
+    },
+    {
+      "client_id": 56,
+      "client_uid": "6da30dfc-ceed-4fbf-89bb-dc7bd15ce2fa",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.435585021972656,
+      "connection_time": 0.16314458847045898,
+      "message_data": [
+        {
+          "timestamp": 1744624209.696627,
+          "message_num": 1,
+          "transcript_part": "{'uid': '6da30dfc-ceed-4fbf-89bb-dc7bd15ce2fa', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"6da30dfc-ceed-4fbf-89bb-dc7bd15ce2fa\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 7.791536808013916
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 7.791536808013916,
+        "max": 7.791536808013916,
+        "mean": 7.791536808013916,
+        "median": 7.791536808013916,
+        "p95": 7.791536808013916
+      },
+      "error": null
+    },
+    {
+      "client_id": 57,
+      "client_uid": "c87282f5-d802-4c38-a73d-5a7091ca4f81",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.838032960891724,
+      "connection_time": 0.17487144470214844,
+      "message_data": [
+        {
+          "timestamp": 1744624206.7475572,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'c87282f5-d802-4c38-a73d-5a7091ca4f81', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"c87282f5-d802-4c38-a73d-5a7091ca4f81\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 4.829715967178345
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 4.829715967178345,
+        "max": 4.829715967178345,
+        "mean": 4.829715967178345,
+        "median": 4.829715967178345,
+        "p95": 4.829715967178345
+      },
+      "error": null
+    },
+    {
+      "client_id": 58,
+      "client_uid": "274c503a-b39d-4c30-81e6-52350d906acd",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 12.810484170913696,
+      "connection_time": 0.39338088035583496,
+      "message_data": [
+        {
+          "timestamp": 1744624214.8235402,
+          "message_num": 1,
+          "transcript_part": "{'uid': '274c503a-b39d-4c30-81e6-52350d906acd', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"274c503a-b39d-4c30-81e6-52350d906acd\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 12.686078548431396
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 12.686078548431396,
+        "max": 12.686078548431396,
+        "mean": 12.686078548431396,
+        "median": 12.686078548431396,
+        "p95": 12.686078548431396
+      },
+      "error": null
+    },
+    {
+      "client_id": 59,
+      "client_uid": "5e809646-f8e7-4934-a3bc-6cab59cbb5d3",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 10.293635606765747,
+      "connection_time": 0.30902910232543945,
+      "message_data": [
+        {
+          "timestamp": 1744624212.2087445,
+          "message_num": 1,
+          "transcript_part": "{'uid': '5e809646-f8e7-4934-a3bc-6cab59cbb5d3', 'message': 'SERVER_READY', 'backend': 'faster_whisper'}",
+          "raw_message": "{\"uid\": \"5e809646-f8e7-4934-a3bc-6cab59cbb5d3\", \"message\": \"SERVER_READY\", \"backend\": \"faster_whisper\"}",
+          "latency": 10.154592752456665
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 10.154592752456665,
+        "max": 10.154592752456665,
+        "mean": 10.154592752456665,
+        "median": 10.154592752456665,
+        "p95": 10.154592752456665
+      },
+      "error": null
+    },
+    {
+      "client_id": 60,
+      "client_uid": "d1b4cd9d-c7c5-4bf1-9443-575ea5fb6d6a",
+      "audio_file": "LJ001-0001.wav",
+      "success": true,
+      "message_count": 1,
+      "audio_duration": 13.3058125,
+      "processing_time": 13.674481630325317,
+      "connection_time": 0.6971578598022461,
+      "message_data": [
+        {
+          "timestamp": 1744624206.1119359,
+          "message_num": 1,
+          "transcript_part": "{'uid': 'd1b4cd9d-c7c5-4bf1-9443-575ea5fb6d6a', 'status': 'WAIT', 'message': 9.935800476868947}",
+          "raw_message": "{\"uid\": \"d1b4cd9d-c7c5-4bf1-9443-575ea5fb6d6a\", \"status\": \"WAIT\", \"message\": 9.935800476868947}",
+          "latency": 3.6685023307800293
+        }
+      ],
+      "transcript": "",
+      "latency_stats": {
+        "min": 3.6685023307800293,
+        "max": 3.6685023307800293,
+        "mean": 3.6685023307800293,
+        "median": 3.6685023307800293,
+        "p95": 3.6685023307800293
+      },
+      "error": null
+    }
+  ],
+  "summary": {
+    "total_duration": 14.458272933959961,
+    "target_clients": 60,
+    "successful_clients": 60,
+    "failed_clients": 0,
+    "total_messages": 62,
+    "avg_audio_duration": 13.3058125,
+    "avg_processing_time": 11.1325816432635,
+    "latency": {
+      "min": 0.09384799003601074,
+      "max": 12.686078548431396,
+      "mean": 3.56840740442276,
+      "median": 3.1636778116226196,
+      "p95": 10.686307537555695
+    }
+  }
+}

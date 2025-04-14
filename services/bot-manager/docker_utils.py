@@ -143,7 +143,7 @@ def start_bot_container(
 
     environment = [
         f"BOT_CONFIG={bot_config_json}",
-        f"WHISPER_LIVE_URL={os.getenv('WHISPER_LIVE_URL', 'ws://whisperlive:9090')}",
+        f"WHISPER_LIVE_URL={os.getenv('WHISPER_LIVE_URL', 'ws://load-balancer:80')}",
         f"LOG_LEVEL={os.getenv('LOG_LEVEL', 'INFO').upper()}",
     ]
 
