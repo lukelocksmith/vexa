@@ -1,3 +1,47 @@
+===============================================================================
+LICENSING NOTICE FOR ENTERPRISE EDITION BRANCHES (ee/*)
+===============================================================================
+
+This branch and ALL BRANCHES starting with "ee/" contain PROPRIETARY CODE 
+that is NOT licensed under Apache 2.0.
+
+IMPORTANT: While the main branch of this repository is licensed under the 
+Apache License 2.0 (see below), ALL ENTERPRISE EDITION BRANCHES (ee/*) contain 
+proprietary enhancements, modifications, and additional features that are:
+
+1. PROPRIETARY and CONFIDENTIAL
+2. NOT licensed for use, modification, or distribution
+3. PROTECTED by copyright and other intellectual property rights
+4. AVAILABLE ONLY under separate commercial licensing agreements
+
+WHAT THIS MEANS:
+- The base code from the main branch remains Apache 2.0 licensed
+- ALL DIFFERENCES, ENHANCEMENTS, AND ADDITIONS in ee/* branches are proprietary
+- You may NOT use, copy, modify, or distribute any proprietary code
+- Commercial licensing is required for any use of the proprietary features
+
+ENTERPRISE EDITION BRANCHES INCLUDE BUT ARE NOT LIMITED TO:
+- ee/* (Any branch with "ee/" prefix)
+
+For licensing inquiries regarding the proprietary features in any ee/* branch,
+please contact:
+Company: Vexa.ai Inc.
+Address: 16192 Coastal Highway, Lewes, DE 19958
+Website: https://www.vexa.ai
+Contact: Dmitry Grankin (Responsible Party)
+
+The main branch Apache 2.0 license applies ONLY to the original code base
+as it exists in the main branch, and does NOT extend to any proprietary
+enhancements found in ee/* or other non-main branches.
+
+===============================================================================
+APACHE 2.0 LICENSE (MAIN BRANCH BASE CODE ONLY)
+===============================================================================
+
+The following Apache 2.0 license applies ONLY to the base code that exists
+in the main branch of this repository, and does NOT apply to any proprietary
+enhancements, modifications, or additions found in ee/* or other enterprise branches.
+
                                  Apache License
                            Version 2.0, January 2004
                         http://www.apache.org/licenses/

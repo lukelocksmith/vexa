@@ -2,6 +2,8 @@
   <img src="assets/logodark.svg" alt="Vexa Logo" width="40"/>
 </p>
 
+> **⚠️ LICENSING NOTICE**: This branch and ALL BRANCHES starting with `ee/` contain **PROPRIETARY CODE** owned by Vexa.ai Inc. While the main branch is Apache 2.0 licensed, ALL Enterprise Edition (`ee/*`) branches are proprietary and require commercial licensing. See [LICENSE](LICENSE) and [NOTICE](NOTICE) files for details.
+
   [![Run Locally](https://img.shields.io/badge/Docker-Run_Locally-2496ED?style=flat-square&logo=docker&logoColor=white)](DEPLOYMENT.md) [![Self Hosted](https://img.shields.io/badge/Server-Self_Hosted-2EA44F?style=flat-square&logo=serverless&logoColor=white)](DEPLOYMENT.md)
 
 # Vexa: API for **Real-Time Meeting Transcription**

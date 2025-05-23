@@ -1,0 +1,73 @@
+Vexa - Real-Time Meeting Transcription API
+Copyright 2024-2025 Vexa.ai Inc.
+
+===============================================================================
+DUAL LICENSING NOTICE
+===============================================================================
+
+This repository uses a dual licensing model:
+
+1. MAIN BRANCH: Apache License 2.0
+   - The main branch contains open source code
+   - Licensed under Apache License 2.0
+   - Free for commercial and non-commercial use
+   - Subject to Apache 2.0 terms and conditions
+
+2. ENTERPRISE EDITION BRANCHES (ee/*): PROPRIETARY
+   - Contains proprietary enhancements and enterprise features
+   - NOT open source
+   - NOT licensed for public use
+   - Requires separate commercial licensing agreement
+   - All rights reserved
+
+===============================================================================
+BRANCH-SPECIFIC LICENSING
+===============================================================================
+
+Enterprise Edition Branches: ee/*
+License: PROPRIETARY - All Rights Reserved
+
+ALL BRANCHES starting with "ee/" contain proprietary code that extends the 
+Apache 2.0 licensed base code from the main branch. Enterprise Edition branches
+include but are not limited to:
+
+- ee/feature/k8s (Kubernetes enterprise deployment configurations)
+- ee/feature/* (All enterprise feature development branches)
+- ee/release/* (Enterprise release branches)
+- ee/* (Any branch with "ee/" prefix)
+
+The proprietary enhancements include but are not limited to:
+- Enterprise-grade Kubernetes deployment configurations
+- Advanced scalability features
+- Enhanced security implementations
+- Commercial-grade monitoring and observability
+- Production-ready enterprise integrations
+- Enterprise authentication and authorization
+- Advanced analytics and reporting features
+
+IMPORTANT: You may NOT use any code from ee/* branches without explicit
+written permission and a commercial licensing agreement.
+
+===============================================================================
+CONTACT INFORMATION
+===============================================================================
+
+For licensing inquiries regarding proprietary features in ee/* branches:
+Company: Vexa.ai Inc.
+Address: 16192 Coastal Highway, Lewes, DE 19958
+EIN: 32-0776097
+Contact: Dmitry Grankin (Responsible Party)
+Website: https://www.vexa.ai
+
+For open source inquiries regarding the main branch:
+GitHub: https://github.com/Vexa-ai/vexa
+
+===============================================================================
+THIRD PARTY COMPONENTS
+===============================================================================
+
+This software may include third-party components with their own licenses.
+See individual files for specific license information where applicable.
+
+The Apache License 2.0 applies only to the base code in the main branch.
+Third-party components maintain their original licensing terms. 
