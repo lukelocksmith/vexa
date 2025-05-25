@@ -228,7 +228,7 @@ update-env-ips:
 
 # --- Full Infrastructure Provisioning Target ---
 .PHONY: gcp-infra-provision
-gcp-infra-provision: gcp-project-setup gcp-ar-create gcp-sql-create gcp-redis-create gcp-vm-create gcp-firewall-create
+gcp-infra-provision: gcp-project-setup gcp-ar-create gcp-sql-create gcp-redis-create gcp-vm-create gcp-iam-setup gcp-firewall-create
 	@echo "\n=== Waiting for all infrastructure to stabilize before creating DB user and updating IPs... ==="
 	@echo "This might take a few minutes. Cloud SQL and Redis can take time to become fully available after creation."
 	@sleep 120 # General wait time, might need adjustment
@@ -270,6 +270,30 @@ gcp-infra-destroy:
 	@echo "Infrastructure deletion attempt complete."
 
 
+# --- IAM helper -------------------------------------------------
+.PHONY: gcp-iam-setup
+gcp-iam-setup:
+	@echo "\n=== Granting Artifact Registry Reader to default VM service account ==="
+	@VM_SA_EMAIL=$$(gcloud iam service-accounts list \
+	               --filter='displayName:Compute Engine default service account' \
+	               --format='value(email)' --project=$(GCP_PROJECT_ID) 2>/dev/null); \
+	if [ -z "$$VM_SA_EMAIL" ]; then \
+		COMPUTE_ENGINE_SA_NUM=$$(gcloud projects describe $(GCP_PROJECT_ID) --format='value(projectNumber)'); \
+		VM_SA_EMAIL="$$COMPUTE_ENGINE_SA_NUM-compute@developer.gserviceaccount.com"; \
+		echo "Default Compute Engine service account email not found via display name, constructing: $$VM_SA_EMAIL"; \
+	else \
+		echo "Found default Compute Engine service account email: $$VM_SA_EMAIL"; \
+	fi; \
+	SERVICE_ACCOUNT_EXISTS=$$(gcloud iam service-accounts describe $$VM_SA_EMAIL --project=$(GCP_PROJECT_ID) --format='value(email)' 2>/dev/null); \
+	if [ -z "$$SERVICE_ACCOUNT_EXISTS" ]; then \
+		echo "WARNING: Service account $$VM_SA_EMAIL does not seem to exist in project $(GCP_PROJECT_ID). Please check."; \
+		exit 1; \
+	fi; \
+	gcloud projects add-iam-policy-binding $(GCP_PROJECT_ID) \
+	    --member=serviceAccount:$$VM_SA_EMAIL \
+	    --role=roles/artifactregistry.reader  --condition=None --quiet || echo "Failed to add IAM policy binding. It might already exist or another error occurred."
+	@echo "IAM role 'Artifact Registry Reader' granting attempt complete for service account $$VM_SA_EMAIL."
+
 # --- Helper Targets ---
 .PHONY: gcp-vm-ssh
 gcp-vm-ssh:
@@ -282,107 +306,96 @@ gcp-vm-get-ip:
 	@gcloud compute instances describe $(VM_MANAGER_NAME) --zone=$(GCP_ZONE) --project=$(GCP_PROJECT_ID) --format='get(networkInterfaces[0].accessConfigs[0].natIP)'
 
 
-# --- Placeholder Deployment Targets (To be implemented later) ---
+# --- Docker Image Management ---
+
 .PHONY: images-auth
 images-auth:
 	@echo "\n=== Authenticating Docker with GCP Artifact Registry: $(GCP_REGION)-docker.pkg.dev ==="
 	gcloud auth configure-docker $(GCP_REGION)-docker.pkg.dev --quiet
 	@echo "Docker authentication configured."
 
-.PHONY: images-build-push
-images-build-push:
-	@echo "\n=== Building and pushing Docker images... ==="
-	@{ \
-	  echo "Using image prefix: $(IMAGE_PREFIX_MAKEVAR)"; \
-	  \
-	  SERVICES_TO_BUILD="api-gateway admin-api bot-manager WhisperLive transcription-collector vexa-bot"; \
-	  SERVICE_IMAGE_NAMES="vexa-api-gateway vexa-admin-api vexa-bot-manager vexa-whisperlive-cpu vexa-transcription-collector vexa-bot"; \
-	  DOCKERFILE_NAMES="Dockerfile Dockerfile Dockerfile Dockerfile.cpu Dockerfile Dockerfile"; \
-	  \
-	  service_count=1; \
-	  for SERVICE_DIR in $$SERVICES_TO_BUILD; do \
-	    IMAGE_NAME=$$(echo $$SERVICE_IMAGE_NAMES | awk -v sc="$$service_count" '{print $$sc}'); \
-	    DOCKERFILE_NAME=$$(echo $$DOCKERFILE_NAMES | awk -v sc="$$service_count" '{print $$sc}'); \
-	    FULL_IMAGE_NAME=\"$(IMAGE_PREFIX_MAKEVAR)/$$IMAGE_NAME:latest\"; \
-	    echo "\n--- Building $$FULL_IMAGE_NAME from ./services/$$SERVICE_DIR using $$DOCKERFILE_NAME ---"; \
-	    if [ -f \"./services/$$SERVICE_DIR/$$DOCKERFILE_NAME\" ]; then \
-	      docker build -t \"$$FULL_IMAGE_NAME\" -f \"./services/$$SERVICE_DIR/$$DOCKERFILE_NAME\" . || { echo \"ERROR: Docker build failed for $$SERVICE_DIR\"; exit 1; }; \
-	      echo \"--- Pushing $$FULL_IMAGE_NAME ---\"; \
-	      docker push \"$$FULL_IMAGE_NAME\" || { echo \"ERROR: Docker push failed for $$FULL_IMAGE_NAME\"; exit 1; }; \
-	    else \
-	      echo \"WARNING: No Dockerfile found in ./services/$$SERVICE_DIR. Skipping.\"; \
-	    fi; \
-	    service_count=$$(($$service_count + 1)); \
-	  done; \
-	  echo "\n=== Docker image build and push complete. ==="; \
-	}
+.PHONY: vm-docker-auth
+vm-docker-auth:
+	@echo "\n=== Authenticating Docker on VM [$(VM_MANAGER_NAME)] with Artifact Registry... ==="
+	gcloud compute ssh "$(VM_MANAGER_NAME)" --zone "$(GCP_ZONE)" --project "$(GCP_PROJECT_ID)" --command="sudo gcloud auth configure-docker $(GCP_REGION)-docker.pkg.dev --quiet"
+	@echo "VM Docker authentication attempt complete."
 
 .PHONY: swarm-init
 swarm-init:
 	@echo "\n=== Initializing Docker Swarm on manager VM: $(VM_MANAGER_NAME) ==="
 	@echo "This involves SSHing to the VM to run commands."
-	@VM_INTERNAL_IP=$$(gcloud compute instances describe $(VM_MANAGER_NAME) --zone=$(GCP_ZONE) --project=$(GCP_PROJECT_ID) --format='get(networkInterfaces[0].networkIP)' 2>/dev/null || echo "NOT_FOUND"); \
+	@VM_INTERNAL_IP=$$(gcloud compute instances describe $(VM_MANAGER_NAME) --zone="$(GCP_ZONE)" --project="$(GCP_PROJECT_ID)" --format='get(networkInterfaces[0].networkIP)' 2>/dev/null || echo "NOT_FOUND"); \
 	if [ "$$VM_INTERNAL_IP" = "NOT_FOUND" ] || [ -z "$$VM_INTERNAL_IP" ]; then \
 	  echo "ERROR: Could not retrieve Internal IP for VM $(VM_MANAGER_NAME). Cannot initialize Swarm."; \
 	  exit 1; \
 	fi; \
 	@echo "Using VM Internal IP for Swarm advertise address: $$VM_INTERNAL_IP"; \
-	gcloud compute ssh $(VM_MANAGER_NAME) --zone $(GCP_ZONE) --project $(GCP_PROJECT_ID) -- \
+	gcloud compute ssh "$(VM_MANAGER_NAME)" --zone "$(GCP_ZONE)" --project "$(GCP_PROJECT_ID)" -- \
 	  "sudo docker swarm init --advertise-addr $$VM_INTERNAL_IP && \
 	   echo 'Swarm initialized.' || echo 'Swarm already initialized or error during init.'"
 
 	@echo "\n=== Copying traefik.toml to manager VM... ==="
-	gcloud compute scp ./traefik.toml $(VM_MANAGER_NAME):~/traefik.toml --zone $(GCP_ZONE) --project $(GCP_PROJECT_ID)
+	gcloud compute scp ./traefik.toml "$(VM_MANAGER_NAME):~/traefik.toml" --zone "$(GCP_ZONE)" --project "$(GCP_PROJECT_ID)"
 
 	@echo "\n=== Creating Traefik Docker Swarm config on manager VM... ==="
-	gcloud compute ssh $(VM_MANAGER_NAME) --zone $(GCP_ZONE) --project $(GCP_PROJECT_ID) -- \
+	gcloud compute ssh "$(VM_MANAGER_NAME)" --zone "$(GCP_ZONE)" --project "$(GCP_PROJECT_ID)" -- \
 	  "sudo docker config inspect traefik_config > /dev/null 2>&1 && \
 	   echo 'Docker config traefik_config already exists. Skipping creation.' || \
 	   (sudo docker config create traefik_config ~/traefik.toml && \
 	    echo 'Docker config traefik_config created.' || echo 'Error creating Docker config traefik_config.')"
 	@echo "\n=== Swarm setup attempt complete. ==="
 
-.PHONY: vm-docker-auth
-vm-docker-auth:
-	@echo "\n=== Authenticating Docker on VM: $(VM_MANAGER_NAME) with GCP Artifact Registry ==="
-	gcloud compute ssh $(VM_MANAGER_NAME) --zone $(GCP_ZONE) --project $(GCP_PROJECT_ID) -- \
-	  "sudo gcloud auth configure-docker $(GCP_REGION)-docker.pkg.dev --quiet"
-	@echo "Docker authentication configured on VM."
-
 .PHONY: stack-deploy
 stack-deploy:
-	@echo "DEBUG: Local IMAGE_PREFIX_MAKEVAR is [$(IMAGE_PREFIX_MAKEVAR)]"
 	@echo "\n=== Deploying Docker Swarm stack: $(STACK_NAME) to manager VM: $(VM_MANAGER_NAME) ==="
 	@echo "Copying docker-compose.gcp-cpu.yml to manager VM..."
-	gcloud compute scp ./docker-compose.gcp-cpu.yml $(VM_MANAGER_NAME):~/docker-compose.gcp-cpu.yml --zone $(GCP_ZONE) --project $(GCP_PROJECT_ID)
+	gcloud compute scp ./docker-compose.gcp-cpu.yml "$(VM_MANAGER_NAME):~/docker-compose.gcp-cpu.yml" --zone "$(GCP_ZONE)" --project "$(GCP_PROJECT_ID)"
 
-	@echo "\nPreparing environment file .vm_env.sh for VM..."
-	@# Create .vm_env.sh with clean export statements
-	@echo "export IMAGE_PREFIX='$(IMAGE_PREFIX_MAKEVAR)'" > .vm_env.sh
-	@# Extract, clean, and append other necessary vars from .env.gcp
-	@cat .env.gcp | grep -E '^DB_HOST=|^DB_PORT=|^DB_NAME=|^DB_USER=|^DB_PASSWORD=|^REDIS_HOST=|^REDIS_PORT=|^ADMIN_API_TOKEN=|^LOG_LEVEL=|^TRAEFIK_HOST=|^LANGUAGE_DETECTION_SEGMENTS=|^VAD_FILTER_THRESHOLD=|^TRAEFIK_WEB_PORT=|^TRAEFIK_DASHBOARD_PORT=' | \
-		awk -F'=' '{ V = $$2; gsub(/^"/, "", V); gsub(/" *#.*$$/, "", V); gsub(/"$$/, "", V); gsub(/ *#.*$$/, "", V); printf "export %s=\x27%s\x27\n", $$1, V }' >> .vm_env.sh
+	@echo "DEBUG MAKE: IMAGE_PREFIX_MAKEVAR is [$(IMAGE_PREFIX_MAKEVAR)]"
+	@echo "DEBUG MAKE: GCP_REGION is [$(GCP_REGION)]"
+	@echo "DEBUG MAKE: GCP_PROJECT_ID is [$(GCP_PROJECT_ID)]"
+	@echo "DEBUG MAKE: ARTIFACT_REGISTRY_NAME is [$(ARTIFACT_REGISTRY_NAME)]"
+	@echo "Preparing environment file .vm_env.sh for VM..."
+	@printf "export %s='%s'\n" "IMAGE_PREFIX" "$(IMAGE_PREFIX_MAKEVAR)" > .vm_env.sh
+	@awk -F'=' '{ key=$$1; value=$$2; gsub(/#.*$$/, "", value); gsub(/^[ \t"'\'']+|[ \t"'\'']+$$/, "", value); if (key != "IMAGE_PREFIX" && key != "" && !match(key, /COMMENT/) && (key == "DB_NAME" || key == "DB_USER" || key == "DB_PASSWORD" || key == "DB_PORT" || key == "DB_HOST" || key == "REDIS_PORT" || key == "REDIS_HOST" || key == "TRAEFIK_HOST" || key == "TRAEFIK_WEB_PORT" || key == "TRAEFIK_DASHBOARD_PORT" || key == "ADMIN_API_TOKEN" || key == "LOG_LEVEL" || key == "LANGUAGE_DETECTION_SEGMENTS" || key == "VAD_FILTER_THRESHOLD" || key == "STACK_NAME")) printf "export %s=\x27%s\x27\n", key, value }' .env.gcp >> .vm_env.sh
 
 	@echo "Copying .vm_env.sh to manager VM..."
-	gcloud compute scp ./.vm_env.sh $(VM_MANAGER_NAME):~/.vm_env.sh --zone $(GCP_ZONE) --project $(GCP_PROJECT_ID)
-	@rm .vm_env.sh # Clean up local temp file
+	@gcloud compute scp ./.vm_env.sh "$(VM_MANAGER_NAME):~/.vm_env.sh" --zone "$(GCP_ZONE)" --project "$(GCP_PROJECT_ID)"
 
-	@echo "\nDeploying stack on VM..."
-	gcloud compute ssh $(VM_MANAGER_NAME) --zone $(GCP_ZONE) --project $(GCP_PROJECT_ID) -- \
-	  "cd ~ && \
-	   echo 'Sourcing environment variables from .vm_env.sh...' && \
-	   source .vm_env.sh && \
-	   echo \"IMAGE_PREFIX on VM after source: [$${IMAGE_PREFIX}]\" && \
-	   echo \"DB_HOST on VM after source: [$${DB_HOST}]\" && \
-	   echo \"REDIS_HOST on VM after source: [$${REDIS_HOST}]\" && \
-	   sudo -E docker stack deploy -c ~/docker-compose.gcp-cpu.yml --with-registry-auth $(STACK_NAME)"
+	@echo "Creating deployment script deploy_on_vm.sh..."
+	@printf "#!/bin/bash\nset -e\n" > ./deploy_on_vm.sh
+	@printf "echo 'Unsetting potentially inherited IMAGE_PREFIX and STACK_NAME...'\n" >> ./deploy_on_vm.sh
+	@printf "unset IMAGE_PREFIX || true\n" >> ./deploy_on_vm.sh
+	@printf "unset STACK_NAME || true\n" >> ./deploy_on_vm.sh
+	@printf "echo 'Sourcing /home/dima/.vm_env.sh...'\n" >> ./deploy_on_vm.sh
+	@printf "source /home/dima/.vm_env.sh\n" >> ./deploy_on_vm.sh
+	@printf "echo 'Configuring Docker for current user (dima) on VM to access Artifact Registry...'\n" >> ./deploy_on_vm.sh
+	@printf "gcloud auth configure-docker %s-docker.pkg.dev --quiet\n" "$(GCP_REGION)" >> ./deploy_on_vm.sh
+	@printf "echo 'Ensuring critical variables are set in environment after source:'\n" >> ./deploy_on_vm.sh
+	@printf "env | grep -E \"IMAGE_PREFIX|STACK_NAME\" || (echo 'CRITICAL FAILURE: IMAGE_PREFIX or STACK_NAME not found in environment after source. Exiting.' && exit 1)\n" >> ./deploy_on_vm.sh
+	@printf "echo 'Deploying stack...'\n" >> ./deploy_on_vm.sh
+	@printf "sudo -E docker stack deploy -c /home/dima/docker-compose.gcp-cpu.yml --with-registry-auth \"$$STACK_NAME\"\n" >> ./deploy_on_vm.sh
+	@printf "echo 'Deployment script finished on VM.'\n" >> ./deploy_on_vm.sh
+	@chmod +x ./deploy_on_vm.sh
+
+	@echo "Copying deployment script to manager VM..."
+	gcloud compute scp ./deploy_on_vm.sh "$(VM_MANAGER_NAME):~/deploy_on_vm.sh" --zone "$(GCP_ZONE)" --project "$(GCP_PROJECT_ID)"
+
+	@echo "Executing deployment script on VM..."
+	gcloud compute ssh "$(VM_MANAGER_NAME)" --zone "$(GCP_ZONE)" --project "$(GCP_PROJECT_ID)" -- "bash /home/dima/deploy_on_vm.sh"
+
+	@echo "Cleaning up local and remote deployment script..."
+	@rm -f ./deploy_on_vm.sh
+	gcloud compute ssh "$(VM_MANAGER_NAME)" --zone "$(GCP_ZONE)" --project "$(GCP_PROJECT_ID)" -- "rm -f /home/dima/deploy_on_vm.sh"
+	@rm -f .vm_env.sh
+
 	@echo "\n=== Stack deployment attempt complete. ==="
 	@echo "Run 'make status' or 'make stack-ps' to check service status on the VM."
 
 .PHONY: stack-remove
 stack-remove:
 	@echo "\n=== Removing Docker Swarm stack: $(STACK_NAME) from manager VM: $(VM_MANAGER_NAME) ==="
-	gcloud compute ssh $(VM_MANAGER_NAME) --zone $(GCP_ZONE) --project $(GCP_PROJECT_ID) -- \
+	gcloud compute ssh "$(VM_MANAGER_NAME)" --zone "$(GCP_ZONE)" --project "$(GCP_PROJECT_ID)" -- \
 	  "sudo docker stack rm $(STACK_NAME) && \
 	   echo 'Stack $(STACK_NAME) removal initiated.' || echo 'Error removing stack $(STACK_NAME) or stack not found.'"
 	@echo "\n=== Stack removal attempt complete. ==="
@@ -390,14 +403,14 @@ stack-remove:
 .PHONY: stack-ps
 stack-ps:
 	@echo "\n=== Status of Docker Swarm stack: $(STACK_NAME) on manager VM: $(VM_MANAGER_NAME) ==="
-	gcloud compute ssh $(VM_MANAGER_NAME) --zone $(GCP_ZONE) --project $(GCP_PROJECT_ID) -- \
+	gcloud compute ssh "$(VM_MANAGER_NAME)" --zone "$(GCP_ZONE)" --project "$(GCP_PROJECT_ID)" -- \
 	  "sudo docker stack ps $(STACK_NAME)"
 
 .PHONY: stack-logs
 stack-logs:
 	@echo "\n=== Logs for Docker Swarm stack: $(STACK_NAME) on manager VM: $(VM_MANAGER_NAME) ==="
 	@echo "(Specify SERVICE_NAME=your_service_name to see logs for a specific service, e.g., make stack-logs SERVICE_NAME=api-gateway)"
-	gcloud compute ssh $(VM_MANAGER_NAME) --zone $(GCP_ZONE) --project $(GCP_PROJECT_ID) -- \
+	gcloud compute ssh "$(VM_MANAGER_NAME)" --zone "$(GCP_ZONE)" --project "$(GCP_PROJECT_ID)" -- \
 	  "sudo docker service logs $(STACK_NAME)_$(SERVICE_NAME) --follow --tail 50 || sudo docker stack ps $(STACK_NAME) && echo 'Showing all stack tasks if service name was not found or invalid. To see specific service logs, provide a valid SERVICE_NAME argument to make. For example: make stack-logs SERVICE_NAME=api-gateway'"
 
 .PHONY: status
@@ -411,4 +424,6 @@ status:
 	@make --no-print-directory stack-ps
 	@echo "\n--- Traefik Dashboard (if accessible) ---"
 	@echo "Potentially at: http://$(TRAEFIK_HOST):$(TRAEFIK_DASHBOARD_PORT) (TRAEFIK_HOST from .env.gcp)"
-	@echo "\nFor detailed service logs: make stack-logs SERVICE_NAME=<service_short_name> (e.g., api-gateway)" 
+	@echo "\nFor detailed service logs: make stack-logs SERVICE_NAME=<service_short_name> (e.g., api-gateway)"
+
+	@echo "DEBUG: Local IMAGE_PREFIX_MAKEVAR is [$(IMAGE_PREFIX_MAKEVAR)]" 
