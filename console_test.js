@@ -36,19 +36,74 @@
     }
 
     function getParticipantName(participantElement) {
-        for (const selector of nameSelectors) {
+        // participantElement is the speaking indicator (.IisKdb)
+        // First, try to find the overarching participant tile using data-participant-id
+        const mainTile = participantElement.closest('[data-participant-id]');
+
+        if (mainTile) {
+            // Strategy 1: Use the user-provided selector if available within the main tile
+            const userExampleNameElement = mainTile.querySelector('span.notranslate');
+            if (userExampleNameElement && userExampleNameElement.textContent && userExampleNameElement.textContent.trim()) {
+                // Check to ensure it's not just an icon or empty span if .notranslate is too broad
+                // A simple heuristic: if it contains typical name characters and isn't excessively long or short.
+                const nameText = userExampleNameElement.textContent.trim();
+                if (nameText.length > 1 && nameText.length < 50 && /^[\p{L}\s.'-]+$/u.test(nameText)) {
+                     // Only return if it looks like a name, not just any .notranslate span
+                    // Example: Filter out cases where .notranslate might be on an icon's text like "more_vert"
+                    const forbiddenSubstrings = ["more_vert", "mic_off", "mic", "videocam", "videocam_off", "present_to_all"];
+                    if (!forbiddenSubstrings.some(sub => nameText.toLowerCase().includes(sub.toLowerCase()))) {
+                        return nameText;
+                    }
+                }
+            }
+
+            // Strategy 2: Try selectors from google.ts within the main tile
+            const googleTsNameSelectors = [
+                '[data-self-name]', // For the current user
+                '.zWGUib',          // Common name display class in Google Meet
+                '.cS7aqe.N2K3jd',   // Another potential name class
+                '.XWGOtd',          // From original console_test.js, might still be valid
+                '[data-tooltip*="name"]' // Tooltips often contain names
+                // Add '.participant-name' if needed, but it can be too generic
+            ];
+
+            for (const selector of googleTsNameSelectors) {
+                const nameElement = mainTile.querySelector(selector);
+                if (nameElement) {
+                    let nameText = nameElement.textContent || nameElement.innerText || nameElement.getAttribute('data-self-name') || nameElement.getAttribute('data-tooltip');
+                    if (nameText && nameText.trim()) {
+                        // If it's a tooltip, it might have extra text like "Tooltip for Dmitriy Grankin"
+                        if (selector.includes('data-tooltip') && nameText.includes("Tooltip for ")) {
+                            nameText = nameText.replace("Tooltip for ", "").trim();
+                        }
+                        // Simple check for common icon texts that might be caught by broad selectors
+                        const forbiddenSubstrings = ["more_vert", "mic_off", "mic", "videocam", "videocam_off", "present_to_all"];
+                         if (!forbiddenSubstrings.some(sub => nameText.toLowerCase().includes(sub.toLowerCase()))) {
+                            return nameText.split('\n').pop()?.trim() || 'Unknown (Filtered)';
+                        }
+                    }
+                }
+            }
+        }
+
+        // Fallback if no specific name element is found on the main tile, or if mainTile itself is not found
+        // Try to get name from the original participantElement (the speaking indicator) context as a last resort
+        // This part is less likely to succeed for names but keeps original fallback logic.
+        for (const selector of nameSelectors) { // nameSelectors is the original list from console_test.js
             const nameElement = participantElement.querySelector(selector);
             if (nameElement) {
                 let nameText = nameElement.textContent || nameElement.innerText || nameElement.getAttribute('data-self-name');
                 if (nameText && nameText.trim()) return nameText.trim();
             }
         }
-        // Fallback if no specific name element is found but it's the 'You' element
+
         if (participantElement.textContent && participantElement.textContent.includes("You") && participantElement.textContent.length < 20) {
             return "You";
         }
-        // Last fallback: use the participant ID
-        return `Participant (${getParticipantId(participantElement)})`;
+
+        // Last fallback: use the participant ID from the main tile if available, otherwise from the indicator
+        const idToDisplay = mainTile ? getParticipantId(mainTile) : getParticipantId(participantElement);
+        return `Participant (${idToDisplay})`;
     }
 
     function logSpeakerEvent(participantElement, isSpeaking) {
