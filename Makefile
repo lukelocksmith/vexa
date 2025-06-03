@@ -317,12 +317,37 @@ up: check_docker
 # Stop services
 down: check_docker
 	@echo "---> Stopping Docker Compose services..."
-	@docker compose down
+	@if [ "$(TARGET)" = "cpu" ]; then \
+		echo "---> Stopping services with 'cpu' profile (including whisperlive-cpu)..."; \
+		docker compose --profile cpu down; \
+	elif [ "$(TARGET)" = "gpu" ]; then \
+		echo "---> Stopping services with 'gpu' profile (including whisperlive GPU)..."; \
+		docker compose --profile gpu down; \
+	else \
+		echo "---> TARGET not specified, stopping all services regardless of profile..."; \
+		docker compose down; \
+	fi
 
 # Stop services and remove volumes
 clean: check_docker
+	@echo "---> WARNING: This will stop services AND REMOVE ALL VOLUMES (including database data)!"
+	@echo "---> This action is IRREVERSIBLE and will delete all persistent data."
+	@read -p "Are you sure you want to continue? (y/N): " confirm; \
+	if [ "$$confirm" != "y" ] && [ "$$confirm" != "Y" ]; then \
+		echo "Operation cancelled."; \
+		exit 0; \
+	fi
 	@echo "---> Stopping Docker Compose services and removing volumes..."
-	@docker compose down -v
+	@if [ "$(TARGET)" = "cpu" ]; then \
+		echo "---> Stopping services with 'cpu' profile (including whisperlive-cpu) and removing volumes..."; \
+		docker compose --profile cpu down -v; \
+	elif [ "$(TARGET)" = "gpu" ]; then \
+		echo "---> Stopping services with 'gpu' profile (including whisperlive GPU) and removing volumes..."; \
+		docker compose --profile gpu down -v; \
+	else \
+		echo "---> TARGET not specified, stopping all services regardless of profile and removing volumes..."; \
+		docker compose down -v; \
+	fi
 
 # Show container status
 ps: check_docker
