@@ -1,0 +1,285 @@
+.PHONY: swarm-help swarm-setup swarm-env swarm-build swarm-push swarm-build-and-push swarm-deploy swarm-remove swarm-status swarm-logs swarm-test swarm-secrets swarm-init swarm-leave swarm-clean
+
+# Default registry and image tag - FOR LOCAL DEPLOYMENT
+REGISTRY_USER ?= local
+IMAGE_TAG ?= 1.0.0
+REGISTRY ?= vexa-swarm
+
+# Docker Swarm compose file
+SWARM_COMPOSE_FILE := docker-compose.swarm.yml
+STACK_NAME ?= vexa_swarm
+
+# Service definitions for build and push
+SERVICES := \
+	vexa-api-gateway:services/api-gateway/Dockerfile:. \
+	vexa-admin-api:services/admin-api/Dockerfile:. \
+	vexa-bot-manager:services/bot-manager/Dockerfile:. \
+	vexa-transcription-collector:services/transcription-collector/Dockerfile:. \
+	vexa-whisperlive-gpu:services/WhisperLive/Dockerfile.project:. \
+	vexa-whisperlive-cpu:services/WhisperLive/Dockerfile.cpu:. \
+	vexa-bot:services/vexa-bot/core/Dockerfile:./services/vexa-bot/core
+
+# Default target
+swarm-help:
+	@echo "Vexa Docker Swarm Deployment Makefile"
+	@echo "======================================"
+	@echo ""
+	@echo "Prerequisites:"
+	@echo "  - Docker Swarm cluster initialized (run 'make swarm-init' on manager)"
+	@echo ""
+	@echo "Quick Start:"
+	@echo "  make swarm-setup                    # Complete setup and deployment"
+	@echo ""
+	@echo "Step-by-step:"
+	@echo "  make swarm-env                      # Setup environment"
+	@echo "  make swarm-build-and-push           # Build and push all images"
+	@echo "  make swarm-secrets                  # Create Docker secrets"
+	@echo "  make swarm-deploy                   # Deploy the stack"
+	@echo ""
+	@echo "Management:"
+	@echo "  make swarm-status                   # Check stack status"
+	@echo "  make swarm-logs SERVICE=<name>      # View service logs"
+	@echo "  make swarm-test                     # Run smoke tests"
+	@echo "  make swarm-remove                   # Remove the stack"
+	@echo ""
+	@echo "Cluster Management:"
+	@echo "  make swarm-init                     # Initialize swarm (manager only)"
+	@echo "  make swarm-leave                    # Leave swarm cluster"
+	@echo ""
+	@echo "Configuration:"
+	@echo "  Local images will be built with prefix: $(REGISTRY)/$(REGISTRY_USER)"
+	@echo "  Image tag: $(IMAGE_TAG)"
+
+# Complete setup and deployment
+swarm-setup: swarm-env swarm-build swarm-secrets swarm-deploy
+	@echo "✅ Swarm deployment complete!"
+	@echo "Access your application at: http://<any-swarm-node-ip>:19090"
+	@echo "Traefik dashboard at: http://<any-swarm-node-ip>:18085"
+
+# Setup environment
+swarm-env:
+	@echo "---> Updating docker-compose.swarm.yml with local image names..."
+	@sed -i.bak \
+		-e 's|ghcr.io/your-registry-username|$(REGISTRY)/$(REGISTRY_USER)|g' \
+		-e 's/1\.0\.0/$(IMAGE_TAG)/g' \
+		$(SWARM_COMPOSE_FILE)
+	@echo "✅ Environment configured for local deployment"
+
+# Check if we're in a swarm
+check-swarm:
+	@if ! docker info --format '{{.Swarm.LocalNodeState}}' | grep -q active; then \
+		echo "❌ ERROR: This node is not part of a Docker Swarm"; \
+		echo "   Run 'make swarm-init' on the manager node first"; \
+		exit 1; \
+	fi
+
+# Check if Docker daemon is running
+check-docker:
+	@if ! docker info > /dev/null 2>&1; then \
+		echo "❌ ERROR: Docker is not running"; \
+		exit 1; \
+	fi
+
+# Build all service images
+swarm-build: check-docker
+	@echo "---> Building all service images..."
+	@echo "Services to build: $(words $(SERVICES)) images"
+	@for service_def in $(SERVICES); do \
+		service_name=$$(echo $$service_def | cut -d: -f1); \
+		dockerfile=$$(echo $$service_def | cut -d: -f2); \
+		context=$$(echo $$service_def | cut -d: -f3); \
+		image_name="$(REGISTRY)/$(REGISTRY_USER)/$$service_name:$(IMAGE_TAG)"; \
+		echo ""; \
+		echo "🔨 Building $$image_name"; \
+		echo "   Dockerfile: $$dockerfile"; \
+		echo "   Context: $$context"; \
+		if ! docker build -f $$dockerfile -t $$image_name $$context; then \
+			echo "❌ Failed to build $$image_name"; \
+			exit 1; \
+		fi; \
+		echo "✅ Built $$image_name"; \
+	done
+	@echo ""
+	@echo "✅ All images built successfully!"
+
+# Push all service images
+swarm-push: check-docker
+	@echo "--> Skipping push for local deployment."
+
+# Build and push all images
+swarm-build-and-push: swarm-build swarm-push
+
+# Create Docker secrets
+swarm-secrets: check-swarm
+	@echo "---> Creating Docker secrets..."
+	@if docker secret ls --format "{{.Name}}" | grep -q "^postgres_password$$"; then \
+		echo "⚠️  Secret 'postgres_password' already exists, skipping"; \
+	else \
+		echo "🔐 Creating postgres_password secret..."; \
+		openssl rand -base64 32 | docker secret create postgres_password -; \
+		echo "✅ Created postgres_password secret"; \
+	fi
+	@if docker secret ls --format "{{.Name}}" | grep -q "^admin_api_token$$"; then \
+		echo "⚠️  Secret 'admin_api_token' already exists, skipping"; \
+	else \
+		echo "🔐 Creating admin_api_token secret..."; \
+		openssl rand -base64 32 | docker secret create admin_api_token -; \
+		echo "✅ Created admin_api_token secret"; \
+	fi
+	@echo "✅ All secrets created!"
+
+# Deploy the stack
+swarm-deploy: check-swarm
+	@echo "---> Deploying Vexa stack to Docker Swarm..."
+	@if [ ! -f $(SWARM_COMPOSE_FILE) ]; then \
+		echo "❌ ERROR: $(SWARM_COMPOSE_FILE) not found"; \
+		exit 1; \
+	fi
+	@echo "📦 Deploying stack '$(STACK_NAME)'..."
+	@docker stack deploy -c $(SWARM_COMPOSE_FILE) $(STACK_NAME)
+	@echo ""
+	@echo "✅ Stack deployed! Use 'make swarm-status' to check progress"
+
+# Remove the stack
+swarm-remove: check-swarm
+	@echo "---> Removing Vexa stack..."
+	@if docker stack ls --format "{{.Name}}" | grep -q "^$(STACK_NAME)$$"; then \
+		docker stack rm $(STACK_NAME); \
+		echo "✅ Stack '$(STACK_NAME)' removed"; \
+	else \
+		echo "⚠️  Stack '$(STACK_NAME)' not found"; \
+	fi
+
+# Show stack status
+swarm-status: check-swarm
+	@echo "Vexa Stack Status"
+	@echo "================="
+	@echo ""
+	@echo "📊 Services:"
+	@docker stack services $(STACK_NAME) 2>/dev/null || echo "❌ Stack '$(STACK_NAME)' not found"
+	@echo ""
+	@echo "📋 Tasks:"
+	@docker stack ps $(STACK_NAME) --no-trunc 2>/dev/null || echo "❌ Stack '$(STACK_NAME)' not found"
+	@echo ""
+	@echo "🔗 Networks:"
+	@docker network ls --filter "name=$(STACK_NAME)" --format "table {{.Name}}\t{{.Driver}}\t{{.Scope}}"
+
+# Show service logs
+swarm-logs: check-swarm
+ifndef SERVICE
+	@echo "Usage: make swarm-logs SERVICE=<service-name>"
+	@echo "Available services:"
+	@docker stack services $(STACK_NAME) --format "  {{.Name}}" 2>/dev/null | sed 's/$(STACK_NAME)_//' || echo "❌ Stack '$(STACK_NAME)' not found"
+else
+	@echo "---> Showing logs for service: $(SERVICE)"
+	@docker service logs -f $(STACK_NAME)_$(SERVICE)
+endif
+
+# Run smoke tests
+swarm-test: check-swarm
+	@echo "🧪 Running Swarm smoke tests..."
+	@echo ""
+	@echo "1️⃣ Checking if all services are running..."
+	@failed_services=$$(docker stack services $(STACK_NAME) --format "{{.Name}} {{.Replicas}}" | grep "0/" | wc -l); \
+	if [ $$failed_services -gt 0 ]; then \
+		echo "❌ Some services are not running:"; \
+		docker stack services $(STACK_NAME) --format "{{.Name}} {{.Replicas}}" | grep "0/"; \
+		exit 1; \
+	else \
+		echo "✅ All services are running"; \
+	fi
+	@echo ""
+	@echo "2️⃣ Testing API Gateway connectivity..."
+	@manager_ip=$$(docker info --format '{{.Swarm.NodeAddr}}'); \
+	if curl -f -s "http://$$manager_ip:19090/docs" > /dev/null; then \
+		echo "✅ API Gateway is responding"; \
+	else \
+		echo "❌ API Gateway is not responding at http://$$manager_ip:19090"; \
+		echo "   Check: make swarm-logs SERVICE=api-gateway"; \
+		exit 1; \
+	fi
+	@echo ""
+	@echo "3️⃣ Testing Traefik dashboard..."
+	@manager_ip=$$(docker info --format '{{.Swarm.NodeAddr}}'); \
+	if curl -f -s "http://$$manager_ip:18085" > /dev/null; then \
+		echo "✅ Traefik dashboard is accessible"; \
+	else \
+		echo "❌ Traefik dashboard is not accessible at http://$$manager_ip:18085"; \
+		echo "   Check: make swarm-logs SERVICE=traefik"; \
+	fi
+	@echo ""
+	@echo "4️⃣ Testing internal service communication..."
+	@api_gateway_task=$$(docker service ps $(STACK_NAME)_api-gateway --format "{{.Name}}.{{.ID}}" | head -1); \
+	if [ -n "$$api_gateway_task" ]; then \
+		if docker exec $$api_gateway_task sh -c "curl -f -s http://admin-api:8001/docs > /dev/null"; then \
+			echo "✅ Internal service communication working"; \
+		else \
+			echo "❌ Internal service communication failed"; \
+			echo "   Check network connectivity between services"; \
+		fi; \
+	else \
+		echo "⚠️  Could not find API Gateway task for internal communication test"; \
+	fi
+	@echo ""
+	@echo "✅ Smoke tests completed!"
+	@echo ""
+	@manager_ip=$$(docker info --format '{{.Swarm.NodeAddr}}'); \
+	echo "🌐 Your Vexa deployment is accessible at:"; \
+	echo "   API: http://$$manager_ip:19090/docs"; \
+	echo "   Traefik Dashboard: http://$$manager_ip:18085"
+
+# Initialize Docker Swarm
+swarm-init: check-docker
+	@if docker info --format '{{.Swarm.LocalNodeState}}' | grep -q active; then \
+		echo "⚠️  Docker Swarm is already initialized on this node"; \
+		echo "Current role: $$(docker info --format '{{.Swarm.ControlAvailable}}' | sed 's/true/Manager/' | sed 's/false/Worker/')"; \
+		exit 0; \
+	fi
+	@echo "---> Initializing Docker Swarm..."
+	@public_ip=$$(curl -s ifconfig.me || hostname -I | cut -d' ' -f1); \
+	echo "🔄 Initializing swarm with advertise address: $$public_ip"; \
+	docker swarm init --advertise-addr $$public_ip
+	@echo ""
+	@echo "✅ Docker Swarm initialized!"
+	@echo "🔗 To add worker nodes, run the 'docker swarm join' command shown above on each worker"
+
+# Leave Docker Swarm
+swarm-leave: check-docker
+	@if ! docker info --format '{{.Swarm.LocalNodeState}}' | grep -q active; then \
+		echo "⚠️  This node is not part of a Docker Swarm"; \
+		exit 0; \
+	fi
+	@echo "---> Leaving Docker Swarm..."
+	@role=$$(docker info --format '{{.Swarm.ControlAvailable}}' | sed 's/true/manager/' | sed 's/false/worker/'); \
+	if [ "$$role" = "manager" ]; then \
+		echo "⚠️  This is a manager node. Forcing leave..."; \
+		docker swarm leave --force; \
+	else \
+		docker swarm leave; \
+	fi
+	@echo "✅ Left Docker Swarm"
+
+# Clean up everything
+swarm-clean: swarm-remove
+	@echo "---> Cleaning up Swarm resources..."
+	@echo "🧹 Removing secrets..."
+	@for secret in postgres_password admin_api_token; do \
+		if docker secret ls --format "{{.Name}}" | grep -q "^$$secret$$"; then \
+			docker secret rm $$secret && echo "✅ Removed secret: $$secret"; \
+		fi; \
+	done
+	@echo "🧹 Removing networks..."
+	@for network in $$(docker network ls --filter "name=$(STACK_NAME)" --format "{{.Name}}"); do \
+		docker network rm $$network 2>/dev/null && echo "✅ Removed network: $$network" || true; \
+	done
+	@echo "🧹 Removing volumes..."
+	@for volume in $$(docker volume ls --filter "name=$(STACK_NAME)" --format "{{.Name}}"); do \
+		docker volume rm $$volume 2>/dev/null && echo "✅ Removed volume: $$volume" || true; \
+	done
+	@echo "✅ Cleanup complete!"
+
+# Show current swarm nodes
+swarm-nodes: check-swarm
+	@echo "Docker Swarm Nodes"
+	@echo "=================="
+	@docker node ls 

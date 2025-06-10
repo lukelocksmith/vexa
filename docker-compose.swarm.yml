@@ -1,0 +1,229 @@
+version: "3.9"
+
+# Configuration variables - EDIT THESE FOR YOUR DEPLOYMENT
+x-registry-user: &registry-user "your-registry-username"
+x-image-tag: &image-tag "1.0.0"
+
+
+services:
+  api-gateway:
+    image: "vexa-swarm/local/vexa-api-gateway:1.0.0"
+    environment:
+      - ADMIN_API_URL=http://admin-api:8001
+      - BOT_MANAGER_URL=http://bot-manager:8080
+      - TRANSCRIPTION_COLLECTOR_URL=http://transcription-collector:8000
+      - LOG_LEVEL=DEBUG
+    networks:
+      - vexa_default
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: rollback
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.api-gateway.rule=PathPrefix(`/`)"
+      - "traefik.http.routers.api-gateway.entrypoints=web"
+      - "traefik.http.services.api-gateway.loadbalancer.server.port=8000"
+
+  admin-api:
+    image: "vexa-swarm/local/vexa-admin-api:1.0.0"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=vexa
+      - DB_USER=postgres
+      - LOG_LEVEL=DEBUG
+      - DB_PASSWORD_FILE=/run/secrets/postgres_password
+      - ADMIN_API_TOKEN_FILE=/run/secrets/admin_api_token
+    secrets:
+      - postgres_password
+      - admin_api_token
+    networks:
+      - vexa_default
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+
+  bot-manager:
+    image: "vexa-swarm/local/vexa-bot-manager:1.0.0"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - BOT_IMAGE_NAME="vexa-swarm/local/vexa-bot:1.0.0"
+      - DOCKER_NETWORK=vexa_swarm_vexa_default
+      - LOG_LEVEL=DEBUG
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=vexa
+      - DB_USER=postgres
+      - DOCKER_HOST=unix://var/run/docker.sock
+      - DEVICE_TYPE=${DEVICE_TYPE:-cpu}
+      - WHISPER_LIVE_URL=ws://whisperlive.internal/ws
+      - DB_PASSWORD_FILE=/run/secrets/postgres_password
+    secrets:
+      - postgres_password
+    networks:
+      - vexa_default
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+
+  whisperlive-cpu:
+    image: "vexa-swarm/local/vexa-whisperlive-cpu:1.0.0"
+    environment:
+      - REDIS_STREAM_URL=redis://redis:6379/0/transcription_segments
+      - TRANSCRIPTION_COLLECTOR_URL=redis://redis:6379/0/transcription_segments
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_DB=0
+      - REDIS_STREAM_NAME=transcription_segments
+      - LANGUAGE_DETECTION_SEGMENTS=${LANGUAGE_DETECTION_SEGMENTS:-10}
+      - VAD_FILTER_THRESHOLD=${VAD_FILTER_THRESHOLD:-0.2}
+      - DEVICE_TYPE=cpu
+    networks:
+      - vexa_default
+      - whispernet
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+    volumes:
+      - huggingface-cache:/root/.cache/huggingface/hub
+      - whisper-models:/app/models
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.whisperlive-router.rule=Host(`whisperlive.internal`) && PathPrefix(`/ws`)"
+      - "traefik.http.routers.whisperlive-router.entrypoints=web"
+      - "traefik.http.services.whisperlive-service.loadbalancer.server.port=9090"
+
+  traefik:
+    image: traefik:v2.10
+    ports:
+      - "19090:8000"
+      - "18085:8080"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.swarmMode=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:8000"
+      - "--log.level=DEBUG"
+      - "--providers.docker.constraints=Label(`traefik.enable`, `true`)"
+      - "--providers.docker.watch=true"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - vexa_default
+      - whispernet
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  transcription-collector:
+    image: "vexa-swarm/local/vexa-transcription-collector:1.0.0"
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_NAME=vexa
+      - DB_USER=postgres
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_STREAM_NAME=transcription_segments
+      - REDIS_CONSUMER_GROUP=collector_group
+      - REDIS_STREAM_READ_COUNT=10
+      - REDIS_STREAM_BLOCK_MS=2000
+      - BACKGROUND_TASK_INTERVAL=10
+      - IMMUTABILITY_THRESHOLD=30
+      - REDIS_SEGMENT_TTL=3600
+      - REDIS_CLEANUP_THRESHOLD=86400
+      - LOG_LEVEL=DEBUG
+      - DB_PASSWORD_FILE=/run/secrets/postgres_password
+    secrets:
+      - postgres_password
+    networks:
+      - vexa_default
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+
+  redis:
+    image: redis:7.0-alpine
+    command:
+      ["redis-server", "--appendonly", "yes", "--appendfsync", "everysec"]
+    volumes:
+      - redis-data:/data
+    networks:
+      - vexa_default
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=vexa
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD_FILE=/run/secrets/postgres_password
+    secrets:
+      - postgres_password
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - vexa_default
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d vexa"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 40s
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]
+
+volumes:
+  redis-data:
+  postgres-data:
+  huggingface-cache:
+  whisper-models:
+
+networks:
+  vexa_default:
+    driver: overlay
+    attachable: true
+  whispernet:
+    driver: overlay
+    attachable: true
+
+secrets:
+  postgres_password:
+    external: true
+  admin_api_token:
+    external: true 
