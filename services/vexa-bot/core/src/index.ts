@@ -6,39 +6,37 @@ import { browserArgs, userAgent } from "./constans";
 import { BotConfig } from "./types";
 import { createClient, RedisClientType } from 'redis';
 import { Page, Browser } from 'playwright-core';
-import * as http from 'http'; // ADDED: For HTTP callback
-import * as https from 'https'; // ADDED: For HTTPS callback (if needed)
+import * as http from 'http';
+import * as https from 'https';
 
 // Module-level variables to store current configuration
 let currentLanguage: string | null | undefined = null;
-let currentTask: string | null | undefined = 'transcribe'; // Default task
+let currentTask: string | null | undefined = 'transcribe';
 let currentRedisUrl: string | null = null;
 let currentConnectionId: string | null = null;
-let botManagerCallbackUrl: string | null = null; // ADDED: To store callback URL
-let botManagerStartedCallbackUrl: string | null = null; // ADDED: To store started callback URL
+let currentMeetingId: number | null = null;
+let botManagerCallbackUrl: string | null = null;
+let botManagerStartedCallbackUrl: string | null = null;
 let currentPlatform: "google_meet" | "zoom" | "teams" | undefined;
-let page: Page | null = null; // Initialize page, will be set in runBot
+let page: Page | null = null;
 
-// --- ADDED: Flag to prevent multiple shutdowns ---
+// Flag to prevent multiple shutdowns
 let isShuttingDown = false;
-// ---------------------------------------------
 
-// --- ADDED: Redis subscriber client ---
+// Redis subscriber client
 let redisSubscriber: RedisClientType | null = null;
-// -----------------------------------
 
-// --- ADDED: Browser instance ---
+// Browser instance
 let browserInstance: Browser | null = null;
-// -------------------------------
 
-// --- ADDED: Message Handler ---
-// --- MODIFIED: Make async and add page parameter ---
+// Heartbeat interval
+let heartbeatInterval: NodeJS.Timeout | null = null;
+
+// Message Handler
 const handleRedisMessage = async (message: string, channel: string, page: Page | null) => {
-  // ++ ADDED: Log entry into handler ++
   log(`[DEBUG] handleRedisMessage entered for channel ${channel}. Message: ${message.substring(0, 100)}...`);
-  // ++++++++++++++++++++++++++++++++++
   log(`Received command on ${channel}: ${message}`);
-  // --- ADDED: Implement reconfigure command handling --- 
+  
   try {
       const command = JSON.parse(message);
       if (command.action === 'reconfigure') {
@@ -49,7 +47,7 @@ const handleRedisMessage = async (message: string, channel: string, page: Page |
           currentTask = command.task;
 
           // Trigger browser-side reconfiguration via the exposed function
-          if (page && !page.isClosed()) { // Ensure page exists and is open
+          if (page && !page.isClosed()) {
               try {
                   await page.evaluate(
                       ([lang, task]) => {
@@ -57,11 +55,10 @@ const handleRedisMessage = async (message: string, channel: string, page: Page |
                               (window as any).triggerWebSocketReconfigure(lang, task);
                           } else {
                               console.error('[Node Eval Error] triggerWebSocketReconfigure not found on window.');
-                              // Optionally log via exposed function if available
                               (window as any).logBot?.('[Node Eval Error] triggerWebSocketReconfigure not found on window.');
                           }
                       },
-                      [currentLanguage, currentTask] // Pass new config as argument array
+                      [currentLanguage, currentTask]
                   );
                   log("Sent reconfigure command to browser context via page.evaluate.");
               } catch (evalError: any) {
@@ -71,11 +68,11 @@ const handleRedisMessage = async (message: string, channel: string, page: Page |
                log("Page not available or closed, cannot send reconfigure command to browser.");
           }
       } else if (command.action === 'leave') {
-        // TODO: Implement leave logic (Phase 4)
         log("Received leave command");
-        if (!isShuttingDown && page && !page.isClosed()) { // Check flag and page state
+        if (!isShuttingDown && page && !page.isClosed()) {
+          // Set status to stopping before leaving
+          await sendBotStatusUpdate('stopping');
           // A command-initiated leave is a successful completion, not an error.
-          // Exit with code 0 to signal success to Nomad and prevent restarts.
           await performGracefulLeave(page, 0, "self_initiated_leave");
         } else {
            log("Ignoring leave command: Already shutting down or page unavailable.")
@@ -84,15 +81,13 @@ const handleRedisMessage = async (message: string, channel: string, page: Page |
   } catch (e: any) {
       log(`Error processing Redis message: ${e.message}`);
   }
-  // -------------------------------------------------
 };
-// ----------------------------
 
-// --- ADDED: Graceful Leave Function ---
+// Graceful Leave Function
 async function performGracefulLeave(
-  page: Page | null, // Allow page to be null for cases where it might not be available
-  exitCode: number = 1, // Default to 1 (failure/generic error)
-  reason: string = "self_initiated_leave" // Default reason
+  page: Page | null,
+  exitCode: number = 1,
+  reason: string = "self_initiated_leave"
 ): Promise<void> {
   if (isShuttingDown) {
     log("[Graceful Leave] Already in progress, ignoring duplicate call.");
@@ -102,17 +97,14 @@ async function performGracefulLeave(
   log(`[Graceful Leave] Initiating graceful shutdown sequence... Reason: ${reason}, Exit Code: ${exitCode}`);
 
   let platformLeaveSuccess = false;
-  if (page && !page.isClosed()) { // Only attempt platform leave if page is valid
+  if (page && !page.isClosed()) {
     try {
       log("[Graceful Leave] Attempting platform-specific leave...");
-      // Assuming currentPlatform is set appropriately, or determine it if needed
-      if (currentPlatform === "google_meet") { // Add platform check if you have other platform handlers
+      if (currentPlatform === "google_meet") {
          platformLeaveSuccess = await leaveGoogleMeet(page);
       } else {
          log(`[Graceful Leave] No platform-specific leave defined for ${currentPlatform}. Page will be closed.`);
-         // If no specific leave, we still consider it "handled" to proceed with cleanup.
-         // The exitCode passed to this function will determine the callback's exitCode.
-         platformLeaveSuccess = true; // Or false if page closure itself is the "action"
+         platformLeaveSuccess = true;
       }
       log(`[Graceful Leave] Platform leave/close attempt result: ${platformLeaveSuccess}`);
     } catch (leaveError: any) {
@@ -121,16 +113,13 @@ async function performGracefulLeave(
     }
   } else {
     log("[Graceful Leave] Page not available or already closed. Skipping platform-specific leave attempt.");
-    // If the page is already gone, we can't perform a UI leave.
-    // The provided exitCode and reason will dictate the callback.
-    // If reason is 'admission_failed', exitCode would be 2, and platformLeaveSuccess is irrelevant.
   }
 
-  // Determine final exit code. If the initial intent was a successful exit (code 0),
-  // it should always be 0. For error cases (non-zero exit codes), preserve the original error code.
+  // Determine final exit code
   const finalCallbackExitCode = (exitCode === 0) ? 0 : exitCode;
   const finalCallbackReason = reason;
 
+  // Send exit callback to bot-manager
   if (botManagerCallbackUrl && currentConnectionId) {
     const payload = JSON.stringify({
       connection_id: currentConnectionId,
@@ -141,29 +130,29 @@ async function performGracefulLeave(
     try {
       log(`[Graceful Leave] Sending exit callback to ${botManagerCallbackUrl} with payload: ${payload}`);
       const url = new URL(botManagerCallbackUrl);
-      const options: https.RequestOptions = { // Added type
+      const options: https.RequestOptions = {
         method: 'POST',
         hostname: url.hostname,
         port: url.port || (url.protocol === 'https:' ? '443' : '80'),
         path: url.pathname,
         headers: {
           'Content-Type': 'application/json',
-          'Content-Length': Buffer.byteLength(payload) // Assumes Buffer is available
+          'Content-Length': Buffer.byteLength(payload)
         }
       };
 
-      const req = (url.protocol === 'https:' ? https : http).request(options, (res: http.IncomingMessage) => { // Added type
+      const req = (url.protocol === 'https:' ? https : http).request(options, (res: http.IncomingMessage) => {
         log(`[Graceful Leave] Bot-manager callback response status: ${res.statusCode}`);
         res.on('data', () => { /* consume data */ });
       });
 
-      req.on('error', (err: Error) => { // Added type
+      req.on('error', (err: Error) => {
         log(`[Graceful Leave] Error sending bot-manager callback: ${err.message}`);
       });
 
       req.write(payload);
       req.end();
-      await new Promise(resolve => setTimeout(resolve, 500)); 
+      await new Promise(resolve => setTimeout(resolve, 500));
     } catch (callbackError: any) {
       log(`[Graceful Leave] Exception during bot-manager callback preparation: ${callbackError.message}`);
     }
@@ -171,6 +160,7 @@ async function performGracefulLeave(
     log("[Graceful Leave] Bot manager callback URL or Connection ID not configured. Cannot send exit status.");
   }
 
+  // Clean up Redis connection
   if (redisSubscriber && redisSubscriber.isOpen) {
     log("[Graceful Leave] Disconnecting Redis subscriber...");
     try {
@@ -182,7 +172,13 @@ async function performGracefulLeave(
     }
   }
 
-  // Close the browser page if it's still open and wasn't closed by platform leave
+  // Stop heartbeat
+  if (heartbeatInterval) {
+    clearInterval(heartbeatInterval);
+    heartbeatInterval = null;
+  }
+
+  // Close the browser page if it's still open
   if (page && !page.isClosed()) {
     log("[Graceful Leave] Ensuring page is closed.");
     try {
@@ -207,14 +203,11 @@ async function performGracefulLeave(
   }
 
   // Exit the process
-  // The process exit code should reflect the overall success/failure.
-  // If callback used finalCallbackExitCode, process.exit could use the same.
   log(`[Graceful Leave] Exiting process with code ${finalCallbackExitCode} (Reason: ${finalCallbackReason}).`);
   process.exit(finalCallbackExitCode);
 }
-// --- ----------------------------- ---
 
-// --- ADDED: Bot Started Callback Function ---
+// Bot Started Callback Function
 async function sendBotStartedCallback(
   status: string,
   details?: string
@@ -228,7 +221,6 @@ async function sendBotStartedCallback(
 
     try {
       log(`[Bot Started] Sending started callback to ${botManagerStartedCallbackUrl} with payload: ${payload}`);
-      log(`[Bot Started] Bot status: ${status}, Details: ${details || 'None'}, Connection ID: ${currentConnectionId}`);
       
       const url = new URL(botManagerStartedCallbackUrl);
       const options: https.RequestOptions = {
@@ -266,65 +258,185 @@ async function sendBotStartedCallback(
     log(`[Bot Started] Cannot send callback: URL=${botManagerStartedCallbackUrl}, ConnectionID=${currentConnectionId}`);
   }
 }
-// --- ------------------------------------ ---
 
-// --- ADDED: Function to be called from browser to trigger leave ---
-// This needs to be defined in a scope where 'page' will be available when it's exposed.
-// We will define the actual exposed function inside runBot where 'page' is in scope.
-// --- ------------------------------------------------------------ ---
+// Bot Joined Callback Function
+async function sendBotJoinedCallback(): Promise<void> {
+  if (botManagerCallbackUrl && currentConnectionId) {
+    const payload = JSON.stringify({
+      connection_id: currentConnectionId
+    });
+
+    try {
+      const url = new URL(botManagerCallbackUrl.replace('/exited', '/joined'));
+      const options: https.RequestOptions = {
+        method: 'POST',
+        hostname: url.hostname,
+        port: url.port || (url.protocol === 'https:' ? '443' : '80'),
+        path: url.pathname,
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(payload)
+        }
+      };
+
+      const req = (url.protocol === 'https:' ? https : http).request(options, (res: http.IncomingMessage) => {
+        log(`[Bot Joined] Bot-manager joined callback response status: ${res.statusCode}`);
+        if (res.statusCode === 200) {
+          log(`[Bot Joined] Successfully sent joined callback to bot-manager`);
+        }
+        res.on('data', () => { /* consume data */ });
+      });
+
+      req.on('error', (err: Error) => {
+        log(`[Bot Joined] Error sending bot-manager joined callback: ${err.message}`);
+      });
+
+      req.write(payload);
+      req.end();
+      await new Promise(resolve => setTimeout(resolve, 500));
+    } catch (callbackError: any) {
+      log(`[Bot Joined] Exception during bot-manager joined callback preparation: ${callbackError.message}`);
+    }
+  } else {
+    log(`[Bot Joined] Cannot send callback: URL=${botManagerCallbackUrl}, ConnectionID=${currentConnectionId}`);
+  }
+}
+
+// Bot Heartbeat Function
+async function sendBotHeartbeat(): Promise<void> {
+  if (botManagerCallbackUrl && currentConnectionId) {
+    const payload = JSON.stringify({
+      connection_id: currentConnectionId
+    });
+
+    try {
+      const url = new URL(botManagerCallbackUrl.replace('/exited', '/heartbeat'));
+      const options: https.RequestOptions = {
+        method: 'POST',
+        hostname: url.hostname,
+        port: url.port || (url.protocol === 'https:' ? '443' : '80'),
+        path: url.pathname,
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(payload)
+        }
+      };
+
+      const req = (url.protocol === 'https:' ? https : http).request(options, (res: http.IncomingMessage) => {
+        if (res.statusCode === 200) {
+          log(`[Bot Heartbeat] Successfully sent heartbeat to bot-manager`);
+        }
+        res.on('data', () => { /* consume data */ });
+      });
+
+      req.on('error', (err: Error) => {
+        log(`[Bot Heartbeat] Error sending heartbeat: ${err.message}`);
+      });
+
+      req.write(payload);
+      req.end();
+    } catch (callbackError: any) {
+      log(`[Bot Heartbeat] Exception during heartbeat preparation: ${callbackError.message}`);
+    }
+  }
+}
+
+// Bot Status Update Function
+async function sendBotStatusUpdate(newStatus: string): Promise<void> {
+  if (botManagerCallbackUrl && currentConnectionId) {
+    const payload = JSON.stringify({
+      connection_id: currentConnectionId,
+      status: newStatus
+    });
+
+    try {
+      const url = new URL(botManagerCallbackUrl.replace('/exited', '/status'));
+      const options: https.RequestOptions = {
+        method: 'PATCH',
+        hostname: url.hostname,
+        port: url.port || (url.protocol === 'https:' ? '443' : '80'),
+        path: url.pathname,
+        headers: {
+          'Content-Type': 'application/json',
+          'Content-Length': Buffer.byteLength(payload)
+        }
+      };
+
+      const req = (url.protocol === 'https:' ? https : http).request(options, (res: http.IncomingMessage) => {
+        log(`[Bot Status Update] Bot-manager status update response: ${res.statusCode}`);
+        res.on('data', () => { /* consume data */ });
+      });
+
+      req.on('error', (err: Error) => {
+        log(`[Bot Status Update] Error sending status update: ${err.message}`);
+      });
+
+      req.write(payload);
+      req.end();
+      await new Promise(resolve => setTimeout(resolve, 500));
+    } catch (callbackError: any) {
+      log(`[Bot Status Update] Exception during status update preparation: ${callbackError.message}`);
+    }
+  }
+}
+
+// Start heartbeat interval
+function startHeartbeat(): void {
+  if (heartbeatInterval) {
+    clearInterval(heartbeatInterval);
+  }
+  
+  heartbeatInterval = setInterval(async () => {
+    await sendBotHeartbeat();
+  }, 30000); // Every 30 seconds
+  
+  log("[Bot Heartbeat] Started heartbeat interval (30 seconds)");
+}
 
 export async function runBot(botConfig: BotConfig): Promise<void> {
-  // --- UPDATED: Parse and store config values ---
+  // Parse and store config values
   currentLanguage = botConfig.language;
   currentTask = botConfig.task || 'transcribe';
   currentRedisUrl = botConfig.redisUrl;
   currentConnectionId = botConfig.connectionId;
-  botManagerCallbackUrl = botConfig.botManagerCallbackUrl || null; // ADDED: Get callback URL from botConfig
-  botManagerStartedCallbackUrl = botConfig.botManagerStartedCallbackUrl || null; // ADDED: Get started callback URL from botConfig
-  currentPlatform = botConfig.platform; // Set currentPlatform here
+  currentMeetingId = botConfig.meeting_id || null;
+  botManagerCallbackUrl = botConfig.botManagerCallbackUrl || null;
+  botManagerStartedCallbackUrl = botConfig.botManagerStartedCallbackUrl || null;
+  currentPlatform = botConfig.platform;
 
-  // Destructure other needed config values
   const { meetingUrl, platform, botName } = botConfig;
 
   log(`Starting bot for ${platform} with URL: ${meetingUrl}, name: ${botName}, language: ${currentLanguage}, task: ${currentTask}, connectionId: ${currentConnectionId}`);
 
-  // --- ADDED: Redis Client Setup and Subscription ---
+  // Redis Client Setup and Subscription
   if (currentRedisUrl && currentConnectionId) {
     log("Setting up Redis subscriber...");
     try {
       redisSubscriber = createClient({ url: currentRedisUrl });
 
       redisSubscriber.on('error', (err) => log(`Redis Client Error: ${err}`));
-      // ++ ADDED: Log connection events ++
       redisSubscriber.on('connect', () => log('[DEBUG] Redis client connecting...'));
       redisSubscriber.on('ready', () => log('[DEBUG] Redis client ready.'));
       redisSubscriber.on('reconnecting', () => log('[DEBUG] Redis client reconnecting...'));
       redisSubscriber.on('end', () => log('[DEBUG] Redis client connection ended.'));
-      // ++++++++++++++++++++++++++++++++++
 
       await redisSubscriber.connect();
       log(`Connected to Redis at ${currentRedisUrl}`);
 
       const commandChannel = `bot_commands:${currentConnectionId}`;
-      // Pass the page object when subscribing
-      // ++ MODIFIED: Add logging inside subscribe callback ++
       await redisSubscriber.subscribe(commandChannel, (message, channel) => {
-          log(`[DEBUG] Redis subscribe callback fired for channel ${channel}.`); // Log before handling
+          log(`[DEBUG] Redis subscribe callback fired for channel ${channel}.`);
           handleRedisMessage(message, channel, page)
-      }); 
-      // ++++++++++++++++++++++++++++++++++++++++++++++++
+      });
       log(`Subscribed to Redis channel: ${commandChannel}`);
 
     } catch (err) {
       log(`*** Failed to connect or subscribe to Redis: ${err} ***`);
-      // Decide how to handle this - exit? proceed without command support?
-      // For now, log the error and proceed without Redis.
-      redisSubscriber = null; // Ensure client is null if setup failed
+      redisSubscriber = null;
     }
   } else {
     log("Redis URL or Connection ID missing, skipping Redis setup.");
   }
-  // -------------------------------------------------
 
   // Use Stealth Plugin to avoid detection
   const stealthPlugin = StealthPlugin();
@@ -347,9 +459,9 @@ export async function runBot(botConfig: BotConfig): Promise<void> {
       height: 720
     }
   })
-  page = await context.newPage(); // Assign to the module-scoped page variable
+  page = await context.newPage();
 
-  // --- ADDED: Expose a function for browser to trigger Node.js graceful leave ---
+  // Expose function for browser to trigger Node.js graceful leave
   await page.exposeFunction("triggerNodeGracefulLeave", async () => {
     log("[Node.js] Received triggerNodeGracefulLeave from browser context.");
     if (!isShuttingDown) {
@@ -358,16 +470,18 @@ export async function runBot(botConfig: BotConfig): Promise<void> {
       log("[Node.js] Ignoring triggerNodeGracefulLeave as shutdown is already in progress.");
     }
   });
-  // --- ----------------------------------------------------------------------- ---
 
-  // --- ADDED: Expose a function for browser to send bot started callback ---
+  // Expose function for browser to send bot started callback
   await page.exposeFunction("sendBotStartedCallback", async (status: string, details?: string) => {
     log(`[Node.js] Received sendBotStartedCallback from browser context: status=${status}, details=${details}`);
-    log(`[Node.js] Sending '${status}' callback to bot-manager for meeting activation`);
     await sendBotStartedCallback(status, details);
-    log(`[Node.js] Completed sending '${status}' callback to bot-manager`);
   });
-  // --- ----------------------------------------------------------------------- ---
+
+  // Expose function for browser to send bot joined callback
+  await page.exposeFunction("sendBotJoinedCallback", async () => {
+    log(`[Node.js] Received sendBotJoinedCallback from browser context`);
+    await sendBotJoinedCallback();
+  });
 
   // Setup anti-detection measures
   await page.addInitScript(() => {
@@ -378,37 +492,68 @@ export async function runBot(botConfig: BotConfig): Promise<void> {
     Object.defineProperty(navigator, "languages", {
       get: () => ["en-US", "en"],
     });
-    Object.defineProperty(navigator, "hardwareConcurrency", { get: () => 4 });
-    Object.defineProperty(navigator, "deviceMemory", { get: () => 8 });
-    Object.defineProperty(window, "innerWidth", { get: () => 1920 });
-    Object.defineProperty(window, "innerHeight", { get: () => 1080 });
-    Object.defineProperty(window, "outerWidth", { get: () => 1920 });
-    Object.defineProperty(window, "outerHeight", { get: () => 1080 });
   });
 
-  // Call the appropriate platform handler
   try {
-    if (botConfig.platform === "google_meet") {
-      await handleGoogleMeet(botConfig, page, performGracefulLeave);
-    } else if (botConfig.platform === "zoom") {
-      log("Zoom platform not yet implemented.");
-      await performGracefulLeave(page, 1, "platform_not_implemented");
-    } else if (botConfig.platform === "teams") {
-      log("Teams platform not yet implemented.");
-      await performGracefulLeave(page, 1, "platform_not_implemented");
-    } else {
-      log(`Unknown platform: ${botConfig.platform}`);
-      await performGracefulLeave(page, 1, "unknown_platform");
+    // Navigate to the meeting URL
+    if (!meetingUrl) {
+      throw new Error("Meeting URL is required but not provided");
     }
-  } catch (error: any) {
-    log(`Error during platform handling: ${error.message}`);
-    await performGracefulLeave(page, 1, "platform_handler_exception");
-  }
+    
+    log(`Navigating to meeting URL: ${meetingUrl}`);
+    await page.goto(meetingUrl, { waitUntil: 'networkidle' });
 
-  log('Bot execution completed OR waiting for external termination/command.'); // Update log message
+    // Send bot started callback
+    log("[Bot Started] Sending started callback to bot-manager");
+    await sendBotStartedCallback("bot_started", "Bot container started and navigated to meeting URL");
+
+    // Start heartbeat
+    startHeartbeat();
+
+    // Handle the meeting based on platform
+    if (platform === "google_meet") {
+      log("Handling Google Meet...");
+      
+      // Create a BotConfig object for the handleGoogleMeet function
+      const botConfigForHandler = {
+        platform: platform,
+        meetingUrl: meetingUrl,
+        botName: botName,
+        token: botConfig.token,
+        connectionId: currentConnectionId || '',
+        nativeMeetingId: botConfig.nativeMeetingId,
+        language: currentLanguage || 'en',
+        task: currentTask || 'transcribe',
+        redisUrl: currentRedisUrl || '',
+        automaticLeave: {
+          waitingRoomTimeout: 300000, // 5 minutes
+          noOneJoinedTimeout: 300000, // 5 minutes
+          everyoneLeftTimeout: 300000  // 5 minutes
+        },
+        meeting_id: currentMeetingId || undefined,
+        botManagerCallbackUrl: botManagerCallbackUrl || undefined,
+        botManagerStartedCallbackUrl: botManagerStartedCallbackUrl || undefined
+      };
+      
+      await handleGoogleMeet(botConfigForHandler, page, performGracefulLeave);
+      
+      // Send bot joined callback
+      log("[Bot Joined] Sending joined callback to bot-manager");
+      await sendBotJoinedCallback();
+      
+    } else {
+      log(`Platform ${platform} not implemented yet. Waiting for manual intervention...`);
+      // Keep the bot running for other platforms
+      await new Promise(() => {}); // Never resolves
+    }
+
+  } catch (error) {
+    log(`Error during bot execution: ${error}`);
+    await performGracefulLeave(page, 1, "execution_error");
+  }
 }
 
-// --- ADDED: Basic Signal Handling (for future Phase 5) ---
+// Basic Signal Handling (for future Phase 5)
 // Setup signal handling to also trigger graceful leave
 const gracefulShutdown = async (signal: string) => {
     log(`Received signal: ${signal}. Triggering graceful shutdown.`);
@@ -424,4 +569,3 @@ const gracefulShutdown = async (signal: string) => {
 
 process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 process.on('SIGINT', () => gracefulShutdown('SIGINT'));
-// --- ------------------------------------------------- ---

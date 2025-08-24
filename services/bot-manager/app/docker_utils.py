@@ -5,7 +5,7 @@ import json
 import uuid
 import os
 import time
-from typing import Optional, List, Dict, Any
+from typing import Optional, List, Dict, Any, Tuple
 from datetime import datetime, timezone
 import asyncio
 from contextlib import asynccontextmanager
@@ -329,11 +329,11 @@ async def start_bot_container(
 
         logger.info(f"Successfully started container {container_id} for meeting: {meeting_id}")
         
-        # *** REMOVED Session Recording Call - To be handled by caller ***
-        # try:
-        #     asyncio.run(_record_session_start(meeting_id, connection_id))
-        # except RuntimeError as e:
-        #     logger.error(f"Error running async session recording: {e}. Session start NOT recorded.")
+        # Create MeetingSession record for this bot instance
+        session_created = await _record_session_start(meeting_id, connection_id)
+        if not session_created:
+            logger.warning(f"Failed to create MeetingSession for meeting {meeting_id}, but container is running")
+            # Don't fail the entire operation, just log the warning
 
         return container_id, connection_id # Return both values
 
