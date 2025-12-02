@@ -2387,11 +2387,16 @@ class ServeClientFasterWhisper(ServeClientBase):
         self.end_time_for_same_output = None
 
         device = "cuda" if torch.cuda.is_available() else "cpu"
-        if device == "cuda":
+        # Check for explicit compute type from environment variable
+        env_compute_type = os.getenv("WL_COMPUTE_TYPE")
+        if env_compute_type:
+            self.compute_type = env_compute_type
+        elif device == "cuda":
             major, _ = torch.cuda.get_device_capability(device)
             self.compute_type = "float16" if major >= 7 else "float32"
         else:
-            self.compute_type = "default" #"int8" #NOTE: maybe we use default here...
+            # Default to int8 for CPU (faster and lower memory)
+            self.compute_type = "int8"
 
         if self.model_size_or_path is None:
             return
@@ -2435,11 +2440,24 @@ class ServeClientFasterWhisper(ServeClientBase):
         """
         Instantiates a new model, sets it as the transcriber.
         """
+        # Get CPU threads from environment variable (0 = auto-detect)
+        # Only pass cpu_threads if explicitly set, otherwise let WhisperModel use default
+        cpu_threads_env = os.getenv("WL_CPU_THREADS", "0")
+        cpu_threads = int(cpu_threads_env) if cpu_threads_env.isdigit() else 0
+        
+        # Build kwargs - only include cpu_threads if it's explicitly set (> 0)
+        model_kwargs = {
+            "device": device,
+            "compute_type": self.compute_type,
+            "local_files_only": False,
+        }
+        # Only pass cpu_threads if explicitly set (0 means auto-detect in WhisperModel)
+        if cpu_threads > 0:
+            model_kwargs["cpu_threads"] = cpu_threads
+        
         self.transcriber = WhisperModel(
             self.model_size_or_path,
-            device=device,
-            compute_type=self.compute_type,
-            local_files_only=False,
+            **model_kwargs
         )
 
     def check_valid_model(self, model_size):

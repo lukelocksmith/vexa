@@ -179,6 +179,8 @@ services:
       - DEVICE_TYPE=cpu
       - WHISPER_MODEL_SIZE=${WHISPER_MODEL_SIZE}
       - WL_MAX_CLIENTS=${WL_MAX_CLIENTS}
+      - WL_CPU_THREADS=${WL_CPU_THREADS:-4}
+      - WL_COMPUTE_TYPE=${WL_COMPUTE_TYPE:-int8}
       - CONSUL_ENABLE=${CONSUL_ENABLE:-true}
       - CONSUL_HTTP_ADDR=${CONSUL_HTTP_ADDR:-http://consul:8500}
     deploy:
