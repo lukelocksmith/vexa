@@ -9,11 +9,14 @@ import {
 } from "./selectors";
 
 export async function joinGoogleMeeting(
-  page: Page, 
+  page: Page | null, 
   meetingUrl: string, 
   botName: string, 
   botConfig: BotConfig
 ): Promise<void> {
+  if (!page) {
+    throw new Error("Page is required for Google Meet");
+  }
   await page.goto(meetingUrl, { waitUntil: "networkidle" });
   await page.bringToFront();
 

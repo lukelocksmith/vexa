@@ -53,10 +53,13 @@ export async function checkForAdmissionIndicators(page: Page): Promise<boolean> 
 }
 
 export async function waitForTeamsMeetingAdmission(
-  page: Page,
-  timeout: number,
+  page: Page | null,
+  timeoutMs: number,
   botConfig: BotConfig
 ): Promise<boolean> {
+  if (!page) {
+    throw new Error("Page is required for Microsoft Teams");
+  }
   try {
     log("Waiting for Teams meeting admission...");
     
@@ -132,12 +135,12 @@ export async function waitForTeamsMeetingAdmission(
     
     // If we're in waiting room, wait for the full timeout period for admission
     if (stillInWaitingRoom) {
-      log(`Bot is in Teams waiting room. Waiting for ${timeout}ms for admission...`);
+      log(`Bot is in Teams waiting room. Waiting for ${timeoutMs}ms for admission...`);
       
       const checkInterval = 2000; // Check every 2 seconds for faster detection
       const startTime = Date.now();
       
-      while (Date.now() - startTime < timeout) {
+      while (Date.now() - startTime < timeoutMs) {
         // Check if we're still in waiting room using visibility
         const lobbyTextStillVisible = await page.locator(teamsWaitingRoomIndicators[0]).isVisible();
         

@@ -34,23 +34,24 @@ function generateReasonTokens(platform: string): {
 }
 
 export type PlatformStrategies = {
-  join: (page: Page, botConfig: BotConfig) => Promise<void>;
-  waitForAdmission: (page: Page, timeoutMs: number, botConfig: BotConfig) => Promise<AdmissionResult>;
-  prepare: (page: Page, botConfig: BotConfig) => Promise<void>;
-  startRecording: (page: Page, botConfig: BotConfig) => Promise<void>;
-  startRemovalMonitor: (page: Page, onRemoval?: () => void | Promise<void>) => () => void;
+  join: (page: Page | null, botConfig: BotConfig) => Promise<void>;
+  waitForAdmission: (page: Page | null, timeoutMs: number, botConfig: BotConfig) => Promise<AdmissionResult>;
+  prepare: (page: Page | null, botConfig: BotConfig) => Promise<void>;
+  startRecording: (page: Page | null, botConfig: BotConfig) => Promise<void>;
+  startRemovalMonitor: (page: Page | null, onRemoval?: () => void | Promise<void>) => () => void;
   leave: (page: Page | null, botConfig?: BotConfig, reason?: LeaveReason) => Promise<boolean>;
 };
 
 export async function runMeetingFlow(
   platform: string,
   botConfig: BotConfig,
-  page: Page,
+  page: Page | null,
   gracefulLeaveFunction: (page: Page | null, exitCode: number, reason: string, errorDetails?: any) => Promise<void>,
   strategies: PlatformStrategies
 ): Promise<void> {
   const tokens = generateReasonTokens(platform);
-  if (!botConfig.meetingUrl) {
+  // For Zoom, meetingUrl may be null as we use nativeMeetingId instead
+  if (!botConfig.meetingUrl && platform !== "zoom") {
     log(`Error: Meeting URL is required for ${platform} but is null.`);
     await gracefulLeaveFunction(page, 1, "missing_meeting_url");
     return;
@@ -105,16 +106,18 @@ export async function runMeetingFlow(
         return;
       }
 
-      // Attempt stateless leave before graceful exit
-      try {
-        const result = await page.evaluate(async () => {
-          if (typeof (window as any).performLeaveAction === "function") {
-            return await (window as any).performLeaveAction();
-          }
-          return false;
-        });
-        if (result) log("✅ Successfully performed graceful leave during admission timeout");
-      } catch {}
+      // Attempt stateless leave before graceful exit (only for browser-based platforms)
+      if (page) {
+        try {
+          const result = await page.evaluate(async () => {
+            if (typeof (window as any).performLeaveAction === "function") {
+              return await (window as any).performLeaveAction();
+            }
+            return false;
+          });
+          if (result) log("✅ Successfully performed graceful leave during admission timeout");
+        } catch {}
+      }
 
       await gracefulLeaveFunction(page, 0, decision.reason || "admission_timeout");
       return;

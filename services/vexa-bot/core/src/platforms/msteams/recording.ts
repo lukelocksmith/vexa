@@ -19,7 +19,10 @@ import {
 } from "./selectors";
 
 // Modified to use new services - Teams recording functionality
-export async function startTeamsRecording(page: Page, botConfig: BotConfig): Promise<void> {
+export async function startTeamsRecording(page: Page | null, botConfig: BotConfig): Promise<void> {
+  if (!page) {
+    throw new Error("Page is required for Microsoft Teams");
+  }
   // Initialize WhisperLive service on Node.js side
   const whisperLiveService = new WhisperLiveService({
     whisperLiveUrl: process.env.WHISPER_LIVE_URL

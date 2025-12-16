@@ -17,4 +17,10 @@ export type BotConfig = {
   reconnectionIntervalMs?: number,
   meeting_id: number,  // Required, not optional
   botManagerCallbackUrl?: string;
+  // Zoom-specific (optional, only for zoom platform)
+  zoomClientId?: string;
+  zoomClientSecret?: string;
+  zoomAccessToken?: string; // Meeting access token (JWT or OAuth)
+  zoomRtmsStreamId?: string; // RTMS stream ID (from webhook or API)
+  zoomServerUrls?: string; // RTMS server URLs (from webhook or API)
 }

@@ -11,7 +11,9 @@ import asyncio
 import json
 import httpx
 import hmac
+import hashlib
 import uuid as uuid_lib
+from fastapi import Request
 
 # Local imports - Remove unused ones
 # from app.database.models import init_db # Using local init_db now
@@ -31,10 +33,12 @@ from shared_models.schemas import (
     is_valid_status_transition, get_status_source
 ) # Import new schemas, Platform, and status enums
 from app.auth import get_user_and_token # MODIFIED
+from app.services.zoom_api import ZoomAPIService  # NEW: Zoom API service
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
 from sqlalchemy import and_, desc, func
 from datetime import datetime # For start_time
+import re  # For URL parsing
 
 # --- Status Transition Helper ---
 
@@ -159,6 +163,31 @@ from app.tasks.webhook_runner import run_status_webhook_task
 def _b64url_encode(data: bytes) -> str:
     """URL-safe base64 encoding without padding."""
     return base64.urlsafe_b64encode(data).rstrip(b"=").decode("ascii")
+
+def parse_zoom_url(meeting_url: str) -> tuple[str, Optional[str]]:
+    """
+    Parse Zoom meeting URL to extract meeting ID and passcode.
+    
+    Examples:
+    - https://us05web.zoom.us/j/83307709878?pwd=w5DHmbN9NTxvPwExHPYoKmsGwTRbJK.1
+    - https://zoom.us/j/83307709878
+    
+    Returns:
+        Tuple of (meeting_id, passcode)
+    """
+    # Extract meeting ID (numeric, 9-11 digits)
+    meeting_id_match = re.search(r'/j/(\d{9,11})', meeting_url)
+    if not meeting_id_match:
+        raise ValueError(f"Invalid Zoom URL format: {meeting_url}")
+    
+    meeting_id = meeting_id_match.group(1)
+    
+    # Extract passcode from pwd parameter
+    passcode_match = re.search(r'[?&]pwd=([^&]+)', meeting_url)
+    passcode = passcode_match.group(1) if passcode_match else None
+    
+    return meeting_id, passcode
+
 
 def mint_meeting_token(meeting_id: int, user_id: int, platform: str, native_meeting_id: str, ttl_seconds: int = 3600) -> str:
     """Mint a MeetingToken (HS256 JWT) using ADMIN_TOKEN."""
@@ -425,6 +454,50 @@ async def request_bot(
 
     logger.info(f"Received bot request for platform '{req.platform.value}' with native ID '{req.native_meeting_id}' from user {current_user.id}")
     native_meeting_id = req.native_meeting_id
+    
+    # Handle Zoom platform - parse URL if provided as full URL
+    zoom_rtms_details = None
+    if req.platform == Platform.ZOOM:
+        # Check if native_meeting_id is a full URL
+        if native_meeting_id.startswith("http"):
+            try:
+                parsed_id, parsed_passcode = parse_zoom_url(native_meeting_id)
+                native_meeting_id = parsed_id
+                if parsed_passcode and not req.passcode:
+                    req.passcode = parsed_passcode
+                logger.info(f"Parsed Zoom URL: meeting_id={native_meeting_id}, passcode={'***' if parsed_passcode else None}")
+            except ValueError as e:
+                logger.error(f"Failed to parse Zoom URL: {e}")
+                raise HTTPException(
+                    status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                    detail=f"Invalid Zoom URL format: {str(e)}"
+                )
+        
+        # Get RTMS details via Zoom API
+        try:
+            zoom_service = ZoomAPIService()
+            zoom_rtms_details = await zoom_service.get_rtms_stream_details(native_meeting_id)
+            
+            meeting_uuid = zoom_rtms_details.get("meeting_uuid")
+            if meeting_uuid:
+                logger.info(f"Successfully obtained meeting UUID {meeting_uuid} for Zoom meeting {native_meeting_id}")
+                # Update native_meeting_id to UUID for RTMS connection
+                native_meeting_id = meeting_uuid
+            else:
+                # Instant meeting - UUID will come from webhook
+                logger.info(
+                    f"Meeting {native_meeting_id} not found via API (likely instant meeting). "
+                    f"RTMS details (including UUID) will be provided via webhook when RTMS starts."
+                )
+                # Keep the numeric meeting ID - it will be replaced with UUID from webhook
+            
+        except Exception as e:
+            logger.error(f"Failed to get RTMS details for Zoom meeting: {e}", exc_info=True)
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail=f"Failed to get RTMS stream details for Zoom meeting: {str(e)}. "
+                       f"Ensure ZOOM_CLIENT_ID, ZOOM_CLIENT_SECRET, and ZOOM_ACCOUNT_ID are configured."
+            )
 
     constructed_url = Platform.construct_meeting_url(req.platform.value, native_meeting_id, req.passcode)
     if not constructed_url:
@@ -478,10 +551,15 @@ async def request_bot(
     if existing_meeting is None:
         logger.info(f"No active/valid existing meeting found for user {current_user.id}, platform '{req.platform.value}', native ID '{native_meeting_id}'. Proceeding to create a new meeting record.")
         # Create Meeting record in DB
-        # Prepare data field with passcode if provided
+        # Prepare data field with passcode and Zoom RTMS details if provided
         meeting_data = {}
         if req.passcode:
             meeting_data['passcode'] = req.passcode
+        if zoom_rtms_details:
+            meeting_data['zoom_rtms'] = zoom_rtms_details
+            # Store original meeting ID if we converted to UUID
+            if req.platform == Platform.ZOOM and 'original_meeting_id' in locals():
+                meeting_data['zoom_original_meeting_id'] = original_meeting_id
             
         new_meeting = Meeting(
             user_id=current_user.id,
@@ -588,7 +666,8 @@ async def request_bot(
             user_token=user_token,
             native_meeting_id=native_meeting_id,
             language=req.language,
-            task=req.task
+            task=req.task,
+            zoom_rtms_details=zoom_rtms_details  # NEW: Pass RTMS details
         )
         logger.info(f"Call to start_bot_container completed. Container ID: {container_id}, Connection ID: {connection_id}")
 
@@ -1441,6 +1520,247 @@ async def bot_status_change_callback(
             status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="An internal error occurred while processing the bot status change callback."
         )
+
+# --- ZOOM RTMS WEBHOOK ENDPOINT ---
+@app.post("/webhooks/zoom/rtms",
+          status_code=status.HTTP_200_OK,
+          summary="Zoom RTMS webhook endpoint",
+          description="Receives RTMS webhook events from Zoom (rtms_started, rtms_stopped) and updates bot configuration with RTMS details",
+          include_in_schema=False) # Hidden from public API docs
+async def zoom_rtms_webhook(
+    request: Request,
+    db: AsyncSession = Depends(get_db)
+):
+    """
+    Handles Zoom RTMS webhook events.
+    
+    Expected events:
+    - meeting.rtms_started: Contains RTMS connection details (stream_id, server_urls, access_token, meeting_uuid)
+    - meeting.rtms_stopped: Indicates RTMS stream has stopped
+    
+    The webhook payload structure:
+    {
+        "event": "meeting.rtms_started",
+        "payload": {
+            "account_id": "...",
+            "object": {
+                "uuid": "meeting-uuid",
+                "id": 123456789,
+                "rtms": {
+                    "stream_id": "...",
+                    "server_urls": "...",
+                    "access_token": "..."
+                }
+            }
+        },
+        "event_ts": 1234567890
+    }
+    """
+    try:
+        # Read request body
+        body = await request.body()
+        body_str = body.decode('utf-8')
+        payload = json.loads(body_str)
+        
+        logger.info(f"Received Zoom RTMS webhook: event={payload.get('event')}")
+        
+        # Verify webhook signature (Zoom sends Authorization header with HMAC)
+        # Format: Authorization: Bearer <hmac_signature>
+        auth_header = request.headers.get("Authorization", "")
+        if auth_header.startswith("Bearer "):
+            signature = auth_header.replace("Bearer ", "")
+            # Verify signature using client secret
+            client_secret = os.getenv("ZOOM_CLIENT_SECRET")
+            if client_secret:
+                # Zoom webhook signature is HMAC-SHA256 of the request body
+                expected_signature = hmac.new(
+                    client_secret.encode('utf-8'),
+                    body,
+                    hashlib.sha256
+                ).hexdigest()
+                
+                if not hmac.compare_digest(signature, expected_signature):
+                    logger.warning("Zoom webhook signature verification failed")
+                    raise HTTPException(
+                        status_code=status.HTTP_401_UNAUTHORIZED,
+                        detail="Invalid webhook signature"
+                    )
+                logger.info("Zoom webhook signature verified successfully")
+        
+        # Handle webhook event
+        event_type = payload.get("event")
+        
+        if event_type == "meeting.rtms_started":
+            await handle_rtms_started(payload, db)
+        elif event_type == "meeting.rtms_stopped":
+            await handle_rtms_stopped(payload, db)
+        else:
+            logger.warning(f"Unknown Zoom RTMS webhook event: {event_type}")
+        
+        # Always return 200 OK to acknowledge receipt
+        return {"status": "ok"}
+        
+    except json.JSONDecodeError as e:
+        logger.error(f"Failed to parse Zoom webhook payload: {e}")
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid JSON payload"
+        )
+    except Exception as e:
+        logger.error(f"Error processing Zoom RTMS webhook: {e}", exc_info=True)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail="Error processing webhook"
+        )
+
+
+async def handle_rtms_started(payload: Dict[str, Any], db: AsyncSession):
+    """
+    Handle meeting.rtms_started webhook event.
+    Extracts RTMS details and updates the meeting/bot configuration.
+    """
+    try:
+        # Extract RTMS details from webhook payload
+        event_object = payload.get("payload", {}).get("object", {})
+        meeting_uuid = event_object.get("uuid")
+        meeting_id_numeric = event_object.get("id")  # Numeric meeting ID
+        rtms_data = event_object.get("rtms", {})
+        
+        if not meeting_uuid:
+            logger.error("Missing meeting UUID in RTMS webhook payload")
+            return
+        
+        if not rtms_data:
+            logger.error("Missing RTMS data in webhook payload")
+            return
+        
+        rtms_stream_id = rtms_data.get("stream_id")
+        server_urls = rtms_data.get("server_urls")
+        access_token = rtms_data.get("access_token")
+        
+        logger.info(f"Processing RTMS started event for meeting UUID: {meeting_uuid}")
+        logger.info(f"RTMS Stream ID: {rtms_stream_id[:20] if rtms_stream_id else 'None'}...")
+        
+        # Find meeting by UUID or numeric ID
+        # Try UUID first (most likely for RTMS)
+        meeting_stmt = select(Meeting).where(
+            and_(
+                Meeting.platform == Platform.ZOOM.value,
+                Meeting.platform_specific_id == meeting_uuid
+            )
+        ).order_by(Meeting.created_at.desc())
+        
+        result = await db.execute(meeting_stmt)
+        meeting = result.scalars().first()
+        
+        # If not found by UUID, try numeric ID
+        if not meeting and meeting_id_numeric:
+            meeting_stmt = select(Meeting).where(
+                and_(
+                    Meeting.platform == Platform.ZOOM.value,
+                    Meeting.platform_specific_id == str(meeting_id_numeric)
+                )
+            ).order_by(Meeting.created_at.desc())
+            
+            result = await db.execute(meeting_stmt)
+            meeting = result.scalars().first()
+        
+        if not meeting:
+            logger.warning(f"No meeting found for UUID {meeting_uuid} or ID {meeting_id_numeric}")
+            return
+        
+        logger.info(f"Found meeting {meeting.id} for RTMS webhook")
+        
+        # Update meeting data with RTMS details
+        if not meeting.data:
+            meeting.data = {}
+        
+        meeting.data["zoom_rtms"] = {
+            "meeting_uuid": meeting_uuid,
+            "rtms_stream_id": rtms_stream_id,
+            "server_urls": server_urls,
+            "access_token": access_token,
+            "received_at": datetime.utcnow().isoformat()
+        }
+        
+        # Update platform_specific_id to UUID if it was numeric
+        if meeting.platform_specific_id != meeting_uuid:
+            logger.info(f"Updating meeting {meeting.id} platform_specific_id from {meeting.platform_specific_id} to {meeting_uuid}")
+            meeting.platform_specific_id = meeting_uuid
+        
+        # Mark data field as modified
+        from sqlalchemy.orm.attributes import flag_modified
+        flag_modified(meeting, "data")
+        
+        await db.commit()
+        await db.refresh(meeting)
+        
+        logger.info(f"Updated meeting {meeting.id} with RTMS details")
+        
+        # Send reconfigure command to bot via Redis if bot is active
+        if meeting.status == MeetingStatus.ACTIVE.value:
+            global redis_client
+            if redis_client:
+                rtms_config = {
+                    "zoomRtmsStreamId": rtms_stream_id,
+                    "zoomServerUrls": server_urls,
+                    "zoomAccessToken": access_token,
+                    "nativeMeetingId": meeting_uuid  # Update to UUID
+                }
+                
+                command_payload = {
+                    "action": "update_rtms_config",
+                    "meeting_id": meeting.id,
+                    "rtms_config": rtms_config
+                }
+                
+                channel = f"bot_commands:meeting:{meeting.id}"
+                try:
+                    payload_str = json.dumps(command_payload)
+                    await redis_client.publish(channel, payload_str)
+                    logger.info(f"Sent RTMS config update to bot for meeting {meeting.id}")
+                except Exception as e:
+                    logger.error(f"Failed to send RTMS config to bot: {e}", exc_info=True)
+        
+    except Exception as e:
+        logger.error(f"Error handling RTMS started event: {e}", exc_info=True)
+        raise
+
+
+async def handle_rtms_stopped(payload: Dict[str, Any], db: AsyncSession):
+    """
+    Handle meeting.rtms_stopped webhook event.
+    Logs the event and can trigger cleanup if needed.
+    """
+    try:
+        event_object = payload.get("payload", {}).get("object", {})
+        meeting_uuid = event_object.get("uuid")
+        rtms_data = event_object.get("rtms", {})
+        stream_id = rtms_data.get("stream_id") if rtms_data else None
+        
+        logger.info(f"RTMS stopped event for meeting UUID: {meeting_uuid}, stream_id: {stream_id}")
+        
+        # Find meeting and log the event
+        if meeting_uuid:
+            meeting_stmt = select(Meeting).where(
+                and_(
+                    Meeting.platform == Platform.ZOOM.value,
+                    Meeting.platform_specific_id == meeting_uuid
+                )
+            ).order_by(Meeting.created_at.desc())
+            
+            result = await db.execute(meeting_stmt)
+            meeting = result.scalars().first()
+            
+            if meeting:
+                logger.info(f"RTMS stopped for meeting {meeting.id}")
+                # Optionally update meeting data or trigger cleanup
+            else:
+                logger.warning(f"No meeting found for RTMS stopped event: {meeting_uuid}")
+        
+    except Exception as e:
+        logger.error(f"Error handling RTMS stopped event: {e}", exc_info=True)
+
 
 # --- --------------------------------------------------------- ---
 

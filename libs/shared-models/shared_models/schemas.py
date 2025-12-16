@@ -247,6 +247,15 @@ class Platform(str, Enum):
                     return url
                 else:
                     return None # Invalid Teams ID format - must be numeric only
+            elif platform == Platform.ZOOM:
+                # Zoom meeting ID (numeric, 9-11 digits)
+                if re.fullmatch(r"^\d{9,11}$", native_id):
+                    url = f"https://zoom.us/j/{native_id}"
+                    if passcode:
+                        url += f"?pwd={passcode}"
+                    return url
+                else:
+                    return None # Invalid Zoom ID format - must be numeric 9-11 digits
             else:
                 return None # Unknown platform
         except ValueError:

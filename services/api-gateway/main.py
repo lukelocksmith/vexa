@@ -206,8 +206,11 @@ async def forward_request(client: httpx.AsyncClient, method: str, url: str, requ
         # Return downstream response directly (including headers, status code)
         return Response(content=resp.content, status_code=resp.status_code, headers=dict(resp.headers))
     except httpx.RequestError as exc:
-        print(f"DEBUG: Request error: {exc}")
-        raise HTTPException(status_code=503, detail=f"Service unavailable: {exc}")
+        import traceback
+        error_details = f"{type(exc).__name__}: {str(exc)}"
+        print(f"DEBUG: Request error: {error_details}")
+        print(f"DEBUG: Traceback: {traceback.format_exc()}")
+        raise HTTPException(status_code=503, detail=f"Service unavailable: {error_details}")
 
 # --- Root Endpoint --- 
 @app.get("/", tags=["General"], summary="API Gateway Root")

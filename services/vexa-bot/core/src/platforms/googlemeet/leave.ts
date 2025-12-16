@@ -4,7 +4,10 @@ import { BotConfig } from "../../types";
 import { googleLeaveSelectors } from "./selectors";
 
 // Prepare for recording by exposing necessary functions
-export async function prepareForRecording(page: Page, botConfig: BotConfig): Promise<void> {
+export async function prepareForRecording(page: Page | null, botConfig: BotConfig): Promise<void> {
+  if (!page) {
+    throw new Error("Page is required for Google Meet");
+  }
   // Expose the logBot function to the browser context
   await page.exposeFunction("logBot", (msg: string) => {
     log(msg);

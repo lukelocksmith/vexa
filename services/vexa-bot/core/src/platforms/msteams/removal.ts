@@ -26,7 +26,10 @@ export async function checkForTeamsRemoval(page: Page): Promise<boolean> {
 }
 
 // Start periodic removal monitoring from Node.js side
-export function startTeamsRemovalMonitor(page: Page, onRemoval?: () => void | Promise<void>): () => void {
+export function startTeamsRemovalMonitor(page: Page | null, onRemoval?: () => void | Promise<void>): () => void {
+  if (!page) {
+    throw new Error("Page is required for Microsoft Teams");
+  }
   log("Starting periodic Teams removal monitoring...");
   let removalDetected = false;
   

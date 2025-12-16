@@ -1,0 +1,28 @@
+{
+  "event": "meeting.rtms_started",
+  "payload": {
+    "account_id": "f7HVh71TQMm64ITC9VJ-7w",
+    "object": {
+      "uuid": "TEST_MEETING_UUID_REPLACE_WITH_REAL",
+      "id": 86593345515,
+      "host_id": "test_host",
+      "topic": "Test Meeting",
+      "type": 1,
+      "start_time": "2025-12-12T15:00:00Z",
+      "timezone": "UTC",
+      "duration": 60,
+      "join_url": "https://us05web.zoom.us/j/86593345515?pwd=2fO4w7Ey7StAfxmKOLhASs2bNyPH0a.1",
+      "rtms": {
+        "stream_id": "TEST_STREAM_ID_REPLACE_WITH_REAL",
+        "server_urls": "wss://rtms.zoom.us",
+        "access_token": "TEST_ACCESS_TOKEN_REPLACE_WITH_REAL"
+      }
+    }
+  },
+  "event_ts": 1734019200
+}
+
+
+
+
+

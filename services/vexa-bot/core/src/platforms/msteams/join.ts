@@ -12,7 +12,10 @@ import {
   teamsSpeakerDisableSelectors
 } from "./selectors";
 
-export async function joinMicrosoftTeams(page: Page, botConfig: BotConfig): Promise<void> {
+export async function joinMicrosoftTeams(page: Page | null, botConfig: BotConfig): Promise<void> {
+  if (!page) {
+    throw new Error("Page is required for Microsoft Teams");
+  }
   // Install RTCPeerConnection hook before any Teams scripts run - ensures remote audio tracks
   // are mirrored into hidden <audio> elements that BrowserAudioService can capture later.
   await page.addInitScript(() => {

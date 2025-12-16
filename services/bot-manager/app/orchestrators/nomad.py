@@ -55,7 +55,8 @@ async def start_bot_container(
     user_token: str,
     native_meeting_id: str,
     language: Optional[str],
-    task: Optional[str]
+    task: Optional[str],
+    zoom_rtms_details: Optional[Dict[str, Any]] = None  # NEW: Zoom RTMS details (ignored for Nomad)
 ) -> Optional[Tuple[str, str]]:
     """Dispatch a parameterised *vexa-bot* Nomad job.
 
@@ -91,6 +92,9 @@ async def start_bot_container(
         "language": language or "",
         "task": task or "",
     }
+    
+    # Note: zoom_rtms_details parameter is accepted for API compatibility but
+    # Nomad job template would need to be updated separately to pass RTMS details
 
     # Nomad job dispatch endpoint
     url = f"{NOMAD_ADDR}/v1/job/{BOT_JOB_NAME}/dispatch"

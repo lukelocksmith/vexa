@@ -18,7 +18,7 @@ export async function handleGoogleMeet(
 ): Promise<void> {
   
   const strategies: PlatformStrategies = {
-    join: async (page: Page, botConfig: BotConfig) => {
+    join: async (page: Page | null, botConfig: BotConfig) => {
       await joinGoogleMeeting(page, botConfig.meetingUrl!, botConfig.botName, botConfig);
     },
     waitForAdmission: waitForGoogleMeetingAdmission,

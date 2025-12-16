@@ -64,6 +64,10 @@ services:
       - DEVICE_TYPE=${DEVICE_TYPE}
       - WHISPER_LIVE_URL=ws://traefik:8081/ws  # Traefik entrypoint for WS
       - ADMIN_TOKEN=${ADMIN_API_TOKEN}
+      # Zoom API credentials for RTMS integration
+      - ZOOM_CLIENT_ID=${ZOOM_CLIENT_ID:-}
+      - ZOOM_CLIENT_SECRET=${ZOOM_CLIENT_SECRET:-}
+      - ZOOM_ACCOUNT_ID=${ZOOM_ACCOUNT_ID:-}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     init: true

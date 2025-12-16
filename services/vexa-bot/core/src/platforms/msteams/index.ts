@@ -16,11 +16,11 @@ export async function handleMicrosoftTeams(
 ): Promise<void> {
   
   const strategies: PlatformStrategies = {
-    join: joinMicrosoftTeams,
+    join: joinMicrosoftTeams as (page: Page | null, botConfig: BotConfig) => Promise<void>,
     waitForAdmission: waitForTeamsMeetingAdmission,
-    prepare: prepareForRecording,
-    startRecording: startTeamsRecording,
-    startRemovalMonitor: startTeamsRemovalMonitor,
+    prepare: prepareForRecording as (page: Page | null, botConfig: BotConfig) => Promise<void>,
+    startRecording: startTeamsRecording as (page: Page | null, botConfig: BotConfig) => Promise<void>,
+    startRemovalMonitor: startTeamsRemovalMonitor as (page: Page | null, onRemoval?: () => void | Promise<void>) => () => void,
     leave: leaveMicrosoftTeams
   };
 

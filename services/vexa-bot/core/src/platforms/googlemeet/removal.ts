@@ -26,7 +26,10 @@ export async function checkForGoogleRemoval(page: Page): Promise<boolean> {
 }
 
 // Start periodic removal monitoring from Node.js side
-export function startGoogleRemovalMonitor(page: Page, onRemoval?: () => void | Promise<void>): () => void {
+export function startGoogleRemovalMonitor(page: Page | null, onRemoval?: () => void | Promise<void>): () => void {
+  if (!page) {
+    throw new Error("Page is required for Google Meet");
+  }
   log("Starting periodic Google Meet removal monitoring...");
   let removalDetected = false;
   

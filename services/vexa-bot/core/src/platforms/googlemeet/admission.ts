@@ -68,10 +68,13 @@ export async function checkForWaitingRoomIndicators(page: Page): Promise<boolean
 
 // New function to wait for Google Meet meeting admission (canonical Teams-style)
 export async function waitForGoogleMeetingAdmission(
-  page: Page,
-  timeout: number,
+  page: Page | null,
+  timeoutMs: number,
   botConfig: BotConfig
 ): Promise<boolean> {
+  if (!page) {
+    throw new Error("Page is required for Google Meet");
+  }
   try {
     log("Waiting for Google Meet meeting admission...");
     
@@ -134,12 +137,12 @@ export async function waitForGoogleMeetingAdmission(
     
     // If we're in waiting room, wait for the full timeout period for admission
     if (stillInWaitingRoom) {
-      log(`Bot is in Google Meet waiting room. Waiting for ${timeout}ms for admission...`);
+      log(`Bot is in Google Meet waiting room. Waiting for ${timeoutMs}ms for admission...`);
       
       const checkInterval = 2000; // Check every 2 seconds for faster detection
       const startTime = Date.now();
       
-      while (Date.now() - startTime < timeout) {
+      while (Date.now() - startTime < timeoutMs) {
         // Check if we're still in waiting room using visibility
         const stillWaiting = await checkForWaitingRoomIndicators(page);
         
@@ -177,10 +180,10 @@ export async function waitForGoogleMeetingAdmission(
       }
     } else {
       // Not in waiting room and not admitted yet: actively poll during the timeout
-      log(`No waiting room detected. Polling for admission for up to ${timeout}ms...`);
+      log(`No waiting room detected. Polling for admission for up to ${timeoutMs}ms...`);
       const checkInterval = 2000;
       const startTime = Date.now();
-      while (Date.now() - startTime < timeout) {
+      while (Date.now() - startTime < timeoutMs) {
         // Rejection check first
         const isRejected = await checkForGoogleRejection(page);
         if (isRejected) {
@@ -220,7 +223,7 @@ export async function waitForGoogleMeetingAdmission(
         // Re-run the waiting room loop with the remaining time
         const checkInterval = 2000;
         const startTime2 = Date.now();
-        while (Date.now() - startTime2 < timeout) {
+        while (Date.now() - startTime2 < timeoutMs) {
           const stillWaiting = await checkForWaitingRoomIndicators(page);
           if (!stillWaiting) {
             const isRejected2 = await checkForGoogleRejection(page);

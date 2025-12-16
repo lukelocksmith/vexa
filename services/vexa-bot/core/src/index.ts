@@ -4,6 +4,7 @@ import { callStatusChangeCallback, mapExitReasonToStatus } from "./services/unif
 import { chromium } from "playwright-extra";
 import { handleGoogleMeet, leaveGoogleMeet } from "./platforms/googlemeet";
 import { handleMicrosoftTeams, leaveMicrosoftTeams } from "./platforms/msteams";
+import { handleZoom } from "./platforms/zoom";
 import { browserArgs, userAgent } from "./constans";
 import { BotConfig } from "./types";
 import { createClient, RedisClientType } from 'redis';
@@ -191,6 +192,31 @@ const handleRedisMessage = async (message: string, channel: string, page: Page |
           } else {
                log("Page not available or closed, cannot send reconfigure command to browser.");
           }
+      } else if (command.action === 'update_rtms_config') {
+        // Handle RTMS config update for Zoom
+        log(`Processing RTMS config update command for meeting ${command.meeting_id}`);
+        const rtmsConfig = command.rtms_config;
+        if (rtmsConfig && (globalThis as any).botConfig) {
+          // Update bot config with RTMS details
+          (globalThis as any).botConfig.zoomRtmsStreamId = rtmsConfig.zoomRtmsStreamId;
+          (globalThis as any).botConfig.zoomServerUrls = rtmsConfig.zoomServerUrls;
+          (globalThis as any).botConfig.zoomAccessToken = rtmsConfig.zoomAccessToken;
+          if (rtmsConfig.nativeMeetingId) {
+            (globalThis as any).botConfig.nativeMeetingId = rtmsConfig.nativeMeetingId;
+          }
+          
+          log(`[Zoom] Updated RTMS config: StreamID=${rtmsConfig.zoomRtmsStreamId?.substring(0, 20)}..., ServerURLs=${rtmsConfig.zoomServerUrls?.substring(0, 30)}...`);
+          
+          // For Zoom, trigger reconnection with new RTMS details
+          // This will be handled by the Zoom platform-specific code
+          if ((globalThis as any).botConfig.platform === 'zoom') {
+            log("[Zoom] RTMS config updated, bot should reconnect with new details");
+            // The join/recording logic will check for updated config and reconnect
+            // For now, we just log - actual reconnection logic can be added if needed
+          }
+        } else {
+          log("⚠️ RTMS config update received but botConfig not available");
+        }
       } else if (command.action === 'leave') {
         // Mark that a stop was requested via Redis
         stopSignalReceived = true;
@@ -402,6 +428,19 @@ export async function runBot(botConfig: BotConfig): Promise<void> {
   }
   // -------------------------------------------------
 
+  // Skip browser setup for Zoom (uses SDK, no browser needed)
+  if (botConfig.platform === "zoom") {
+    log("Zoom platform uses Meeting SDK, no browser needed");
+    // Call Zoom handler directly without browser
+    try {
+      await handleZoom(botConfig, null, performGracefulLeave);
+    } catch (error: any) {
+      log(`Error during Zoom platform handling: ${error.message}`);
+      await performGracefulLeave(null, 1, "platform_handler_exception");
+    }
+    return; // Exit early, no browser cleanup needed
+  }
+
   // Simple browser setup like simple-bot.js
   if (botConfig.platform === "teams") {
     log("Using MS Edge browser for Teams platform (simple-bot.js approach)");
@@ -496,9 +535,6 @@ export async function runBot(botConfig: BotConfig): Promise<void> {
   try {
     if (botConfig.platform === "google_meet") {
       await handleGoogleMeet(botConfig, page, performGracefulLeave);
-    } else if (botConfig.platform === "zoom") {
-      log("Zoom platform not yet implemented.");
-      await performGracefulLeave(page, 1, "platform_not_implemented");
     } else if (botConfig.platform === "teams") {
       await handleMicrosoftTeams(botConfig, page, performGracefulLeave);
     } else {

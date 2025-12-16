@@ -14,7 +14,10 @@ import {
 } from "./selectors";
 
 // Modified to use new services - Google Meet recording functionality
-export async function startGoogleRecording(page: Page, botConfig: BotConfig): Promise<void> {
+export async function startGoogleRecording(page: Page | null, botConfig: BotConfig): Promise<void> {
+  if (!page) {
+    throw new Error("Page is required for Google Meet");
+  }
   // Initialize WhisperLive service on Node.js side
   const whisperLiveService = new WhisperLiveService({
     whisperLiveUrl: process.env.WHISPER_LIVE_URL

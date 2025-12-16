@@ -148,7 +148,8 @@ async def start_bot_container(
     user_token: str,
     native_meeting_id: str,
     language: Optional[str],
-    task: Optional[str]
+    task: Optional[str],
+    zoom_rtms_details: Optional[Dict[str, Any]] = None  # NEW: Zoom RTMS details
 ) -> Optional[tuple[str, str]]:
     """
     Starts a vexa-bot container via requests_unixsocket AFTER checking user limit.
@@ -215,6 +216,27 @@ async def start_bot_container(
         },
         "botManagerCallbackUrl": f"http://bot-manager:8080/bots/internal/callback/exited"
     }
+    
+    # Add Zoom RTMS details if provided
+    if platform == "zoom" and zoom_rtms_details:
+        zoom_client_id = os.getenv("ZOOM_CLIENT_ID")
+        zoom_client_secret = os.getenv("ZOOM_CLIENT_SECRET")
+        
+        if zoom_client_id and zoom_client_secret:
+            bot_config_data.update({
+                "zoomClientId": zoom_client_id,
+                "zoomClientSecret": zoom_client_secret,
+            })
+        
+        # Add RTMS connection details (may be None if not available yet)
+        if zoom_rtms_details.get("rtms_stream_id"):
+            bot_config_data["zoomRtmsStreamId"] = zoom_rtms_details.get("rtms_stream_id")
+        if zoom_rtms_details.get("server_urls"):
+            bot_config_data["zoomServerUrls"] = zoom_rtms_details.get("server_urls")
+        if zoom_rtms_details.get("access_token"):
+            bot_config_data["zoomAccessToken"] = zoom_rtms_details.get("access_token")
+        
+        logger.info(f"Added Zoom RTMS configuration to bot config for meeting {meeting_id}")
     # Remove keys with None values before serializing
     cleaned_config_data = {k: v for k, v in bot_config_data.items() if v is not None}
     bot_config_json = json.dumps(cleaned_config_data)
