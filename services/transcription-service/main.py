@@ -89,6 +89,15 @@ VAD_FILTER = _env_bool("VAD_FILTER", True)
 VAD_FILTER_THRESHOLD = _env_float("VAD_FILTER_THRESHOLD", 0.5)
 VAD_MIN_SILENCE_DURATION_MS = _env_int("VAD_MIN_SILENCE_DURATION_MS", 160)
 
+# Language detection (improved algorithm: segment-level aggregation, weighted scoring, early stopping)
+# Used only when language is not provided (auto-detect). See _detect_language_improved().
+SAMPLE_RATE_WHISPER = 16000  # Whisper/faster-whisper expect 16 kHz
+LANGUAGE_DETECTION_THRESHOLD = _env_float("LANGUAGE_DETECTION_THRESHOLD", 0.5)
+LANGUAGE_DETECTION_SEGMENTS = _env_int("LANGUAGE_DETECTION_SEGMENTS", 10)
+# Duration per segment for language detection (seconds). We run detect_language on each segment then aggregate.
+LANGUAGE_DETECTION_SEGMENT_DURATION_S = 10
+LANGUAGE_DETECTION_SEGMENT_SAMPLES = SAMPLE_RATE_WHISPER * LANGUAGE_DETECTION_SEGMENT_DURATION_S
+
 # Temperature fallback chain
 USE_TEMPERATURE_FALLBACK = _env_bool("USE_TEMPERATURE_FALLBACK", False)
 TEMPERATURE_FALLBACK_CHAIN = [0.0, 0.2, 0.4, 0.6, 0.8, 1.0]
@@ -113,6 +122,153 @@ def _looks_like_hallucination(segments: List[Dict[str, Any]]) -> bool:
         if float(s.get("avg_logprob", 0.0)) < LOG_PROB_THRESHOLD:
             return True
     return False
+
+
+def _resample_to_16k(audio: np.ndarray, sample_rate: int) -> np.ndarray:
+    """Resample audio to 16 kHz (float32) for Whisper/faster-whisper language detection."""
+    if sample_rate == SAMPLE_RATE_WHISPER:
+        return np.ascontiguousarray(audio, dtype=np.float32)
+    n = len(audio)
+    duration_s = n / sample_rate
+    n_16k = int(duration_s * SAMPLE_RATE_WHISPER)
+    indices = np.linspace(0, n - 1, n_16k, dtype=np.float64)
+    resampled = np.interp(indices, np.arange(n, dtype=np.float64), audio.astype(np.float64))
+    return resampled.astype(np.float32)
+
+
+def _detect_language_improved(
+    whisper_model: WhisperModel,
+    audio: np.ndarray,
+    sample_rate: int,
+    language_detection_threshold: float = LANGUAGE_DETECTION_THRESHOLD,
+    language_detection_segments: int = LANGUAGE_DETECTION_SEGMENTS,
+) -> Tuple[str, float]:
+    """
+    Improved language detection: aggregate probabilities across segments, weighted scoring,
+    early stopping, and robust handling of noisy/silent audio (aligned with WhisperLive PR #77).
+
+    - Filters out segments with low confidence (max_prob < 0.4, or uncertain top vs second).
+    - Aggregates per-language probabilities across valid segments.
+    - Uses weighted score (avg prob + consistency) and early stopping when confident.
+    - Returns ("en", 0.0) when confidence < 0.5 to avoid false positives from silence/noise.
+
+    Returns:
+        (language, language_probability). probability is 0.0 when detection is not trusted.
+    """
+    audio_16k = _resample_to_16k(audio, sample_rate)
+    n_samples = len(audio_16k)
+    vad_params = {
+        "threshold": VAD_FILTER_THRESHOLD,
+        "min_silence_duration_ms": VAD_MIN_SILENCE_DURATION_MS,
+    }
+
+    language_prob_aggregator: Dict[str, List[float]] = {}
+    segments_processed = 0
+    language = None
+    language_probability = None
+    all_language_probs: Optional[List[Tuple[str, float]]] = None
+    min_segment_confidence = 0.4
+
+    num_segments = min(
+        language_detection_segments,
+        max(1, (n_samples + LANGUAGE_DETECTION_SEGMENT_SAMPLES - 1) // LANGUAGE_DETECTION_SEGMENT_SAMPLES),
+    )
+
+    for seg_idx in range(num_segments):
+        start = seg_idx * LANGUAGE_DETECTION_SEGMENT_SAMPLES
+        end = min(start + LANGUAGE_DETECTION_SEGMENT_SAMPLES, n_samples)
+        segment_audio = audio_16k[start:end]
+        if len(segment_audio) < SAMPLE_RATE_WHISPER * 0.5:
+            continue
+
+        seg_lang, seg_prob, all_probs = whisper_model.detect_language(
+            segment_audio,
+            vad_filter=VAD_FILTER,
+            vad_parameters=vad_params,
+            language_detection_segments=1,
+            language_detection_threshold=language_detection_threshold,
+        )
+        # Strip token format e.g. "<|en|>" -> "en"
+        segment_language_probs = [
+            (t[2:-2] if (t.startswith("<|") and t.endswith("|>")) else t, p)
+            for t, p in (all_probs or [])
+        ]
+        all_language_probs = segment_language_probs
+
+        if not segment_language_probs:
+            continue
+        max_prob = max(p for _, p in segment_language_probs)
+        if max_prob < min_segment_confidence:
+            logger.debug(
+                "Skipping segment with low confidence (max_prob=%.3f < %.3f)",
+                max_prob, min_segment_confidence,
+            )
+            continue
+        if len(segment_language_probs) >= 2:
+            top_prob = segment_language_probs[0][1]
+            second_prob = segment_language_probs[1][1]
+            prob_diff = top_prob - second_prob
+            # Slightly relaxed so valid non-English segments are not discarded (was 0.35 / 0.5)
+            if (prob_diff < 0.12 and top_prob < 0.45) or top_prob < 0.3:
+                logger.debug(
+                    "Skipping uncertain/low-confidence segment (top_prob=%.3f, diff=%.3f)",
+                    top_prob, prob_diff,
+                )
+                continue
+
+        for lang, prob in segment_language_probs:
+            if prob >= 0.1:
+                language_prob_aggregator.setdefault(lang, []).append(prob)
+        segments_processed += 1
+
+        if language_prob_aggregator:
+            lang_avg_probs = {
+                lang: sum(probs) / len(probs)
+                for lang, probs in language_prob_aggregator.items()
+            }
+            top_lang = max(lang_avg_probs, key=lang_avg_probs.get)
+            top_lang_avg_prob = lang_avg_probs[top_lang]
+            early_stop_threshold = language_detection_threshold
+            if segments_processed >= 3:
+                early_stop_threshold = max(0.4, language_detection_threshold - 0.1)
+            if top_lang_avg_prob > early_stop_threshold and segments_processed >= 2:
+                top_lang_count = len(language_prob_aggregator[top_lang])
+                if top_lang_count >= 2 and top_lang_avg_prob > early_stop_threshold:
+                    language = top_lang
+                    language_probability = top_lang_avg_prob
+                    break
+
+    if language is None:
+        if not language_prob_aggregator:
+            if all_language_probs:
+                top_lang, top_prob = all_language_probs[0]
+                if top_prob >= 0.5:
+                    language, language_probability = top_lang, top_prob
+                else:
+                    logger.info(
+                        "All segments filtered out, last segment has low confidence (%.3f < 0.5). Returning 'en' with probability 0.0",
+                        top_prob,
+                    )
+                    language, language_probability = "en", 0.0
+            else:
+                language, language_probability = "en", 0.0
+        else:
+            lang_scores = {}
+            for lang, probs in language_prob_aggregator.items():
+                avg_prob = sum(probs) / len(probs)
+                consistency_weight = min(1.0, len(probs) / 3.0)
+                lang_scores[lang] = avg_prob * (0.7 + 0.3 * consistency_weight)
+            language = max(lang_scores, key=lang_scores.get)
+            language_probability = sum(language_prob_aggregator[language]) / len(language_prob_aggregator[language])
+            if language_probability < 0.5:
+                logger.info(
+                    "Language detection confidence too low (%.3f < 0.5), likely noise/silence. Returning 'en' with probability 0.0",
+                    language_probability,
+                )
+                language, language_probability = "en", 0.0
+
+    return language, language_probability
+
 
 # API Token Authentication
 API_TOKEN = os.getenv("API_TOKEN", "").strip()
@@ -318,6 +474,40 @@ async def transcribe_audio(
         # Ensure audio is contiguous array
         audio_array = np.ascontiguousarray(audio_array, dtype=np.float32)
         
+        # When language is not provided, use improved language detection (segment-level aggregation,
+        # weighted scoring, early stopping, noise/silence filtering) before transcribing.
+        auto_detect_low_confidence = False  # True when we ran detector but rejected (prob 0)
+        if language is None and model is not None:
+            def _detect_sync():
+                return _detect_language_improved(
+                    model,
+                    audio_array,
+                    sample_rate,
+                    language_detection_threshold=LANGUAGE_DETECTION_THRESHOLD,
+                    language_detection_segments=LANGUAGE_DETECTION_SEGMENTS,
+                )
+            detected_lang, detected_prob = await asyncio.get_event_loop().run_in_executor(
+                transcription_executor, _detect_sync
+            )
+            # Whisper has a known bias toward English; require higher confidence for "en" before locking.
+            MIN_CONFIDENCE_FOR_EN = 0.65
+            if detected_prob > 0:
+                if detected_lang == "en" and detected_prob < MIN_CONFIDENCE_FOR_EN:
+                    auto_detect_low_confidence = True
+                    logger.info(
+                        f"Worker {WORKER_ID} English detection borderline (prob={detected_prob:.3f} < {MIN_CONFIDENCE_FOR_EN}), not locking"
+                    )
+                else:
+                    language = detected_lang
+                    logger.info(
+                        f"Worker {WORKER_ID} auto-detected language: {language} (confidence={detected_prob:.3f})"
+                    )
+            else:
+                auto_detect_low_confidence = True
+                logger.info(
+                    f"Worker {WORKER_ID} language detection low confidence, transcribe will use default"
+                )
+
         # Transcribe (with optional temperature fallback)
         requested_temp = float(temperature) if temperature else 0.0
         temps = TEMPERATURE_FALLBACK_CHAIN if USE_TEMPERATURE_FALLBACK else [requested_temp]
@@ -405,18 +595,27 @@ async def transcribe_audio(
             best = (full_text, info.language if info else (language or "unknown"), duration, segments)
 
         full_text, detected_language, duration, segments = best
-        logger.info(f"Worker {WORKER_ID} transcription completed - language: {detected_language}")
+        # When we had low-confidence auto-detect and model returned "en", don't report "en" so
+        # clients don't lock to English; report "unknown" and probability 0 so they can keep detecting.
+        if auto_detect_low_confidence and detected_language == "en":
+            reported_language = "unknown"
+            language_probability = 0.0
+        else:
+            reported_language = detected_language
+            language_probability = 1.0
+        logger.info(f"Worker {WORKER_ID} transcription completed - language: {reported_language}")
         
         processing_time = time.time() - start_time
         logger.info(
             f"Worker {WORKER_ID} completed in {processing_time:.2f}s - "
-            f"Duration: {duration:.2f}s, Segments: {len(segments)}, Language: {detected_language}"
+            f"Duration: {duration:.2f}s, Segments: {len(segments)}, Language: {reported_language}"
         )
         
         # Return format expected by Vexa RemoteTranscriber
         response = {
             "text": full_text,
-            "language": detected_language,
+            "language": reported_language,
+            "language_probability": language_probability,
             "duration": duration,
             "segments": segments,
         }

@@ -627,10 +627,13 @@ class RemoteTranscriber:
         # Convert to segments
         segments = self._response_to_segments(api_response)
         
-        # Extract language info and normalize to ISO code
+        # Extract language info and normalize to ISO code.
+        # Only default to "en" when neither caller nor API provided a language (don't force "en"
+        # when API returns "unknown" for low-confidence detection).
         api_language = api_response.get("language")
-        detected_language = normalize_language_code(language or api_language or "en")
-        language_probability = 1.0  # Remote API may not provide probability
+        raw_language = language or api_language
+        detected_language = normalize_language_code(raw_language) if raw_language else "en"
+        language_probability = api_response.get("language_probability", 1.0)
         
         # Calculate duration
         duration = len(audio_array) / self.sampling_rate
