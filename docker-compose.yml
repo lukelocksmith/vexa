@@ -70,6 +70,8 @@ services:
       - DEVICE_TYPE=${DEVICE_TYPE}
       - WHISPER_LIVE_URL=ws://whisperlive-remote:9090/ws  # Direct connection to whisperlive-remote
       - ADMIN_TOKEN=${ADMIN_API_TOKEN}
+      - DEFAULT_LANGUAGE=${DEFAULT_LANGUAGE}
+      - DEFAULT_TASK=${DEFAULT_TASK}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     init: true

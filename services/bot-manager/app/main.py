@@ -607,8 +607,8 @@ async def request_bot(
             bot_name=req.bot_name,
             user_token=user_token,
             native_meeting_id=native_meeting_id,
-            language=req.language,
-            task=req.task
+            language=req.language or config.DEFAULT_LANGUAGE,
+            task=req.task or config.DEFAULT_TASK
         )
         container_start_time = datetime.utcnow()
         logger.info(f"Call to start_bot_container completed. Container ID: {container_id}, Connection ID: {connection_id}")
