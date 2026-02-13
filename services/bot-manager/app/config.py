@@ -10,7 +10,7 @@ DOCKER_NETWORK = os.environ.get("DOCKER_NETWORK", "vexa_default")
 
 # Lock settings
 DEFAULT_LANGUAGE = os.environ.get("DEFAULT_LANGUAGE")  # e.g. "pl" for Polish
-DEFAULT_TASK = os.environ.get("DEFAULT_TASK")  # e.g. "translate" for translation to English
+DEFAULT_TASK = os.environ.get("DEFAULT_TASK")  # e.g. "transcribe" (keep original language) or "translate" (to English)
 
 # Lock settings
 LOCK_TIMEOUT_SECONDS = 300 # 5 minutes
