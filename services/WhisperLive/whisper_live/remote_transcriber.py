@@ -165,8 +165,8 @@ class RemoteTranscriber:
         self.response_format = "verbose_json"
         self.temperature = temperature or os.getenv("REMOTE_TRANSCRIBER_TEMPERATURE", "0")
         self.vad_model = vad_model or os.getenv("REMOTE_TRANSCRIBER_VAD_MODEL")
-        # Request only segment timestamps (no word-level precision needed)
-        self.timestamp_granularities = "segment"
+        # Disabled: some APIs (e.g. Groq) reject timestamp_granularities parameter
+        self.timestamp_granularities = None
         self.sampling_rate = sampling_rate
         
         # Retry configuration
