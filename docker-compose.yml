@@ -44,6 +44,9 @@ services:
       - ADMIN_API_TOKEN=${ADMIN_API_TOKEN}
       - LOG_LEVEL=DEBUG
     init: true
+    depends_on:
+      postgres:
+        condition: service_healthy
     networks:
       - vexa_default
     restart: unless-stopped
@@ -73,6 +76,8 @@ services:
     depends_on:
       redis:
         condition: service_started
+      postgres:
+        condition: service_healthy
     networks:
       - vexa_default
     restart: unless-stopped
@@ -213,6 +218,11 @@ services:
     ports:
       - "${TRANSCRIPTION_COLLECTOR_HOST_PORT:-8123}:8000"
     # volumes removed for Coolify compatibility (files are already in Docker image)
+    depends_on:
+      redis:
+        condition: service_started
+      postgres:
+        condition: service_healthy
     environment:
       - DB_HOST=${DB_HOST:-postgres}
       - DB_PORT=${DB_PORT:-5432}
@@ -233,9 +243,6 @@ services:
       - REDIS_CLEANUP_THRESHOLD=86400
       - LOG_LEVEL=DEBUG
     init: true
-    depends_on:
-      redis:
-        condition: service_started
     networks:
       - vexa_default
     restart: unless-stopped
@@ -253,6 +260,23 @@ services:
     depends_on:
       api-gateway:
         condition: service_started
+    networks:
+      - vexa_default
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=${DB_NAME:-vexa}
+      - POSTGRES_USER=${DB_USER:-postgres}
+      - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER:-postgres} -d ${DB_NAME:-vexa}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - vexa_default
     restart: unless-stopped
