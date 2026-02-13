@@ -16,8 +16,6 @@ services:
       - PUBLIC_BASE_URL=https://share.dev.vexa.ai
       - TRANSCRIPT_SHARE_TTL_SECONDS=900
       - LOG_LEVEL=DEBUG
-    volumes:
-      - ../.cursor:/app/.cursor
     init: true
     depends_on:
       admin-api:
@@ -71,7 +69,6 @@ services:
       - ADMIN_TOKEN=${ADMIN_API_TOKEN}
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - ../.cursor:/app/.cursor
     init: true
     depends_on:
       redis:
@@ -171,7 +168,7 @@ services:
 
   # Remote API version of WhisperLive
   whisperlive-remote:
-    profiles: ["remote"]
+    # profiles: ["remote"]  # removed for Coolify compatibility
     build:
       context: .
       dockerfile: services/WhisperLive/Dockerfile.cpu
@@ -207,7 +204,6 @@ services:
         condition: service_started
     networks:
       - vexa_default
-      - vexa-network
     restart: unless-stopped
 
   transcription-collector:
@@ -216,9 +212,7 @@ services:
       dockerfile: services/transcription-collector/Dockerfile
     ports:
       - "${TRANSCRIPTION_COLLECTOR_HOST_PORT:-8123}:8000"
-    volumes:
-      - ./alembic.ini:/app/alembic.ini
-      - ./libs/shared-models/alembic:/app/alembic
+    # volumes removed for Coolify compatibility (files are already in Docker image)
     environment:
       - DB_HOST=${DB_HOST:-postgres}
       - DB_PORT=${DB_PORT:-5432}
@@ -280,6 +274,3 @@ volumes:
 networks:
   vexa_default:
     driver: bridge
-  vexa-network:
-    external: true
-    name: vexa-network
