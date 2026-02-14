@@ -1,0 +1,76 @@
+# Polish Whisper hallucination phrases
+# Common false positives when there's silence or low audio
+# Updated: 2026-02-14
+
+ Dziękuję.
+ Dziękuję bardzo.
+ Dzięki.
+ Dzięki za oglądanie.
+ Dzięki za uwagę.
+ Proszę.
+ Proszę bardzo.
+ Do widzenia.
+ Do zobaczenia.
+ Do zobaczenia następnym razem.
+ Do następnego razu.
+ Cześć.
+ Hej.
+ Tak.
+ Nie.
+ Dobrze.
+ Dobra.
+ Okej.
+ Ok.
+ No.
+ No dobrze.
+ No tak.
+ Właśnie.
+ No właśnie.
+ Jasne.
+ Rozumiem.
+ Dziękuję za uwagę.
+ Dziękuję za oglądanie.
+ Subskrybuj.
+ Subskrybuj kanał.
+ Zapraszam.
+ Zapraszam do subskrypcji.
+ Zapraszam na następny odcinek.
+ Miłego dnia.
+ Miłego wieczoru.
+ Dobranoc.
+ Witam.
+ Witajcie.
+ Przepraszam.
+ Tak jest.
+ Nie, nie, nie.
+ Nie, nie, nie, nie.
+ Tak, tak, tak.
+ Napisy tworzone przez społeczność Amara.org
+ Napisy wykonane przez społeczność Amara.org
+ Napisy stworzone przez społeczność Amara.org
+ Tłumaczenie:
+ Napisy: Piotr
+ Napisy: Adam
+ Napisy:
+ ...
+ Hmm.
+ Hm.
+ Aha.
+ Mhm.
+ Uhm.
+ No i co?
+ Ee.
+ Eee.
+ To tyle.
+ To tyle na dzisiaj.
+ Tyle.
+ No i tyle.
+ Pa.
+ Pa pa.
+ Dzięki.
+ Pozdrawiam.
+ Pozdrawiam serdecznie.
+ Dobra, to tyle.
+ Dobra, dzięki.
+ Elo.
+ Siema.

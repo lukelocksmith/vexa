@@ -95,7 +95,7 @@ export class WhisperLiveService {
       language: botConfig.language || null,
       task: botConfig.task || "transcribe",
       model: null, // Let server use WHISPER_MODEL_SIZE from environment
-      use_vad: false,
+      use_vad: true,
       platform: botConfig.platform,
       token: botConfig.token,  // MeetingToken (HS256 JWT)
       meeting_id: botConfig.meeting_id,

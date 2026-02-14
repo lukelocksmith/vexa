@@ -352,7 +352,7 @@ export class BrowserWhisperLiveService {
           language: this.botConfigData.language || null,
           task: this.botConfigData.task || "transcribe",
           model: null,
-          use_vad: false,
+          use_vad: true,
           platform: this.botConfigData.platform,
           token: this.botConfigData.token,  // MeetingToken (HS256 JWT)
           meeting_id: this.botConfigData.meeting_id,
@@ -399,7 +399,7 @@ export class BrowserWhisperLiveService {
           language: this.botConfigData.language || null,
           task: this.botConfigData.task || "transcribe",
           model: null,
-          use_vad: false,
+          use_vad: true,
           platform: this.botConfigData.platform,
           token: this.botConfigData.token,  // MeetingToken (HS256 JWT)
           meeting_id: this.botConfigData.meeting_id,
