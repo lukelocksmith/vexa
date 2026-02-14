@@ -541,43 +541,25 @@ export async function startGoogleRecording(page: Page, botConfig: BotConfig): Pr
 
             initializeGoogleSpeakerDetection(whisperLiveService, audioService, botConfigData);
 
-            // Simple single-strategy participant extraction from main video area
-            (window as any).logBot("Initializing simplified participant counting (main frame text scan)...");
+            // Participant counting based on [data-participant-id] elements (reliable DOM-based detection)
+            (window as any).logBot("Initializing participant counting (data-participant-id based)...");
 
-            const extractParticipantsFromMain = (botName: string | undefined): string[] => {
-              const participants: string[] = [];
-              const mainElement = document.querySelector('main');
-              if (mainElement) {
-                const nameElements = mainElement.querySelectorAll('*');
-                nameElements.forEach((el: Element) => {
-                  const element = el as HTMLElement;
-                  const text = (element.textContent || '').trim();
-                  if (text && element.children.length === 0) {
-                    // Basic length validation only (allow numbers, parentheses, etc.)
-                    if ((text.length > 1 && text.length < 50) || (botName && text === botName)) {
-                      participants.push(text);
-                    }
-                  }
-                });
-              }
-              const tooltips = document.querySelectorAll('main [role="tooltip"]');
-              tooltips.forEach((el: Element) => {
-                const text = (el.textContent || '').trim();
-                // Basic length validation only (allow numbers, parentheses, etc.)
-                if (text && ((text.length > 1 && text.length < 50) || (botName && text === botName))) {
-                  participants.push(text);
-                }
+            const getUniqueParticipantIds = (): string[] => {
+              const ids = new Set<string>();
+              document.querySelectorAll('[data-participant-id]').forEach((el: Element) => {
+                const id = el.getAttribute('data-participant-id');
+                if (id) ids.add(id);
               });
-              return Array.from(new Set(participants));
+              return Array.from(ids);
             };
 
             (window as any).getGoogleMeetActiveParticipants = () => {
-              const names = extractParticipantsFromMain((botConfigData as any)?.botName);
-              (window as any).logBot(`🔍 [Google Meet Participants] ${JSON.stringify(names)}`);
-              return names;
+              const uniqueIds = getUniqueParticipantIds();
+              (window as any).logBot(`\u{1f50d} [Google Meet Participants] uniqueIds=${uniqueIds.length}`);
+              return uniqueIds;
             };
             (window as any).getGoogleMeetActiveParticipantsCount = () => {
-              return (window as any).getGoogleMeetActiveParticipants().length;
+              return getUniqueParticipantIds().length;
             };
             
             // Setup Google Meet meeting monitoring (browser context)

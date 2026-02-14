@@ -1579,6 +1579,9 @@ async def reconcile_meetings_and_containers():
                         f"has no running container/process. Finalizing..."
                     )
                     
+                    # Capture old status before update
+                    old_status_value = meeting.status
+                    
                     # Finalize the meeting
                     success = await update_meeting_status(
                         meeting,
@@ -1602,6 +1605,21 @@ async def reconcile_meetings_and_containers():
                             meeting.platform_specific_id, 
                             meeting.user_id
                         )
+                        # Send webhook to n8n so it can process the completed meeting
+                        try:
+                            await run_status_webhook_task(
+                                meeting.id,
+                                {
+                                    'old_status': old_status_value,
+                                    'new_status': MeetingStatus.COMPLETED.value,
+                                    'reason': 'reconciliation_zombie_meeting',
+                                    'timestamp': __import__('datetime').datetime.utcnow().isoformat(),
+                                    'transition_source': 'reconciliation'
+                                }
+                            )
+                            logger.info(f"[Reconciliation] Sent status webhook for zombie meeting {meeting.id}")
+                        except Exception as wh_err:
+                            logger.error(f"[Reconciliation] Failed to send webhook for meeting {meeting.id}: {wh_err}")
                         zombie_meetings_fixed += 1
                         logger.info(f"[Reconciliation] Fixed zombie meeting {meeting.id}")
                     else:
